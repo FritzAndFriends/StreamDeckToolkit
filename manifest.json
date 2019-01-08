@@ -1,0 +1,36 @@
+{
+  "Actions": [
+    {
+      "Icon": "actionIcon", 
+      "Name": "Counter", 
+      "States": [
+        {
+          "Image": "actionDefaultImage",
+          "TitleAlignment": "middle", 
+          "FontSize": "16"
+        }
+      ], 
+      "SupportedInMultiActions": false,
+      "Tooltip": "How many times did you get pwned today? Keep track with this counter.", 
+      "UUID": "com.csharpfritz.firstCounter.action"
+    }
+  ], 
+  "Author": "Jeffrey T. Fritz",
+	"CodePathWin": "StreamDeck_First.exe", 
+	"CodePathMac":  "StreamDeck_First",
+  "Description": "Jeff's first plugin and action", 
+  "Name": "Fritz_Counter", 
+  "Icon": "pluginIcon", 
+  "URL": "https://www.elgato.com/gaming/stream-deck", 
+  "Version": "1.2",
+  "OS": [
+    {
+        "Platform": "mac", 
+        "MinimumVersion" : "10.11"
+    },
+    {
+        "Platform": "windows", 
+        "MinimumVersion" : "10"
+    }
+  ]
+}
