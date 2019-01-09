@@ -23,7 +23,8 @@ namespace StreamDeck_First
 	{
 
 		private static readonly Dictionary<string, Action<StreamDeckEventPayload>> _EventDictionary = new Dictionary<string, Action<StreamDeckEventPayload>> {
-			{ "keyDown", Program.KeyDown }
+			{ "keyUp", Program.KeyDown },
+			{ "willAppear", Program.WillAppear }
 		};
 
 		public static Task<int> Main(string[] args) => CommandLineApplication.ExecuteAsync<Program>(args);
@@ -64,7 +65,7 @@ namespace StreamDeck_First
 			Console.WriteLine($"Attempting to connect to port:'{Port}'");
 
 			while (!Debugger.IsAttached) {
-				Thread.Sleep(100);
+				await Task.Delay(100);
 			}
 
 
@@ -72,7 +73,7 @@ namespace StreamDeck_First
 
 			await _Socket.SendAsync(GetPluginRegistrationBytes(), WebSocketMessageType.Text, true, CancellationToken.None);
 
-			var buffer = new byte[] { };
+			//var buffer = new byte[1024] { };
 			var tokenSource = new CancellationTokenSource();
 
 			while (!tokenSource.IsCancellationRequested)
@@ -83,15 +84,19 @@ namespace StreamDeck_First
 				// Tommcq cheered 310 on Jan. 8, 2019
 				// poeticAndroid cheered 100 on Jan 8, 2019
 				// kevin_downs cheered 200 on Jan 8, 2019
-
-				await _Socket.ReceiveAsync(buffer, tokenSource.Token);
+				byte[] buffer = new byte[65536];
+				var segment = new ArraySegment<byte>(buffer, 0, buffer.Length);
+				await _Socket.ReceiveAsync(segment, tokenSource.Token);
 				var jsonString = UTF8Encoding.UTF8.GetString(buffer);
 
 				if (!string.IsNullOrEmpty(jsonString))
 				{
 					var payload = JsonConvert.DeserializeObject<StreamDeckEventPayload>(jsonString);
-					_EventDictionary[payload.action]?.Invoke(payload);
+					if (_EventDictionary.ContainsKey(payload?._event ?? ""))
+						_EventDictionary[payload?._event ?? ""]?.Invoke(payload);
 				}
+
+				await Task.Delay(100);
 
 			}
 
@@ -104,12 +109,20 @@ namespace StreamDeck_First
 		{
 
 			_Counter++;
-			SetTitle(args.context, _Counter.ToString());
+			SetTitle(args.context, _Counter.ToString()).GetAwaiter().GetResult();
 
 
 		//	_Socket.
 
 		}
+
+		private static void WillAppear(StreamDeckEventPayload args)
+		{
+			_Counter = 0;
+			SetTitle(args.context, "0").GetAwaiter().GetResult();
+		}
+
+
 
 		/// <summary>
 		/// Set the title on the button passed in the context
@@ -117,11 +130,11 @@ namespace StreamDeck_First
 		/// <param name="context"></param>
 		/// <param name="title"></param>
 		/// <returns></returns>
-		private static Task SetTitle(string context, string title) {
+		private static async Task SetTitle(string context, string title) {
 
 			var json = @"{
 					""event"": ""setTitle"",
-					""context"": " + context + @",
+					""context"": """ + context + @""",
 					""payload"": {
 						""title"": """ + title + @""",
 						""target"": " + (int)Destination.HARDWARE_AND_SOFTWARE + @"
@@ -129,7 +142,7 @@ namespace StreamDeck_First
 				}";
 
 			var bytes = UTF8Encoding.UTF8.GetBytes(json);
-			return _Socket.SendAsync(bytes, WebSocketMessageType.Text, true, CancellationToken.None);
+			await _Socket.SendAsync(bytes, WebSocketMessageType.Text, true, CancellationToken.None);
 
 		}
 
