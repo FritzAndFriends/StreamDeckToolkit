@@ -64,9 +64,9 @@ namespace StreamDeck_First
 
 			Console.WriteLine($"Attempting to connect to port:'{Port}'");
 
-			while (!Debugger.IsAttached) {
-				await Task.Delay(100);
-			}
+			//while (!Debugger.IsAttached) {
+			//	await Task.Delay(100);
+			//}
 
 
 			await _Socket.ConnectAsync(new Uri($"ws://localhost:{Port}"), CancellationToken.None);

@@ -16,12 +16,13 @@ namespace StreamDeckLib
 	public sealed class ConnectionManager : IDisposable
 	{
 
-		private string _Port;
+		private int _Port;
 		private string _Uuid;
 		private string _RegisterEvent;
 		private readonly ClientWebSocket _Socket = new ClientWebSocket();
 
-		private static readonly Dictionary<string, Action<IStreamDeckPlugin, (string action, string context, Messages.StreamDeckEventPayload.Payload payload, string device)>> _ActionDictionary = new Dictionary<string, Action<IStreamDeckPlugin, (string action, string context, StreamDeckEventPayload.Payload payload, string device)>>() {
+		private static readonly Dictionary<string, Action<IStreamDeckPlugin, (string action, string context, Messages.StreamDeckEventPayload.Payload payload, string device)>> _ActionDictionary 
+			= new Dictionary<string, Action<IStreamDeckPlugin, (string action, string context, StreamDeckEventPayload.Payload payload, string device)>>() {
 
 			{ "keyDown", (plugin, args) => plugin.OnKeyDown(args.action, args.context, args.payload, args.device) },
 			{ "keyUp", (plugin, args) => plugin.OnKeyUp(args.action, args.context, args.payload, args.device)},
@@ -34,14 +35,17 @@ namespace StreamDeckLib
 
 		public Messages.Info Info { get; private set; }
 
-		public static ConnectionManager Initialize(string port, string uuid, string registerEvent, Messages.Info info) {
+		public static ConnectionManager Initialize(int port, string uuid, string registerEvent, string info) {
+
+			// TODO: Validate the info parameter
+			var myInfo = JsonConvert.DeserializeObject<Messages.Info>(info);
 
 			var manager = new ConnectionManager()
 			{
 				_Port = port,
 				_Uuid = uuid,
 				_RegisterEvent = registerEvent,
-				Info = info
+				Info = myInfo
 			};
 
 			return manager;
@@ -55,9 +59,9 @@ namespace StreamDeckLib
 
 		}
 
-		public ConnectionManager Start(CancellationToken token) {
+		public async Task<ConnectionManager> StartAsync(CancellationToken token) {
 
-			Task.Factory.StartNew(() => Run(token), TaskCreationOptions.LongRunning);
+			await Task.Factory.StartNew(() => Run(token), TaskCreationOptions.LongRunning);
 
 			return this;
 

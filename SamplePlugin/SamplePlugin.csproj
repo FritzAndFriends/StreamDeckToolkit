@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StreamDeckLib\StreamDeckLib.csproj" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="2.3.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+		<PackageReference Include="System.Net.WebSockets" Version="4.3.0" />
+	</ItemGroup>
+
+</Project>
