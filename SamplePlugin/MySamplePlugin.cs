@@ -1,30 +1,37 @@
 ﻿using StreamDeckLib;
 using StreamDeckLib.Messages;
+using System.Threading.Tasks;
 
 namespace SamplePlugin
 {
 	internal class MySamplePlugin : IStreamDeckPlugin
 	{
+
+		// Cheer 200 kevin_downs Jan 11, 2019
+
 		public ConnectionManager Manager { get; set; }
 
-		public void OnKeyDown(string action, string context, StreamDeckEventPayload.Payload payload, string device)
+		public Task OnKeyDown(string action, string context, StreamDeckEventPayload.Payload payload, string device)
 		{
-			throw new System.NotImplementedException();
+			return Task.CompletedTask;
 		}
 
-		public void OnKeyUp(string action, string context, StreamDeckEventPayload.Payload payload, string device)
+		private static int _Counter = 0;
+
+		public async Task OnKeyUp(string action, string context, StreamDeckEventPayload.Payload payload, string device)
 		{
-			throw new System.NotImplementedException();
+			_Counter++;
+			await Manager.SetTitleAsync(context, _Counter.ToString());
 		}
 
-		public void OnWillAppear(string action, string context, StreamDeckEventPayload.Payload payload, string device)
+		public Task OnWillAppear(string action, string context, StreamDeckEventPayload.Payload payload, string device)
 		{
-			throw new System.NotImplementedException();
+			return Task.CompletedTask;
 		}
 
-		public void OnWillDisappear(string action, string context, StreamDeckEventPayload.Payload payload, string device)
+		public Task OnWillDisappear(string action, string context, StreamDeckEventPayload.Payload payload, string device)
 		{
-			throw new System.NotImplementedException();
+			return Task.CompletedTask;
 		}
 	}
 }

@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using StreamDeckLib.Messages;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -21,8 +23,8 @@ namespace StreamDeckLib
 		private string _RegisterEvent;
 		private readonly ClientWebSocket _Socket = new ClientWebSocket();
 
-		private static readonly Dictionary<string, Action<IStreamDeckPlugin, (string action, string context, Messages.StreamDeckEventPayload.Payload payload, string device)>> _ActionDictionary 
-			= new Dictionary<string, Action<IStreamDeckPlugin, (string action, string context, StreamDeckEventPayload.Payload payload, string device)>>() {
+		private static readonly Dictionary<string, Func<IStreamDeckPlugin, (string action, string context, Messages.StreamDeckEventPayload.Payload payload, string device), Task>> _ActionDictionary 
+			= new Dictionary<string, Func<IStreamDeckPlugin, (string action, string context, StreamDeckEventPayload.Payload payload, string device), Task>>() {
 
 			{ "keyDown", (plugin, args) => plugin.OnKeyDown(args.action, args.context, args.payload, args.device) },
 			{ "keyUp", (plugin, args) => plugin.OnKeyUp(args.action, args.context, args.payload, args.device)},
@@ -35,10 +37,13 @@ namespace StreamDeckLib
 
 		public Messages.Info Info { get; private set; }
 
-		public static ConnectionManager Initialize(int port, string uuid, string registerEvent, string info) {
+		public static ConnectionManager Initialize(int port, string uuid, string registerEvent, string info, ILoggerFactory loggerFactory) {
 
 			// TODO: Validate the info parameter
 			var myInfo = JsonConvert.DeserializeObject<Messages.Info>(info);
+
+			_LoggerFactory = loggerFactory;
+			_Logger = loggerFactory.CreateLogger("ConnectionManager");
 
 			var manager = new ConnectionManager()
 			{
@@ -61,13 +66,25 @@ namespace StreamDeckLib
 
 		public async Task<ConnectionManager> StartAsync(CancellationToken token) {
 
+			TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+
 			await Task.Factory.StartNew(() => Run(token), TaskCreationOptions.LongRunning);
 
 			return this;
 
 		}
 
+		private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+
 		private async Task Run(CancellationToken token) {
+
+			while (!Debugger.IsAttached)
+			{
+				await Task.Delay(100);
+			}
 
 			await _Socket.ConnectAsync(new Uri($"ws://localhost:{_Port}"), token);
 
@@ -96,8 +113,18 @@ namespace StreamDeckLib
 				if (!string.IsNullOrEmpty(jsonString))
 				{
 
-					var msg = JsonConvert.DeserializeObject<StreamDeckEventPayload>(jsonString);
-					_ActionDictionary[msg.Event]?.Invoke(_Plugin, (msg.action, msg.context, msg.payload, msg.device));
+					try
+					{
+
+						var msg = JsonConvert.DeserializeObject<StreamDeckEventPayload>(jsonString);
+						if (!_ActionDictionary.ContainsKey(msg.Event)) continue;
+						_ActionDictionary[msg.Event]?.Invoke(_Plugin, (msg.action, msg.context, msg.payload, msg.device));
+
+					} catch (Exception ex) {
+
+						_Logger.LogError(ex, "Error while processing payload from StreamDeck");
+
+					}
 
 				}
 
@@ -151,6 +178,8 @@ namespace StreamDeckLib
 		#region IDisposable Support
 		private bool disposedValue = false; // To detect redundant calls
 		private IStreamDeckPlugin _Plugin;
+		private static ILoggerFactory _LoggerFactory;
+		private static ILogger _Logger;
 
 		void Dispose(bool disposing)
 		{

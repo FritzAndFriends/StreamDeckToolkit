@@ -1,4 +1,5 @@
 ﻿using StreamDeckLib.Messages;
+using System.Threading.Tasks;
 
 namespace StreamDeckLib
 {
@@ -6,9 +7,9 @@ namespace StreamDeckLib
 	{
 		ConnectionManager Manager { get; set; }
 
-		void OnKeyDown(string action, string context, StreamDeckEventPayload.Payload payload, string device);
-		void OnKeyUp(string action, string context, StreamDeckEventPayload.Payload payload, string device);
-		void OnWillAppear(string action, string context, StreamDeckEventPayload.Payload payload, string device);
-		void OnWillDisappear(string action, string context, StreamDeckEventPayload.Payload payload, string device);
+		Task OnKeyDown(string action, string context, StreamDeckEventPayload.Payload payload, string device);
+		Task OnKeyUp(string action, string context, StreamDeckEventPayload.Payload payload, string device);
+		Task OnWillAppear(string action, string context, StreamDeckEventPayload.Payload payload, string device);
+		Task OnWillDisappear(string action, string context, StreamDeckEventPayload.Payload payload, string device);
 	}
 }

@@ -1,4 +1,6 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using StreamDeckLib;
 using System;
 using System.Threading;
@@ -28,7 +30,14 @@ namespace SamplePlugin
 
 			var source = new CancellationTokenSource();
 
-			await ConnectionManager.Initialize(Port, PluginUUID, RegisterEvent, Info)
+			var loggerFactory = new LoggerFactory()
+				.AddSerilog();
+
+			Log.Logger = new LoggerConfiguration()
+				.WriteTo.File("SamplePlugin.log")
+				.CreateLogger();
+
+			await ConnectionManager.Initialize(Port, PluginUUID, RegisterEvent, Info, loggerFactory)
 				.SetPlugin(new MySamplePlugin())
 				.StartAsync(source.Token);
 
