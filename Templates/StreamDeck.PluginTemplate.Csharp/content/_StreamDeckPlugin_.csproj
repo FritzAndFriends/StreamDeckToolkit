@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+   <PropertyGroup>
+      <OutputType>Exe</OutputType>
+      <TargetFramework>netcoreapp2.1</TargetFramework>
+      <LangVersion>latest</LangVersion>
+   </PropertyGroup>
+   <ItemGroup />
+   <ItemGroup>
+      <PackageReference Include="StreamDeckLib" Version="1.*" />
+      <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="2.3.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+      <PackageReference Include="Serilog" Version="2.7.1" />
+      <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
+      <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
+      <PackageReference Include="System.Net.WebSockets" Version="4.3.0" />
+   </ItemGroup>
+   <ItemGroup>
+      <Content Include="actionDefaultImage.png">
+         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="actionDefaultImage@2x.png" />
+      <Content Include="actionIcon.png">
+         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="actionIcon@2x.png" />
+      <Content Include="manifest.json">
+         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="pluginIcon.png">
+         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="pluginIcon@2x.png" />
+      <Content Update="actionDefaultImage%402x.png">
+         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="actionIcon%402x.png">
+         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="pluginIcon%402x.png">
+         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+   </ItemGroup>
+</Project>
