@@ -66,7 +66,7 @@ namespace StreamDeckLib
 
 		private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
 		{
-			throw new NotImplementedException();
+			// throw new NotImplementedException();
 		}
 
 		private async Task Run(CancellationToken token) {
@@ -155,6 +155,16 @@ namespace StreamDeckLib
 			await _Socket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
 
 		}
+
+        public async Task SetSettingsAsync(string context, dynamic value) {
+            var args = new SetSettingsArgs()
+            {
+                context = context,
+                payload = value
+            };
+            var bytes = UTF8Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(args));
+            await _Socket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
+        }
 
 		private async Task<string> GetMessageAsString(CancellationToken token)
 		{

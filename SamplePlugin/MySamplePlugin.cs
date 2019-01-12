@@ -1,5 +1,6 @@
 ﻿using StreamDeckLib;
 using StreamDeckLib.Messages;
+using System.Dynamic;
 using System.Threading.Tasks;
 
 namespace SamplePlugin
@@ -17,5 +18,21 @@ namespace SamplePlugin
 			await Manager.SetTitleAsync(args.context, _Counter.ToString());
 		}
 
-	}
+        public override async Task OnWillAppear(StreamDeckEventPayload args)
+        {
+            if(args.payload!= null && args.payload.settings != null && args.payload.settings.counter != null)
+            {
+                _Counter = args.payload.settings.counter;
+            }
+            await Manager.SetTitleAsync(args.context, _Counter.ToString());
+        }
+
+        public override async Task OnWillDisappear(StreamDeckEventPayload args)
+        {
+            dynamic settings = new ExpandoObject();
+            settings.counter = _Counter;
+            await Manager.SetSettingsAsync(args.context, settings);
+        }
+
+    }
 }
