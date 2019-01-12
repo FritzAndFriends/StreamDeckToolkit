@@ -1,12 +1,11 @@
 ﻿using StreamDeckLib.Messages;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace StreamDeckLib
 {
-	partial class ConnectionManager
+    partial class ConnectionManager
 	{
 
 		private static readonly Dictionary<string, Func<BaseStreamDeckPlugin, StreamDeckEventPayload, Task>> _ActionDictionary

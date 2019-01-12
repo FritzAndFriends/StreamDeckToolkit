@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using StreamDeckLib.Messages;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
@@ -12,10 +11,10 @@ using System.Threading.Tasks;
 namespace StreamDeckLib
 {
 
-	/// <summary>
-	/// This class manages the connection to the StreamDeck hardware
-	/// </summary>
-	public partial class ConnectionManager : IDisposable
+    /// <summary>
+    /// This class manages the connection to the StreamDeck hardware
+    /// </summary>
+    public partial class ConnectionManager : IDisposable
 	{
 
 		private int _Port;
