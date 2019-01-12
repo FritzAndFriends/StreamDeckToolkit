@@ -16,7 +16,20 @@ namespace SamplePlugin
 		{
 			_Counter++;
 			await Manager.SetTitleAsync(args.context, _Counter.ToString());
-		}
+
+            if (_Counter % 10 == 0)
+            {
+                await Manager.ShowAlertAsync(args.context);
+            }
+            else if (_Counter % 15 == 0)
+            {
+                await Manager.OpenUrlAsync(args.context, "https://www.bing.com");
+            }
+            else if (_Counter % 3 == 0)
+            {
+                await Manager.ShowOkAsync(args.context);
+            } 
+        }
 
         public override async Task OnWillAppear(StreamDeckEventPayload args)
         {

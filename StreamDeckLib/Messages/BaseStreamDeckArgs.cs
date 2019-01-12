@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StreamDeckLib.Messages
 {
-    public abstract class StreamDeckArgsBase
+    public abstract class BaseStreamDeckArgs
     {
         [JsonProperty(PropertyName = "event")]
         public abstract string Event

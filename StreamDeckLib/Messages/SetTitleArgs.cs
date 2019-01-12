@@ -2,7 +2,7 @@
 
 namespace StreamDeckLib.Messages
 {
-	public class SetTitleArgs : StreamDeckArgsBase
+	public class SetTitleArgs : BaseStreamDeckArgs
 	{
         public override string Event => "setTitle";
 		public Payload payload { get; set; }
