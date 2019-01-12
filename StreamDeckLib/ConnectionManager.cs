@@ -15,23 +15,13 @@ namespace StreamDeckLib
 	/// <summary>
 	/// This class manages the connection to the StreamDeck hardware
 	/// </summary>
-	public sealed class ConnectionManager : IDisposable
+	public partial class ConnectionManager : IDisposable
 	{
 
 		private int _Port;
 		private string _Uuid;
 		private string _RegisterEvent;
 		private readonly ClientWebSocket _Socket = new ClientWebSocket();
-
-		private static readonly Dictionary<string, Func<IStreamDeckPlugin, (string action, string context, Messages.StreamDeckEventPayload.Payload payload, string device), Task>> _ActionDictionary 
-			= new Dictionary<string, Func<IStreamDeckPlugin, (string action, string context, StreamDeckEventPayload.Payload payload, string device), Task>>() {
-
-			{ "keyDown", (plugin, args) => plugin.OnKeyDown(args.action, args.context, args.payload, args.device) },
-			{ "keyUp", (plugin, args) => plugin.OnKeyUp(args.action, args.context, args.payload, args.device)},
-			{ "willAppear", (plugin, args) => plugin.OnWillAppear(args.action, args.context, args.payload, args.device)},
-			{ "willDisappear", (plugin, args) => plugin.OnWillDisappear(args.action, args.context, args.payload, args.device)}
-		};
-
 
 		private ConnectionManager() { }
 
@@ -56,7 +46,7 @@ namespace StreamDeckLib
 			return manager;
 		}	
 
-		public ConnectionManager SetPlugin(IStreamDeckPlugin plugin) {
+		public ConnectionManager SetPlugin(BaseStreamDeckPlugin plugin) {
 
 			this._Plugin = plugin;
 			plugin.Manager = this;
@@ -81,10 +71,16 @@ namespace StreamDeckLib
 
 		private async Task Run(CancellationToken token) {
 
+#if DEBUG
+
+			Debugger.Launch();
+
 			while (!Debugger.IsAttached)
 			{
 				await Task.Delay(100);
 			}
+
+#endif
 
 			await _Socket.ConnectAsync(new Uri($"ws://localhost:{_Port}"), token);
 
@@ -110,15 +106,23 @@ namespace StreamDeckLib
 
 				var jsonString = await GetMessageAsString(token);
 
-				if (!string.IsNullOrEmpty(jsonString))
+				if (!string.IsNullOrEmpty(jsonString) && !jsonString.StartsWith("\0"))
 				{
 
 					try
 					{
 
 						var msg = JsonConvert.DeserializeObject<StreamDeckEventPayload>(jsonString);
-						if (!_ActionDictionary.ContainsKey(msg.Event)) continue;
-						_ActionDictionary[msg.Event]?.Invoke(_Plugin, (msg.action, msg.context, msg.payload, msg.device));
+						if (msg == null) {
+							_Logger.LogError($"Unknown message received: {jsonString}");
+							continue;
+						}
+						if (!_ActionDictionary.ContainsKey(msg.Event))
+						{
+							_Logger.LogTrace($"Plugin does not handle the event '{msg.Event}'");
+							continue;
+						}
+						_ActionDictionary[msg.Event]?.Invoke(_Plugin, msg);
 
 					} catch (Exception ex) {
 
@@ -177,7 +181,7 @@ namespace StreamDeckLib
 
 		#region IDisposable Support
 		private bool disposedValue = false; // To detect redundant calls
-		private IStreamDeckPlugin _Plugin;
+		private BaseStreamDeckPlugin _Plugin;
 		private static ILoggerFactory _LoggerFactory;
 		private static ILogger _Logger;
 
@@ -188,6 +192,7 @@ namespace StreamDeckLib
 				if (disposing)
 				{
 					_Socket.Dispose();
+					_LoggerFactory.Dispose();
 				}
 
 				disposedValue = true;

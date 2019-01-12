@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using StreamDeckLib;
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,20 +31,33 @@ namespace SamplePlugin
 
 			var source = new CancellationTokenSource();
 
-			var loggerFactory = new LoggerFactory()
-				.AddSerilog();
+			var logLocation = Path.Combine(Path.GetTempPath(), $"{GetType().Assembly.GetName().Name}-.log");
+
 
 			Log.Logger = new LoggerConfiguration()
-				.WriteTo.File("SamplePlugin.log")
+				.MinimumLevel.Verbose()
+				.Enrich.FromLogContext()
+				.WriteTo.File(logLocation, rollingInterval: RollingInterval.Day)
 				.CreateLogger();
 
-			await ConnectionManager.Initialize(Port, PluginUUID, RegisterEvent, Info, loggerFactory)
-				.SetPlugin(new MySamplePlugin())
-				.StartAsync(source.Token);
+			var loggerFactory = new LoggerFactory()
+				.AddSerilog(Log.Logger);
 
-			Console.ReadLine();
+			var topLogger = loggerFactory.CreateLogger("top");
+
+			try
+			{
+				await ConnectionManager.Initialize(Port, PluginUUID, RegisterEvent, Info, loggerFactory)
+					.SetPlugin(new MySamplePlugin())
+					.StartAsync(source.Token);
+				
+				Console.ReadLine();	
+
+			} catch (Exception ex) {
+				topLogger.LogError(ex, "Error while running the plugin");
+			}
+
 			source.Cancel();
-
 
 		}
 	}
