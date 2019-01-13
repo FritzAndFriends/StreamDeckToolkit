@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Newtonsoft.Json;
 
 namespace StreamDeck_First
 {
-	public class StreamDeckEventPayload
+    public class StreamDeckEventPayload
 	{
 		public string action { get; set; }
+
+		[JsonProperty(PropertyName = "event")]
 		public string _event { get; set; }
 		public string context { get; set; }
 		public string device { get; set; }

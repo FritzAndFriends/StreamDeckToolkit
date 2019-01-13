@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamDeck_First", "StreamDeck_First.csproj", "{18D189D4-0A91-4F85-998C-6D86764FBB49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamDeckLib", "StreamDeckLib\StreamDeckLib.csproj", "{19F24D43-79DB-47B6-AEDA-BAEA3B2F1962}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SamplePlugin", "SamplePlugin\SamplePlugin.csproj", "{7FCB0FEF-FC38-4187-858C-425FB0664F4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{18D189D4-0A91-4F85-998C-6D86764FBB49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18D189D4-0A91-4F85-998C-6D86764FBB49}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18D189D4-0A91-4F85-998C-6D86764FBB49}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18D189D4-0A91-4F85-998C-6D86764FBB49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19F24D43-79DB-47B6-AEDA-BAEA3B2F1962}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19F24D43-79DB-47B6-AEDA-BAEA3B2F1962}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19F24D43-79DB-47B6-AEDA-BAEA3B2F1962}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19F24D43-79DB-47B6-AEDA-BAEA3B2F1962}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FCB0FEF-FC38-4187-858C-425FB0664F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FCB0FEF-FC38-4187-858C-425FB0664F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FCB0FEF-FC38-4187-858C-425FB0664F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FCB0FEF-FC38-4187-858C-425FB0664F4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
