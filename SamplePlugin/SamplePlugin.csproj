@@ -70,4 +70,14 @@
 	  </Content>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="debugfilecopy.ps1">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="powershell.exe C:\dev\StreamDeck_First\SamplePlugin\debugFileCopy.ps1" />
+	</Target>
+
 </Project>
