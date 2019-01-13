@@ -1,11 +1,14 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Settings.Configuration;
 using StreamDeckLib;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace SamplePlugin
 {
@@ -31,19 +34,21 @@ namespace SamplePlugin
 
 			var source = new CancellationTokenSource();
 
-			var logLocation = Path.Combine(Path.GetTempPath(), $"{GetType().Assembly.GetName().Name}-.log");
+            Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
 
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-			Log.Logger = new LoggerConfiguration()
-				.MinimumLevel.Verbose()
-				.Enrich.FromLogContext()
-				.WriteTo.File(logLocation, rollingInterval: RollingInterval.Day)
-				.CreateLogger();
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
 
 			var loggerFactory = new LoggerFactory()
 				.AddSerilog(Log.Logger);
 
 			var topLogger = loggerFactory.CreateLogger("top");
+			topLogger.LogInformation("Plugin started");
 
 			try
 			{
