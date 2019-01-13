@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 namespace StreamDeck_First
 {
 
-	public enum Destination {
+    public enum Destination {
 
 		HARDWARE_AND_SOFTWARE = 0,
 		HARDWARE_ONLY = 1,

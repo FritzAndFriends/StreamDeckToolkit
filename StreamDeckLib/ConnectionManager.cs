@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using StreamDeckLib.Messages;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
@@ -27,7 +26,8 @@ namespace StreamDeckLib
 
 		public Messages.Info Info { get; private set; }
 
-		public static ConnectionManager Initialize(int port, string uuid, string registerEvent, string info, ILoggerFactory loggerFactory) {
+		public static ConnectionManager Initialize(int port, string uuid, string registerEvent, string info, ILoggerFactory loggerFactory)
+		{
 
 			// TODO: Validate the info parameter
 			var myInfo = JsonConvert.DeserializeObject<Messages.Info>(info);
@@ -44,9 +44,10 @@ namespace StreamDeckLib
 			};
 
 			return manager;
-		}	
+		}
 
-		public ConnectionManager SetPlugin(BaseStreamDeckPlugin plugin) {
+		public ConnectionManager SetPlugin(BaseStreamDeckPlugin plugin)
+		{
 
 			this._Plugin = plugin;
 			plugin.Manager = this;
@@ -54,7 +55,8 @@ namespace StreamDeckLib
 
 		}
 
-		public async Task<ConnectionManager> StartAsync(CancellationToken token) {
+		public async Task<ConnectionManager> StartAsync(CancellationToken token)
+		{
 
 			TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
@@ -69,7 +71,8 @@ namespace StreamDeckLib
 			throw new NotImplementedException();
 		}
 
-		private async Task Run(CancellationToken token) {
+		private async Task Run(CancellationToken token)
+		{
 
 #if DEBUG
 
@@ -88,7 +91,7 @@ namespace StreamDeckLib
 
 			var keepRunning = true;
 
-			while(!token.IsCancellationRequested)
+			while (!token.IsCancellationRequested)
 			{
 
 				// Exit loop if the socket is closed or aborted
@@ -113,7 +116,8 @@ namespace StreamDeckLib
 					{
 
 						var msg = JsonConvert.DeserializeObject<StreamDeckEventPayload>(jsonString);
-						if (msg == null) {
+						if (msg == null)
+						{
 							_Logger.LogError($"Unknown message received: {jsonString}");
 							continue;
 						}
@@ -124,7 +128,9 @@ namespace StreamDeckLib
 						}
 						_ActionDictionary[msg.Event]?.Invoke(_Plugin, msg);
 
-					} catch (Exception ex) {
+					}
+					catch (Exception ex)
+					{
 
 						_Logger.LogError(ex, "Error while processing payload from StreamDeck");
 
@@ -139,7 +145,8 @@ namespace StreamDeckLib
 
 		}
 
-		public async Task SetTitleAsync(string context, string newTitle) {
+		public async Task SetTitleAsync(string context, string newTitle)
+		{
 
 			var args = new SetTitleArgs()
 			{
@@ -151,9 +158,54 @@ namespace StreamDeckLib
 				}
 			};
 
-			var bytes = UTF8Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(args));
-			await _Socket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
+			await SendStreamDeckEvent(args);
+		}
 
+		public async Task SetSettingsAsync(string context, dynamic value)
+		{
+			var args = new SetSettingsArgs()
+			{
+				context = context,
+				payload = value
+			};
+			await SendStreamDeckEvent(args);
+		}
+
+		public async Task ShowAlertAsync(string context)
+		{
+			var args = new ShowAlertArgs()
+			{
+				context = context
+			};
+			await SendStreamDeckEvent(args);
+		}
+
+		public async Task ShowOkAsync(string context)
+		{
+			var args = new ShowOkArgs()
+			{
+				context = context
+			};
+			await SendStreamDeckEvent(args);
+		}
+
+		public async Task OpenUrlAsync(string context, string url)
+		{
+			var args = new OpenUrlArgs()
+			{
+				context = context,
+				payload = new OpenUrlArgs.Payload()
+				{
+					url = url
+				}
+			};
+			await SendStreamDeckEvent(args);
+		}
+
+		private Task SendStreamDeckEvent(BaseStreamDeckArgs args)
+		{
+			var bytes = UTF8Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(args));
+			return _Socket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
 		}
 
 		private async Task<string> GetMessageAsString(CancellationToken token)

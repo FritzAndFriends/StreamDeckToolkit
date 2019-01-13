@@ -1,11 +1,8 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace StreamDeckLib.Messages
 {
-	public class StreamDeckEventPayload
+    public class StreamDeckEventPayload
 	{
 		public string action { get; set; }
 
