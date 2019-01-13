@@ -1,0 +1,75 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "csharpfritz",
+    "classifications": [
+      "Console",
+      "StreamDeckPlugin"
+    ],
+    "name": "Stream Deck Plugin",
+    "generatorVersions": "[1.0.0.0-*)",
+    "description": "An project template for creating a Stream Deck Plugin.",
+    "groupIdentity": "StreamDeck",
+    "precedence": "3000",
+    "identity": "StreamDeck.Plugin.CSharp",
+    "shortName": "streamdeck-plugin",
+    "tags": {
+      "language": "C#",
+      "type": "project"
+    },
+    "sourceName": "_StreamDeckPlugin_",
+    "preferNameDirectory": true,
+    "guids": [
+      "7387b3c8-b87a-401b-b5ca-ee2a955e3b6f"
+    ],
+    "defaultName": "MyStreamDeckPlugin",
+    "symbols": {
+      "skipRestore": {
+        "type": "parameter",
+        "datatype": "bool",
+        "description": "If specified, skips the automatic restore of the project on create.",
+        "defaultValue": "false"
+      },
+      "plugin-name": {
+        "type": "parameter",
+        "datatype": "string",
+        "description": "The name of the stream deck plugin.",
+        "defaultValue": "MyPlugin",
+        "FileRename" : "_PluginName_",
+        "replaces": "$(PluginName)"
+      },
+      "uuid": {
+        "type": "parameter",
+        "datatype": "string",
+        "description": "The uuid of the stream deck plugin action.",
+        "defaultValue": "com.yourcompany.plugin.action",
+        "replaces": "$(UUID)"
+      }
+    },
+    "sources": [
+      {
+        "source": "./",
+        "target": "./",
+        "exclude": [
+          ".template.config/**"
+        ]
+      }
+    ],
+    "primaryOutputs": [
+      {
+        "path": "_StreamDeckPlugin_.csproj"
+      }
+    ],
+    "postActions": [
+      {
+        "condition": "(!skipRestore)",
+        "description": "Restore NuGet packages required by this project.",
+        "manualInstructions": [
+          {
+            "text": "Run 'dotnet restore'"
+          }
+        ],
+        "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
+        "continueOnError": true
+      }
+    ]
+  }

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>StreamDeckPluginTemplate</id>
+    <version>$version$</version>
+    <authors>csharpfritz</authors>
+    <description>Templates for creating StreamDeck plugin.</description>
+    <language>en-US</language>
+    <projectUrl>https://github.com/csharpfritz/StreamDeck_First</projectUrl>
+    <licenseUrl>https://github.com/csharpfritz/StreamDeck_First/blob/master/LICENSE</licenseUrl >
+    <copyright></copyright>
+    <tags>dotnet templates</tags>
+    <packageTypes>
+      <packageType name="Template" />
+    </packageTypes>
+  </metadata>
+  <files>
+    <file src="content/**" target="content/" />
+  </files>
+</package>
