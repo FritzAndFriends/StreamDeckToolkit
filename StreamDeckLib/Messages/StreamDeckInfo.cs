@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace StreamDeckLib.Messages
+﻿namespace StreamDeckLib.Messages
 {
-	public class Info
+    public class Info
 	{
 		public Application application { get; set; }
 		public Device[] devices { get; set; }

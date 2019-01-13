@@ -1,10 +1,9 @@
 ﻿using StreamDeckLib.Messages;
-using System;
 using System.Threading.Tasks;
 
 namespace StreamDeckLib
 {
-	public class BaseStreamDeckPlugin
+    public class BaseStreamDeckPlugin
 	{
 
 		protected internal ConnectionManager Manager { get; set; }

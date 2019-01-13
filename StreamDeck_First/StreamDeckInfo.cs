@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace StreamDeck_First
+﻿namespace StreamDeck_First
 {
-	public class StreamDeckInfo
+    public class StreamDeckInfo
 	{
 		public Application application { get; set; }
 		public Device[] devices { get; set; }

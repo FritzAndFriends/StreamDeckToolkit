@@ -2,15 +2,12 @@
 
 namespace StreamDeckLib.Messages
 {
-	public class SetTitleArgs
+	public class SetTitleArgs : BaseStreamDeckArgs
 	{
-
-		[JsonProperty(PropertyName = "event")]
-		public string Event { get { return "setTitle"; } }
-		public string context { get; set; }
+        public override string Event => "setTitle";
 		public Payload payload { get; set; }
 
-		public class Payload
+        public class Payload
 		{
 			public string title { get; set; }
 

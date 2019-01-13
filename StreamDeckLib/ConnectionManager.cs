@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using StreamDeckLib.Messages;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
@@ -12,10 +11,10 @@ using System.Threading.Tasks;
 namespace StreamDeckLib
 {
 
-	/// <summary>
-	/// This class manages the connection to the StreamDeck hardware
-	/// </summary>
-	public partial class ConnectionManager : IDisposable
+    /// <summary>
+    /// This class manages the connection to the StreamDeck hardware
+    /// </summary>
+    public partial class ConnectionManager : IDisposable
 	{
 
 		private int _Port;
@@ -66,7 +65,7 @@ namespace StreamDeckLib
 
 		private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
 		{
-			throw new NotImplementedException();
+			 throw new NotImplementedException();
 		}
 
 		private async Task Run(CancellationToken token) {
@@ -151,10 +150,54 @@ namespace StreamDeckLib
 				}
 			};
 
-			var bytes = UTF8Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(args));
-			await _Socket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
-
+            await SendStreamDeckEvent(args);
 		}
+
+        public async Task SetSettingsAsync(string context, dynamic value) {
+            var args = new SetSettingsArgs()
+            {
+                context = context,
+                payload = value
+            };
+            await SendStreamDeckEvent(args);
+        }
+
+        public async Task ShowAlertAsync(string context)
+        {
+            var args = new ShowAlertArgs()
+            {
+                context = context
+            };
+            await SendStreamDeckEvent(args);
+        }
+
+        public async Task ShowOkAsync(string context)
+        {
+            var args = new ShowOkArgs()
+            {
+                context = context
+            };
+            await SendStreamDeckEvent(args);
+        }
+
+        public async Task OpenUrlAsync(string context, string url)
+        {
+            var args = new OpenUrlArgs()
+            {
+                context = context,
+                payload = new OpenUrlArgs.Payload()
+                {
+                    url = url
+                }
+            };
+            await SendStreamDeckEvent(args);
+        }
+
+        private Task SendStreamDeckEvent(BaseStreamDeckArgs args)
+        {
+            var bytes = UTF8Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(args));
+            return _Socket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
+        }
 
 		private async Task<string> GetMessageAsString(CancellationToken token)
 		{
