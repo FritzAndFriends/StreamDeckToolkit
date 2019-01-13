@@ -48,6 +48,7 @@ namespace SamplePlugin
 				.AddSerilog(Log.Logger);
 
 			var topLogger = loggerFactory.CreateLogger("top");
+			topLogger.LogInformation("Plugin started");
 
 			try
 			{

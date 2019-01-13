@@ -119,7 +119,7 @@ namespace StreamDeckLib
 						}
 						if (!_ActionDictionary.ContainsKey(msg.Event))
 						{
-							_Logger.LogTrace($"Plugin does not handle the event '{msg.Event}'");
+							_Logger.LogWarning($"Plugin does not handle the event '{msg.Event}'");
 							continue;
 						}
 						_ActionDictionary[msg.Event]?.Invoke(_Plugin, msg);
