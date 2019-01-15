@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <LangVersion>latest</LangVersion>
     <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+		<Version>0.2.0-preview</Version>
   </PropertyGroup>
 
   <ItemGroup>
