@@ -9,61 +9,56 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 
 namespace SamplePlugin
 {
 	class Program
 	{
-		static Task<int> Main(string[] args) => CommandLineApplication.ExecuteAsync<Program>(args);
-
-
-		[Option(Description = "The port the Elgato StreamDeck software is listening on", ShortName = "port")]
-		public int Port { get; set; }
-
-		[Option(ShortName = "pluginUUID")]
-		public string PluginUUID { get; set; }
-
-		[Option(ShortName = "registerEvent")]
-		public string RegisterEvent { get; set; }
-
-		[Option(ShortName = "info")]
-		public string Info { get; set; }
-
-		private async Task OnExecuteAsync()
-		{
-
-			var source = new CancellationTokenSource();
-
+        static ILoggerFactory GetLoggerFactory()
+        {
             Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
-
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
+                    .AddJsonFile("appsettings.json")
+                    .Build();
 
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
+                    .ReadFrom.Configuration(configuration)
+                    .CreateLogger();
+            var loggerFactory = new LoggerFactory()
+                .AddSerilog(Log.Logger);
 
-			var loggerFactory = new LoggerFactory()
-				.AddSerilog(Log.Logger);
+            TopLogger = loggerFactory.CreateLogger("top");
 
-			var topLogger = loggerFactory.CreateLogger("top");
-			topLogger.LogInformation("Plugin started");
+            TopLogger.LogInformation("Plugin started");
+            return loggerFactory;
+        }
 
-			try
-			{
-				await ConnectionManager.Initialize(Port, PluginUUID, RegisterEvent, Info, loggerFactory)
-					.SetPlugin(new MySamplePlugin())
-					.StartAsync(source.Token);
-				
-				Console.ReadLine();	
+        private static Microsoft.Extensions.Logging.ILogger TopLogger;
 
-			} catch (Exception ex) {
-				topLogger.LogError(ex, "Error while running the plugin");
-			}
+        static async Task Main(string[] args)
+        {
+            using (var source = new CancellationTokenSource())
+            {
+                using (var loggerFactory = GetLoggerFactory())
+                {
+                    try
+                    {
+                        using (var conMan = ConnectionManager.Initialize(args, loggerFactory))
+                        {
+                            await conMan.SetPlugin(new MySamplePlugin())
+                                .StartAsync(source.Token);
+                        }
 
-			source.Cancel();
-
+                        Console.ReadLine();
+                    }
+                    catch (Exception ex)
+                    {
+                        TopLogger.LogError(ex, "Error while running the plugin");
+                    }
+                }
+                source.Cancel();
+            }
 		}
 	}
 }
