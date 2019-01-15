@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using McMaster.Extensions.CommandLineUtils;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
 using StreamDeckLib.Messages;
 using System;
@@ -10,13 +12,11 @@ using System.Threading.Tasks;
 
 namespace StreamDeckLib
 {
-
 	/// <summary>
 	/// This class manages the connection to the StreamDeck hardware
 	/// </summary>
 	public partial class ConnectionManager : IDisposable
 	{
-
 		private int _Port;
 		private string _Uuid;
 		private string _RegisterEvent;
@@ -25,15 +25,38 @@ namespace StreamDeckLib
 		private ConnectionManager() { }
 
 		public Messages.Info Info { get; private set; }
+        
+        public static ConnectionManager Initialize(string[] commandLineArgs, ILoggerFactory loggerFactory = null)
+        {
+            using (var app = new CommandLineApplication())
+            {
+                app.HelpOption();
+                // UNTESTED. I don't have a streamdeck device and don't know how to "click" the button in the app.
+                var optionPort = app.Option<int>("-port|--port <PORT>", "The port the Elgato StreamDeck software is listening on", CommandOptionType.SingleValue);
+                var optionPluginUUID = app.Option("-pluginUUID <UUID>", "The UUID that the Elgato StreamDeck software knows this plugin as.", CommandOptionType.SingleValue);
+                var optionRegisterEvent = app.Option("-registerEvent <REGEVENT>", "The registration event", CommandOptionType.SingleValue);
+                var optionInfo = app.Option("-info <INFO>", "Some information", CommandOptionType.SingleValue);
+
+                app.Parse(commandLineArgs);
+
+                try
+                {
+                    return Initialize(int.Parse(optionPort.Value()), optionPluginUUID.Value(), optionRegisterEvent.Value(), optionInfo.Value(), loggerFactory);
+                }
+                catch
+                {
+                    throw new ArgumentException($"{nameof(commandLineArgs)} must be the commandline args that the StreamDeck application calls this program with.");
+                }
+            }
+        }          
 
 		public static ConnectionManager Initialize(int port, string uuid, string registerEvent, string info, ILoggerFactory loggerFactory)
 		{
-
 			// TODO: Validate the info parameter
 			var myInfo = JsonConvert.DeserializeObject<Messages.Info>(info);
 
 			_LoggerFactory = loggerFactory;
-			_Logger = loggerFactory.CreateLogger("ConnectionManager");
+			_Logger = loggerFactory?.CreateLogger("ConnectionManager") ?? NullLogger.Instance;
 
 			var manager = new ConnectionManager()
 			{
@@ -48,22 +71,18 @@ namespace StreamDeckLib
 
 		public ConnectionManager SetPlugin(BaseStreamDeckPlugin plugin)
 		{
-
 			this._Plugin = plugin;
 			plugin.Manager = this;
 			return this;
-
 		}
 
 		public async Task<ConnectionManager> StartAsync(CancellationToken token)
 		{
-
 			TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
 			await Task.Factory.StartNew(() => Run(token), TaskCreationOptions.LongRunning);
 
 			return this;
-
 		}
 
 		private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
@@ -93,7 +112,6 @@ namespace StreamDeckLib
 
 			while (!token.IsCancellationRequested)
 			{
-
 				// Exit loop if the socket is closed or aborted
 				switch (_Socket.State)
 				{
@@ -111,7 +129,6 @@ namespace StreamDeckLib
 
 				if (!string.IsNullOrEmpty(jsonString) && !jsonString.StartsWith("\0"))
 				{
-
 					try
 					{
 
@@ -127,7 +144,6 @@ namespace StreamDeckLib
 							continue;
 						}
 						_ActionDictionary[msg.Event]?.Invoke(_Plugin, msg);
-
 					}
 					catch (Exception ex)
 					{
@@ -135,17 +151,16 @@ namespace StreamDeckLib
 						_Logger.LogError(ex, "Error while processing payload from StreamDeck");
 
 					}
-
 				}
 
 				await Task.Delay(100);
 
 			}
-
-
 		}
 
-		public async Task SetTitleAsync(string context, string newTitle)
+        #region StreamDeck Methods
+
+        public async Task SetTitleAsync(string context, string newTitle)
 		{
 
 			var args = new SetTitleArgs()
@@ -202,9 +217,11 @@ namespace StreamDeckLib
 			await SendStreamDeckEvent(args);
 		}
 
-		private Task SendStreamDeckEvent(BaseStreamDeckArgs args)
+        #endregion
+
+        private Task SendStreamDeckEvent(BaseStreamDeckArgs args)
 		{
-			var bytes = UTF8Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(args));
+			var bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(args));
 			return _Socket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
 		}
 
@@ -213,7 +230,7 @@ namespace StreamDeckLib
 			byte[] buffer = new byte[65536];
 			var segment = new ArraySegment<byte>(buffer, 0, buffer.Length);
 			await _Socket.ReceiveAsync(segment, token);
-			var jsonString = UTF8Encoding.UTF8.GetString(buffer);
+			var jsonString = Encoding.UTF8.GetString(buffer);
 			return jsonString;
 		}
 
@@ -226,12 +243,13 @@ namespace StreamDeckLib
 			};
 
 			var outString = JsonConvert.SerializeObject(registration);
-			var outBytes = UTF8Encoding.UTF8.GetBytes(outString);
+			var outBytes = Encoding.UTF8.GetBytes(outString);
 
 			return new ArraySegment<byte>(outBytes);
 		}
 
 		#region IDisposable Support
+
 		private bool disposedValue = false; // To detect redundant calls
 		private BaseStreamDeckPlugin _Plugin;
 		private static ILoggerFactory _LoggerFactory;
@@ -260,9 +278,5 @@ namespace StreamDeckLib
 			// GC.SuppressFinalize(this);
 		}
 		#endregion
-
-
-
 	}
-
 }
