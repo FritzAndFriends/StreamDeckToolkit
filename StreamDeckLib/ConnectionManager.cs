@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
 using StreamDeckLib.Messages;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
@@ -38,15 +39,24 @@ namespace StreamDeckLib
 				var optionInfo = app.Option("-info <INFO>", "Some information", CommandOptionType.SingleValue);
 
 #if DEBUG
-				var optionDebug = app.Option<bool>("--debug", "Wait for a debugger to attach before execution", CommandOptionType.SingleOrNoValue);
-				var waitForDebugger = optionDebug.TryParse(optionDebug.Value());
+				var optionDebug = app.Option<bool>("-d|--debug", "Wait for a debugger to attach before execution", CommandOptionType.SingleOrNoValue);
 #endif
 
 				app.Parse(commandLineArgs);
 
+#if DEBUG
+				var waitForDebugger = optionDebug.HasValue() && optionDebug.ParsedValue;
+#endif
+
+				if (app.GetValidationResult() != ValidationResult.Success)
+				{
+					app.ShowHelp();
+					throw new ArgumentException("The command line parameters were not valid or could not be parsed.");
+				}
+					
 				try
 				{
-					return Initialize(int.Parse(optionPort.Value()), optionPluginUUID.Value(), optionRegisterEvent.Value(), optionInfo.Value(), loggerFactory, waitForDebugger);
+					return Initialize(optionPort.ParsedValue, optionPluginUUID.Value(), optionRegisterEvent.Value(), optionInfo.Value(), loggerFactory, waitForDebugger);
 				}
 				catch
 				{
