@@ -25,32 +25,38 @@ namespace StreamDeckLib
 		private ConnectionManager() { }
 
 		public Messages.Info Info { get; private set; }
-        
-        public static ConnectionManager Initialize(string[] commandLineArgs, ILoggerFactory loggerFactory = null)
-        {
-            using (var app = new CommandLineApplication())
-            {
-                app.HelpOption();
-                // UNTESTED. I don't have a streamdeck device and don't know how to "click" the button in the app.
-                var optionPort = app.Option<int>("-port|--port <PORT>", "The port the Elgato StreamDeck software is listening on", CommandOptionType.SingleValue);
-                var optionPluginUUID = app.Option("-pluginUUID <UUID>", "The UUID that the Elgato StreamDeck software knows this plugin as.", CommandOptionType.SingleValue);
-                var optionRegisterEvent = app.Option("-registerEvent <REGEVENT>", "The registration event", CommandOptionType.SingleValue);
-                var optionInfo = app.Option("-info <INFO>", "Some information", CommandOptionType.SingleValue);
 
-                app.Parse(commandLineArgs);
+		public static ConnectionManager Initialize(string[] commandLineArgs, ILoggerFactory loggerFactory = null)
+		{
+			using (var app = new CommandLineApplication())
+			{
+				app.HelpOption();
+				// UNTESTED. I don't have a streamdeck device and don't know how to "click" the button in the app.
+				var optionPort = app.Option<int>("-port|--port <PORT>", "The port the Elgato StreamDeck software is listening on", CommandOptionType.SingleValue);
+				var optionPluginUUID = app.Option("-pluginUUID <UUID>", "The UUID that the Elgato StreamDeck software knows this plugin as.", CommandOptionType.SingleValue);
+				var optionRegisterEvent = app.Option("-registerEvent <REGEVENT>", "The registration event", CommandOptionType.SingleValue);
+				var optionInfo = app.Option("-info <INFO>", "Some information", CommandOptionType.SingleValue);
 
-                try
-                {
-                    return Initialize(int.Parse(optionPort.Value()), optionPluginUUID.Value(), optionRegisterEvent.Value(), optionInfo.Value(), loggerFactory);
-                }
-                catch
-                {
-                    throw new ArgumentException($"{nameof(commandLineArgs)} must be the commandline args that the StreamDeck application calls this program with.");
-                }
-            }
-        }          
+#if DEBUG
+				var optionDebug = app.Option<bool>("--debug", "Wait for a debugger to attach before execution", CommandOptionType.SingleOrNoValue);
+				var waitForDebugger = optionDebug.TryParse(optionDebug.Value());
+#endif
 
-		public static ConnectionManager Initialize(int port, string uuid, string registerEvent, string info, ILoggerFactory loggerFactory)
+				app.Parse(commandLineArgs);
+
+				try
+				{
+					return Initialize(int.Parse(optionPort.Value()), optionPluginUUID.Value(), optionRegisterEvent.Value(), optionInfo.Value(), loggerFactory, waitForDebugger);
+				}
+				catch
+				{
+					throw new ArgumentException($"{nameof(commandLineArgs)} must be the commandline args that the StreamDeck application calls this program with.");
+				}
+			}
+		}
+
+		public static ConnectionManager Initialize(int port, string uuid, string registerEvent, string info, ILoggerFactory loggerFactory, bool waitForDebugger = false)
+
 		{
 			// TODO: Validate the info parameter
 			var myInfo = JsonConvert.DeserializeObject<Messages.Info>(info);
@@ -63,7 +69,8 @@ namespace StreamDeckLib
 				_Port = port,
 				_Uuid = uuid,
 				_RegisterEvent = registerEvent,
-				Info = myInfo
+				Info = myInfo,
+				_waitForDebugger = waitForDebugger,
 			};
 
 			return manager;
@@ -92,17 +99,22 @@ namespace StreamDeckLib
 
 		private async Task Run(CancellationToken token)
 		{
-
-#if DEBUG
-
-			Debugger.Launch();
-
-			while (!Debugger.IsAttached)
+			if (_waitForDebugger)
 			{
-				await Task.Delay(100);
-			}
+				Debugger.Launch();
 
-#endif
+				// Wait for a debugger to attach, but if the token gets a cancelation request, we need to exit.
+				while (!Debugger.IsAttached | !token.IsCancellationRequested)
+				{
+					await Task.Delay(100);
+				}
+
+				// If we exited because the token cancellation has been requested, return before doing any socket-related operations
+				if (token.IsCancellationRequested)
+				{
+					return;
+				}
+			}
 
 			await _Socket.ConnectAsync(new Uri($"ws://localhost:{_Port}"), token);
 
@@ -158,9 +170,9 @@ namespace StreamDeckLib
 			}
 		}
 
-        #region StreamDeck Methods
+		#region StreamDeck Methods
 
-        public async Task SetTitleAsync(string context, string newTitle)
+		public async Task SetTitleAsync(string context, string newTitle)
 		{
 
 			var args = new SetTitleArgs()
@@ -217,9 +229,9 @@ namespace StreamDeckLib
 			await SendStreamDeckEvent(args);
 		}
 
-        #endregion
+		#endregion
 
-        private Task SendStreamDeckEvent(BaseStreamDeckArgs args)
+		private Task SendStreamDeckEvent(BaseStreamDeckArgs args)
 		{
 			var bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(args));
 			return _Socket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
@@ -254,6 +266,7 @@ namespace StreamDeckLib
 		private BaseStreamDeckPlugin _Plugin;
 		private static ILoggerFactory _LoggerFactory;
 		private static ILogger _Logger;
+		private bool _waitForDebugger;
 
 		void Dispose(bool disposing)
 		{
