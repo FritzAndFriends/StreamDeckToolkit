@@ -53,7 +53,7 @@ namespace StreamDeckLib
 					app.ShowHelp();
 					throw new ArgumentException("The command line parameters were not valid or could not be parsed.");
 				}
-					
+
 				try
 				{
 					return Initialize(optionPort.ParsedValue, optionPluginUUID.Value(), optionRegisterEvent.Value(), optionInfo.Value(), loggerFactory, waitForDebugger);
