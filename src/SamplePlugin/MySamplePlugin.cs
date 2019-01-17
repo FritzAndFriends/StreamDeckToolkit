@@ -9,6 +9,17 @@ namespace SamplePlugin
 	{
 
 		// Cheer 200 kevin_downs Jan 11, 2019
+		// Cheer 401 cpayette Jan 15, 2019
+		// Cheer 2501 themikejolley Jan 15, 2019
+		// Cheer 100 wolfgang_blitz Jan 15, 2019
+		// Cheer 157 jongalloway Jan 15, 2019
+		// Cheer 100 johanb Jan 15, 2019
+		// Cheer 400 faniereynders Jan 15, 2019
+		// Cheer 100 TomMcQ Jan 15, 2019
+		// Cheer 361 Crazy240sx Jan 15, 2019
+		// Cheer 600 yarrgh Jan 15, 2019
+		// Cheer 1030 kulu83 Jan 15, 2019
+		// Cheer 2500 Auth0Bobby Jan 15, 2019
 
 		private static int _Counter = 0;
 
