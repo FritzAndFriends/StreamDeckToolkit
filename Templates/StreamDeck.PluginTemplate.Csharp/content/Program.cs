@@ -28,16 +28,15 @@ namespace _StreamDeckPlugin_
 
 		private async Task OnExecuteAsync()
 		{
-
 			var source = new CancellationTokenSource();
-
 			var logLocation = Path.Combine(Path.GetTempPath(), $"{GetType().Assembly.GetName().Name}-.log");
-
 
 			Log.Logger = new LoggerConfiguration()
 				.MinimumLevel.Verbose()
-				.Enrich.FromLogContext()
-				.WriteTo.File(logLocation, rollingInterval: RollingInterval.Day)
+				.Enrich
+					.FromLogContext()
+				.WriteTo
+					.File(logLocation, rollingInterval: RollingInterval.Day)
 				.CreateLogger();
 
 			var loggerFactory = new LoggerFactory()

@@ -26,12 +26,9 @@
 		public int rows { get; set; }
 	}
 
-	public class PluginRegistration {
-
+	public class PluginRegistration 
+	{
 		public string @event { get; set; }
-
 		public string uuid { get; set; }
-
 	}
-
 }

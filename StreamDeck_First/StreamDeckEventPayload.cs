@@ -27,5 +27,4 @@ namespace StreamDeck_First
 		public int column { get; set; }
 		public int row { get; set; }
 	}
-
 }

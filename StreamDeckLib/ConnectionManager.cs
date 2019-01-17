@@ -21,12 +21,10 @@ namespace StreamDeckLib
 		private string _Uuid;
 		private string _RegisterEvent;
 		private readonly ClientWebSocket _Socket = new ClientWebSocket();
-
 		private ConnectionManager() { }
-
 		public Messages.Info Info { get; private set; }
-        
-        public static ConnectionManager Initialize(string[] commandLineArgs, ILoggerFactory loggerFactory = null)
+        public static ConnectionManager Initialize(string[] commandLineArgs, 
+			ILoggerFactory loggerFactory = null)
         {
             using (var app = new CommandLineApplication())
             {
@@ -115,13 +113,11 @@ namespace StreamDeckLib
 				// Exit loop if the socket is closed or aborted
 				switch (_Socket.State)
 				{
-
 					case WebSocketState.CloseReceived:
 					case WebSocketState.Closed:
 					case WebSocketState.Aborted:
 						keepRunning = false;
 						break;
-
 				}
 				if (!keepRunning) break;
 
@@ -131,7 +127,6 @@ namespace StreamDeckLib
 				{
 					try
 					{
-
 						var msg = JsonConvert.DeserializeObject<StreamDeckEventPayload>(jsonString);
 						if (msg == null)
 						{
@@ -147,14 +142,11 @@ namespace StreamDeckLib
 					}
 					catch (Exception ex)
 					{
-
 						_Logger.LogError(ex, "Error while processing payload from StreamDeck");
-
 					}
 				}
 
 				await Task.Delay(100);
-
 			}
 		}
 
@@ -162,7 +154,6 @@ namespace StreamDeckLib
 
         public async Task SetTitleAsync(string context, string newTitle)
 		{
-
 			var args = new SetTitleArgs()
 			{
 				context = context,
@@ -185,7 +176,7 @@ namespace StreamDeckLib
 			};
 			await SendStreamDeckEvent(args);
 		}
-
+		
 		public async Task ShowAlertAsync(string context)
 		{
 			var args = new ShowAlertArgs()
