@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <LangVersion>latest</LangVersion>
     <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
-		<Version>0.2.0-preview</Version>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
 
   <ItemGroup>
@@ -48,7 +48,6 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="2.3.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
@@ -72,13 +71,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="debugfilecopy.ps1">
+	  <None Update="RegisterPluginAndStartStreamDeck.ps1">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="powershell.exe C:\dev\StreamDeck_First\SamplePlugin\debugFileCopy.ps1" />
+	  <Exec Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)RegisterPluginAndStartStreamDeck.ps1&quot;" />
+	</Target>
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+	  <Exec Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)CloseStreamDeck.ps1&quot;" />
 	</Target>
 
 </Project>

@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "SamplePlugin": {
+      "commandName": "Executable",
+      "executablePath": "cmd",
+      "commandLineArgs": "/S /C \"start \"title\" /B \"C:\\Program Files\\Elgato\\StreamDeck\\StreamDeck.exe\" \""
+    }
+  }
+}
