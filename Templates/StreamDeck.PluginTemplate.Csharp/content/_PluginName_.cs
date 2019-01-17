@@ -9,6 +9,5 @@ namespace _StreamDeckPlugin_
 		{
 			// Your plugin code goes here.
 		}
-
 	}
 }

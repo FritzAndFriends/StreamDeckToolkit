@@ -18,6 +18,7 @@ namespace SamplePlugin
         static ILoggerFactory GetLoggerFactory()
         {
             Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+            
             var configuration = new ConfigurationBuilder()
                     .AddJsonFile("appsettings.json")
                     .Build();
@@ -25,12 +26,14 @@ namespace SamplePlugin
             Log.Logger = new LoggerConfiguration()
                     .ReadFrom.Configuration(configuration)
                     .CreateLogger();
+
             var loggerFactory = new LoggerFactory()
                 .AddSerilog(Log.Logger);
 
             TopLogger = loggerFactory.CreateLogger("top");
 
             TopLogger.LogInformation("Plugin started");
+            
             return loggerFactory;
         }
 
