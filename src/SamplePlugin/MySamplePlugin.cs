@@ -57,6 +57,5 @@ namespace SamplePlugin
             settings.counter = _Counter;
             await Manager.SetSettingsAsync(args.context, settings);
         }
-
     }
 }
