@@ -20,9 +20,7 @@ namespace StreamDeckLib.Messages
 			public int userDesiredState { get; set; }
 			public bool isInMultiAction { get; set; }
 			public string title { get; set; }
-
 			public TitleParameters titleParameters { get; set; }
-
 		}
 
 		public class Coordinates
@@ -31,24 +29,15 @@ namespace StreamDeckLib.Messages
 			public int row { get; set; }
 		}
 
-		public class TitleParameters {
-
+		public class TitleParameters 
+		{
 			public string fontFamily { get; set; }
-
 			public int fontSize { get; set; }
-
 			public string fontStyle { get; set; }
-
 			public bool fontUnderline { get; set; }
-
 			public bool showTitle { get; set; }
-
 			public string titleAlignment { get; set; }
-
 			public string titleColor { get; set; }
-
 		}
-
 	}
-
 }
