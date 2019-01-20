@@ -47,7 +47,7 @@ namespace _StreamDeckPlugin_
 			try
 			{
 				await ConnectionManager.Initialize(Port, PluginUUID, RegisterEvent, Info, loggerFactory)
-					.SetPlugin(new $(PluginName))())
+					.SetPlugin(new $(PluginName)())
 					.StartAsync(source.Token);
 				
 				Console.ReadLine();	
