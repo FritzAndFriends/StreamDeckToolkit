@@ -9,6 +9,8 @@ namespace _StreamDeckPlugin_
 		public override async Task OnKeyUp(StreamDeckEventPayload args)
 		{
 			// Your plugin code goes here.
+
+			return Task.CompletedTask;
 		}
 	}
 }
