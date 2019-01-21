@@ -2,7 +2,7 @@
 
 namespace StreamDeckLib.Messages
 {
-    public class StreamDeckEventPayload
+	public class StreamDeckEventPayload
 	{
 		public string action { get; set; }
 
@@ -10,6 +10,9 @@ namespace StreamDeckLib.Messages
 		public string Event { get; set; }
 		public string context { get; set; }
 		public string device { get; set; }
+
+		public Deviceinfo deviceInfo { get; set; }
+
 		public Payload payload { get; set; }
 
 		public class Payload
@@ -21,15 +24,10 @@ namespace StreamDeckLib.Messages
 			public bool isInMultiAction { get; set; }
 			public string title { get; set; }
 			public TitleParameters titleParameters { get; set; }
+			public string application { get; set; }
 		}
 
-		public class Coordinates
-		{
-			public int column { get; set; }
-			public int row { get; set; }
-		}
-
-		public class TitleParameters 
+		public class TitleParameters
 		{
 			public string fontFamily { get; set; }
 			public int fontSize { get; set; }
@@ -39,5 +37,13 @@ namespace StreamDeckLib.Messages
 			public string titleAlignment { get; set; }
 			public string titleColor { get; set; }
 		}
+
+		public class Deviceinfo
+		{
+			public int type { get; set; }
+			public Size size { get; set; }
+		}
+
 	}
+
 }

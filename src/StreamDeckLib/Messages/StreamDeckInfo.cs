@@ -1,6 +1,6 @@
 ﻿namespace StreamDeckLib.Messages
 {
-    public class Info
+	public class Info
 	{
 		public Application application { get; set; }
 		public Device[] devices { get; set; }
@@ -17,12 +17,6 @@
 			public string id { get; set; }
 			public Size size { get; set; }
 			public int type { get; set; }
-		}
-
-		public class Size
-		{
-			public int columns { get; set; }
-			public int rows { get; set; }
 		}
 
 		public class PluginRegistration

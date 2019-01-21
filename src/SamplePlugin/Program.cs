@@ -39,7 +39,7 @@ namespace SamplePlugin
 
 	private static Microsoft.Extensions.Logging.ILogger TopLogger;
 
-	static async Task Main(string[] args)
+	static async Task Main(string[] args) 
 	{
 
 
