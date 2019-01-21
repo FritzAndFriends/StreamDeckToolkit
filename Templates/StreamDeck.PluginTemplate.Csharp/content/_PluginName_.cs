@@ -1,5 +1,6 @@
 ﻿using StreamDeckLib;
 using StreamDeckLib.Messages;
+using System.Threading.Tasks;
 
 namespace _StreamDeckPlugin_
 {
@@ -8,6 +9,8 @@ namespace _StreamDeckPlugin_
 		public override async Task OnKeyUp(StreamDeckEventPayload args)
 		{
 			// Your plugin code goes here.
+
+			return Task.CompletedTask;
 		}
 	}
 }
