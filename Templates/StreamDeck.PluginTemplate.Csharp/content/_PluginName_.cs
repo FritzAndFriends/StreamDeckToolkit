@@ -1,5 +1,6 @@
 ﻿using StreamDeckLib;
 using StreamDeckLib.Messages;
+using System.Threading.Tasks;
 
 namespace _StreamDeckPlugin_
 {
