@@ -181,6 +181,8 @@ namespace StreamDeckLib
 				return true;
 			}
 
+			Console.Write("Attach a debugger to resume execution...");
+			
 			Debugger.Launch();
 
 			// Wait for a debugger to attach, but if the token gets a cancelation request, we need to exit.
