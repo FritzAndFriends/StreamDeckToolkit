@@ -1,6 +1,6 @@
 ﻿
 $streamDeckExePath = "C:\Program Files\Elgato\StreamDeck\StreamDeck.exe"
-$bindir = $PSScriptRoot + "\bin\Debug\netcoreapp2.2\win10-x64"
+$bindir = $PSScriptRoot + "\bin\Debug\netcoreapp2.2"
 $manifestFile = $bindir +"\manifest.json"
 
 $manifestContent = Get-Content $manifestFile | Out-String
