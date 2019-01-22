@@ -17,7 +17,8 @@ namespace SamplePlugin
     {
         static ILoggerFactory GetLoggerFactory()
         {
-            Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+            var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Directory.SetCurrentDirectory(dir);
 
             var configuration = new ConfigurationBuilder()
                     .AddJsonFile("appsettings.json")
