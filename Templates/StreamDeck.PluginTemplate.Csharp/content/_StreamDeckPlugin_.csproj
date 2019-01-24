@@ -2,10 +2,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
    <PropertyGroup>
       <OutputType>Exe</OutputType>
-      <TargetFramework>netcoreapp2.1</TargetFramework>
+      <TargetFramework>netcoreapp2.2</TargetFramework>
       <LangVersion>latest</LangVersion>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
    </PropertyGroup>
+   
    <ItemGroup />
+
    <ItemGroup>
       <PackageReference Include="StreamDeckLib" Version="1.*" />
       <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="2.3.0" />
@@ -16,6 +19,7 @@
       <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
       <PackageReference Include="System.Net.WebSockets" Version="4.3.0" />
    </ItemGroup>
+   
    <ItemGroup>
       <Content Include="actionDefaultImage.png">
          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
