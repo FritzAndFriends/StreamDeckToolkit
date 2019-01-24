@@ -32,4 +32,4 @@ Once the template is installed, open a terminal and create a new project.
 
 Or create a directory in a location of your choice, change to that directory and run the command, which will inherit the directory name as the project name.
 
-    dotnet new streamdesk-plugin
+    dotnet new streamdeck-plugin
