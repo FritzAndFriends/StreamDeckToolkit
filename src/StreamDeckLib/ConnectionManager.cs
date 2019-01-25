@@ -91,10 +91,12 @@ namespace StreamDeckLib
         private async Task Run(CancellationToken token)
         {
 
-
+            _Logger.LogInformation("In Run Method");
 
             await _Socket.ConnectAsync(new Uri($"ws://localhost:{_Port}"), token);
+            _Logger.LogInformation("Connected to the StreamDeck");
             await _Socket.SendAsync(GetPluginRegistrationBytes(), WebSocketMessageType.Text, true, CancellationToken.None);
+            _Logger.LogInformation("Registered with the StreamDeck");
 
             var keepRunning = true;
 
@@ -112,6 +114,8 @@ namespace StreamDeckLib
                 if (!keepRunning) break;
 
                 var jsonString = await GetMessageAsString(token);
+
+                _Logger.LogInformation("Got information from socket: " + jsonString);
 
                 if (!string.IsNullOrEmpty(jsonString) && !jsonString.StartsWith("\0"))
                 {
@@ -211,8 +215,9 @@ namespace StreamDeckLib
         {
             var buffer = new byte[65536];
             var segment = new ArraySegment<byte>(buffer, 0, buffer.Length);
-            await _Socket.ReceiveAsync(segment, token);
-            var jsonString = Encoding.UTF8.GetString(buffer);
+            var result = await _Socket.ReceiveAsync(segment, token);
+            
+            var jsonString = Encoding.Default.GetString(buffer, 0, result.Count);
             return jsonString;
         }
 
