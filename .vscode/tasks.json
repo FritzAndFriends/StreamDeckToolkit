@@ -5,7 +5,7 @@
     "tasks": [
         {
             "label": "build",
-            "command": "dotnet build",
+            "command": "dotnet build --runtime osx-x64",
             "type": "shell",
             "group": "build",
             "options": {
