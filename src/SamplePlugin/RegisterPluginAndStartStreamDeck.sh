@@ -31,4 +31,7 @@ cp bin/Debug/netcoreapp2.2/* ${PLUGIN_DIR}
 #Notify user of Action.
 echo "Done installing ${pluginName}."
 
+#start the stream deck
+open /Applications/Stream\ Deck.app &
+
 exit
