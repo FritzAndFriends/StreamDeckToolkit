@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+#Define Plugin Directory
+PLUGIN_DIR="~/Library/Application\ Support/com.elgato.StreamDeck/Plugins/${pluginName.sdPlugin}"
+#Define suffix
+SUFFIX=".action"
+
 #Notify user of action.
 echo 'Killing the stream deck process'
 
@@ -9,22 +14,21 @@ pkill 'Stream Deck'
 #Pull the UUID from the manifest.json
 uuid=$(sed -n 's/.*"UUID": "\(.*\)"/\1/p' manifest.json)
 
-#Define suffix
-suffix=".action"
-
-pluginName=$(echo "$uuid" | tr -d \" | sed -e "s/$suffix$//")
+pluginName=$(echo "${uuid}" | tr -d \" | sed -e "s/${SUFFIX}$//")
 
 #Notify user of Action.
-echo "Installing the $pluginName plugin..."
+echo "Installing the ${pluginName} plugin..."
 
-#On first run the file does not exist, we ignore errors from removing it.
-#Not elegant, and needs love.
-rm -r ~/Library/Application\ Support/com.elgato.StreamDeck/Plugins/$pluginName.sdPlugin 2> /dev/null || echo > /dev/null
+#On first run the file does not exist, we check if it exists.
+if [ -d ${PLUGIN_DIR} ]; then rm -fr ${PLUGIN_DIR}; fi
 
 #Recreate directory for plugin.
-mkdir ~/Library/Application\ Support/com.elgato.StreamDeck/Plugins/$pluginName.sdPlugin
+mkdir -p ${PLUGIN_DIR}
 
 #Move our build into folder.
-cp bin/Debug/netcoreapp2.2/* ~/Library/Application\ Support/com.elgato.StreamDeck/Plugins/$pluginName.sdPlugin
+cp bin/Debug/netcoreapp2.2/* ${PLUGIN_DIR}
+
+#Notify user of Action.
+echo "Done installing ${pluginName}."
 
 exit
