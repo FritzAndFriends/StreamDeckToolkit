@@ -18,7 +18,7 @@ Uninstall the local template by running.
 
     dotnet new -u /StreamDeckToolkit/Templates/StreamDeck.PluginTemplate.Csharp/
 
-### From Nuget
+### From NuGet
 
     dotnet add package StreamDeckPluginTemplate
     - OR -
