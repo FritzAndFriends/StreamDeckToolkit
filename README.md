@@ -2,6 +2,8 @@
 
 [![Build status](https://dev.azure.com/FritzAndFriends/StreamDeckTools/_apis/build/status/StreamDeckTools-CI)](https://dev.azure.com/FritzAndFriends/StreamDeckTools/_build/latest?definitionId=8)  ![](https://vsrm.dev.azure.com/FritzAndFriends/_apis/public/Release/badge/00a6d40c-eb0d-4aa8-a405-d13d03317ca9/1/1)  [![NuGet](https://img.shields.io/nuget/v/StreamDeckLib.svg)](https://www.nuget.org/packages/StreamDeckLib/)
 
+[Intellicode Model](https://prod.intellicode.vsengsaas.visualstudio.com/get?m=EE5419D495BE49528606139DA3ADC687)
+
 ## Install Project Template
 
 ### From File System
