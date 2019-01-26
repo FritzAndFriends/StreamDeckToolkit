@@ -5,7 +5,6 @@
 		<TargetFramework>netcoreapp2.2</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
-                <RuntimeIdentifiers>win10-x64;osx-x64</RuntimeIdentifiers>
 		<RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
 	</PropertyGroup>                         
 
