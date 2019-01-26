@@ -48,7 +48,7 @@ namespace StreamDeckLib
             }
         }
 
-        public static ConnectionManager Initialize(int port, string uuid, string registerEvent, string info, ILoggerFactory loggerFactory)
+        private static ConnectionManager Initialize(int port, string uuid, string registerEvent, string info, ILoggerFactory loggerFactory)
         {
             // TODO: Validate the info parameter
             var myInfo = JsonConvert.DeserializeObject<Messages.Info>(info);

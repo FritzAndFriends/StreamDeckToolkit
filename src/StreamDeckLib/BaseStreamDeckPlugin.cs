@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace StreamDeckLib
 {
-	public class BaseStreamDeckPlugin
+	public abstract class BaseStreamDeckPlugin
 	{
 		protected internal ConnectionManager Manager { get; set; }
 

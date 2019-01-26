@@ -15,6 +15,23 @@
                 "reveal": "always"
             },
             "problemMatcher": "$msCompile"
-        }
+        },
+        {
+          "label": "TestWithCoverage",
+          "command": "dotnet",
+          "type": "process",
+          "args": [
+           "test",
+           "/p:CollectCoverage=true",
+           "/p:CoverletOutputFormat=lcov",
+           "/p:CoverletOutput=./lcov",
+           "${workspaceRoot}/src/StreamDeckLib.Test/StreamDeckLib.Test.csproj"
+          ],
+          "problemMatcher": "$msCompile",
+          "group": {
+           "kind": "test",
+           "isDefault": true
+          }
+         }
     ]
 }
