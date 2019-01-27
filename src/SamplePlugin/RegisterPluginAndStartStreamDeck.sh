@@ -1,3 +1,5 @@
+command -v jq >/dev/null 2>&1 || { echo >&2 "Aborting. This script requires jq. Please visit: https://stedolan.github.io/jq/"; exit 1; }
+
 echo 'Killing the Stream Deck process'
 pkill 'Stream Deck'
 
