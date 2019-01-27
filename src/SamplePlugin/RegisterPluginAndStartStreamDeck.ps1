@@ -37,5 +37,5 @@ else
 
 Write-Host "Script Completed"
 
-#& $streamDeckExePath
+Start-Process $streamDeckExePath
 exit 0
