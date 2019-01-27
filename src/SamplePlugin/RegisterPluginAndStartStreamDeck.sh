@@ -1,9 +1,7 @@
-command -v jq >/dev/null 2>&1 || { echo >&2 "Aborting. This script requires jq. Please visit: https://stedolan.github.io/jq/"; exit 1; }
-
 echo 'Killing the Stream Deck process'
 pkill 'Stream Deck'
 
-uuid=$(jq -r .Actions[0].UUID manifest.json)
+uuid=$(sed -n 's/.*"UUID": "\(.*\)"/\1/p' manifest.json)
 pluginName=${uuid%.*}
 pluginsDir="$HOME/Library/Application Support/com.elgato.StreamDeck/Plugins"
 projectDir=$(PWD)
