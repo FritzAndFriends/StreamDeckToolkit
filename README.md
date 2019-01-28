@@ -12,15 +12,15 @@ This is a template to help create plugins for the [Elgato Stream Deck][Stream De
 
 ## Pre-Requisites
 
-In order to make use of this template, you will need to have the [Dotnet Core SDK][] (version 2.2 or above) installed on your development machine.
+In order to make use of this template, you will need to have the [Dotnet Core SDK][] (version 2.2.100 or above) installed on your development machine.
 
-You will also need to have, at the very least, the [Stream Deck Software][] installed to be able to perform some integration testing of your plugin.
+While not absolutely necessary, it is **strongly** recommended to have the [Stream Deck Software][] installed, to be able to perform some integration testing of your plugin.
 
 ## Install Project Template
 
 ### From File System
 
-Useful for testing local testing of the template when developing.
+Useful for local testing of the template when developing.
 
     dotnet new -i /StreamDeckToolkit/Templates/StreamDeck.PluginTemplate.Csharp/
 
@@ -44,8 +44,8 @@ Or create a directory in a location of your choice, change to that directory and
 
     dotnet new streamdeck-plugin
 
-
 <!-- Reference Links -->
+
 [Dotnet Core]: https://dotnet.microsoft.com/ "Free, cross-platform application framework"
 [Dotnet Core SDK]: https://get.dot.net/ "Download the Dotnet Core SDK or Runtime"
 [Stream Deck]: https://www.elgato.com/gaming/stream-deck/ "Elgato's Stream Deck product page"
