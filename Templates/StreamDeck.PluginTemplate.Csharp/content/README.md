@@ -44,7 +44,19 @@ The other file, for high-DPI displayes, must be 56 pixels squared (56x56px), and
 
 #### Actions Icon
 
+##### Purpose
 
+
+##### Specifications
+
+
+
+#### Key Icon
+
+##### Purpose
+
+
+##### Specifications
 
 The following
 
