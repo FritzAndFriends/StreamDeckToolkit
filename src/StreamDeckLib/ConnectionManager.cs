@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using StreamDeckLib.Messages;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -159,14 +160,22 @@ namespace StreamDeckLib
 			await _Proxy.SendStreamDeckEvent(args);
 		}
 
-		public async Task SetSettingsAsync(string context, dynamic value)
-		{
-			var args = new SetSettingsArgs()
+		public async Task SetImageAsync(string context, string imageLocation) {
+
+			var imgString = Convert.ToBase64String(File.ReadAllBytes(imageLocation), Base64FormattingOptions.None);
+
+			var args = new SetImageArgs
 			{
 				context = context,
-				payload = value
+				payload = new SetImageArgs.Payload
+				{
+					TargetType = SetTitleArgs.TargetType.HardwareAndSoftware,
+					image = $"data:image/{new FileInfo(imageLocation).Extension.ToLowerInvariant().Substring(1)};base64, {imgString}"
+				}
 			};
+
 			await _Proxy.SendStreamDeckEvent(args);
+
 		}
 
 		public async Task ShowAlertAsync(string context)
@@ -185,6 +194,62 @@ namespace StreamDeckLib
 				context = context
 			};
 			await _Proxy.SendStreamDeckEvent(args);
+		}
+
+		public async Task SetSettingsAsync(string context, dynamic value)
+		{
+			var args = new SetSettingsArgs()
+			{
+				context = context,
+				payload = value
+			};
+			await _Proxy.SendStreamDeckEvent(args);
+		}
+
+		public async Task SetStateAsync(string context, int state)
+		{
+
+			var args = new SetStateArgs
+			{
+				context = context,
+				payload = new SetStateArgs.Payload
+				{
+					state = state
+				}
+			};
+
+			await _Proxy.SendStreamDeckEvent(args);
+
+
+		}
+
+		public async Task SendToPropertyInspectorAsync(string context, dynamic payload) {
+
+			var args = new SendToPropertyInspectorArgs
+			{
+				action = _Uuid,
+				context = context,
+				payload = payload
+			};
+
+			await _Proxy.SendStreamDeckEvent(args);
+
+		}
+
+		public async Task SwitchToProfileAsync(string context, string device, string profileName) {
+
+			var args = new SwitchToProfileArgs
+			{
+				context = context,
+				device = device,
+				payload = new SwitchToProfileArgs.Payload
+				{
+					profile = profileName
+				}
+			};
+
+			await _Proxy.SendStreamDeckEvent(args);
+
 		}
 
 		public async Task OpenUrlAsync(string context, string url)
