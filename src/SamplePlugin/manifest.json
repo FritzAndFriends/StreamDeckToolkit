@@ -1,35 +1,35 @@
 {
   "Actions": [
     {
-      "Icon": "actionIcon", 
-      "Name": "SamplePlugin", 
+      "Icon": "actionIcon",
+      "Name": "SamplePlugin",
       "States": [
         {
           "Image": "actionDefaultImage",
-          "TitleAlignment": "middle", 
+          "TitleAlignment": "middle",
           "FontSize": "16"
         }
-      ], 
+      ],
       "SupportedInMultiActions": false,
-      "Tooltip": "How many times did you get pwned today? Keep track with this counter.", 
+      "Tooltip": "How many times did you get pwned today? Keep track with this counter.",
       "UUID": "com.csharpfritz.samplePlugin.action"
     }
-  ], 
+  ],
   "Author": "Jeffrey T. Fritz",
-	"CodePathWin": "SamplePlugin.exe", 
-	"CodePathMac":  "StreamDeck_First",
-  "Description": "The Sample Plugin", 
-  "Name": "Sample Plugin", 
-  "Icon": "pluginIcon", 
-  "URL": "https://www.elgato.com/gaming/stream-deck", 
+	"CodePathWin": "SamplePlugin.exe",
+	"CodePathMac":  "SamplePlugin",
+  "Description": "The Sample Plugin",
+  "Name": "Sample Plugin",
+  "Icon": "pluginIcon",
+  "URL": "https://www.elgato.com/gaming/stream-deck",
   "Version": "1.2",
   "OS": [
     {
-        "Platform": "mac", 
+        "Platform": "mac",
         "MinimumVersion" : "10.11"
     },
     {
-        "Platform": "windows", 
+        "Platform": "windows",
         "MinimumVersion" : "10"
     }
   ]
