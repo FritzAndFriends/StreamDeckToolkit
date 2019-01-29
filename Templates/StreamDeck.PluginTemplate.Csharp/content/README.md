@@ -14,11 +14,18 @@ Within the directory from which you are reading this file, there exist a few oth
 
 ## What's Next?
 
+### First, a Word of Caution
+
+Due to the multi-platform target of the [Stream Deck][], when specifying filesystem paths which will be used at runtime (images, other assets), use the POSIX/Unix standard forward slash (`/`) as the directory separator.
+
+**Do this** `path/to/my/assets`
+**Instead of** `path\to\my\assets`
+
 ### The `manifest.json` file
 
-The [`manifest.json` file][Manifest File] (also referred to as the *manifest*) is the mechanism used by the [Stream Deck SDK][] to uniquely identify plugins, their actions and other parameters.
+The [`manifest.json` file][Manifest File] (also referred to as the *manifest* or *manifest file*) is the mechanism used by the [Stream Deck SDK][] to uniquely identify plugins, their actions and other parameters.
 
-At the very least, you should set a value for both the **Author** and the **URL** values, representing you and your plugin.
+Your first step should set a value for both the **Author** and the **URL** values, representing you and your plugin.
 
 ### Images and Other Assets
 
@@ -76,7 +83,7 @@ The other file, for high-DPI displayes, must be 40 pixels squared (40x40px), and
 
 ##### Purpose
 
-The **Key Icon** is the icon which is displayed on the key(s) to which is is assigned on the Stream Deck, as well as within the Stream Deck software during configuration. If your action supports multiple states, the **Key Icon** will be displayed when its assigned state is active. Each action hast as least one state, and as of this time, has at most two states.
+The **Key Icon** is the icon which is displayed on the key(s) to which is is assigned on the [Stream Deck][], as well as within the [Stream Deck software][] during configuration. If your action supports multiple states, the **Key Icon** will be displayed when its assigned state is active. Each action hast as least one state, and as of this time, has at most two states.
 
  Once again, just as with the **Category Icon** and **Action Image**, when setting its value in the *manifest*, do not specify an extension.
 
