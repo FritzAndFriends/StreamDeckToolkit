@@ -70,7 +70,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="RegisterPluginAndStartStreamDeck.ps1">
+
+    <None Update="RegisterPluginAndStartStreamDeck.ps1">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</None>
 		<None Update="RegisterPluginAndStartStreamDeck.sh">
