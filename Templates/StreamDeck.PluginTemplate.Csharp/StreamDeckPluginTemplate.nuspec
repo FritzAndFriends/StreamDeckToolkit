@@ -4,10 +4,10 @@
     <id>StreamDeckPluginTemplate</id>
     <version>$version$</version>
     <authors>csharpfritz</authors>
-    <description>Templates for creating StreamDeck plugin.</description>
+    <description>Templates for creating a plugin for the Elgato (Corsair) Stream Deck</description>
     <language>en-US</language>
-    <projectUrl>https://github.com/csharpfritz/StreamDeck_First</projectUrl>
-    <licenseUrl>https://github.com/csharpfritz/StreamDeck_First/blob/master/LICENSE</licenseUrl >
+    <projectUrl>https://github.com/FritzAndFriends/StreamDeckToolkit/</projectUrl>
+    <licenseUrl>https://github.com/FritzAndFriends/StreamDeckToolkit/blob/master/LICENSE</licenseUrl >
     <copyright></copyright>
     <tags>dotnet templates</tags>
     <packageTypes>

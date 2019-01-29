@@ -4,9 +4,9 @@
 		<OutputType>Exe</OutputType>
 		<TargetFramework>netcoreapp2.2</TargetFramework>
 		<LangVersion>latest</LangVersion>
-		<RuntimeIdentifier Condition=" '$(OS)' == 'Windows_NT' and '$(Configuration)'=='Debug' ">win-x64</RuntimeIdentifier> <!-- When building/running on Windows -->
-		<RuntimeIdentifier Condition=" '$(OS)' != 'Windows_NT' and '$(Configuration)'=='Debug' ">osx-x64</RuntimeIdentifier> <!-- When on non-Windows environment, assume macOS for now -->
-		<RuntimeIdentifiers Condition="'$(Configuration)'=='Release' ">win-x64;osx-x64</RuntimeIdentifiers> <!-- At this time, the only platforms we are really targetting, and supported by the Stream Deck SDK are Windows and macOS  -->
+		<RuntimeIdentifier Condition=" '$(OS)' == 'Windows_NT' and '$(Configuration)'=='Debug' ">win-x64</RuntimeIdentifier>		<!-- When building/running on Windows -->
+		<RuntimeIdentifier Condition=" '$(OS)' != 'Windows_NT' and '$(Configuration)'=='Debug' ">osx-x64</RuntimeIdentifier>		<!-- When on non-Windows environment, assume macOS for now -->
+		<RuntimeIdentifiers Condition="'$(Configuration)'=='Release' ">win-x64;osx-x64</RuntimeIdentifiers>		<!-- At this time, the only platforms we are really targetting, and supported by the Stream Deck SDK are Windows and macOS  -->
 		<RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
 	</PropertyGroup>
 	<ItemGroup>
@@ -31,34 +31,40 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="actionDefaultImage.png">
+		<Content Include="images/actionDefaultImage.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="actionDefaultImage@2x.png" />
-		<Content Include="actionIcon.png">
+		<Content Include="images/actionDefaultImage@2x.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="actionIcon@2x.png" />
-		<Content Include="Fritz.png">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Content Include="images/actionIcon.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="manifest.json">
+		<Content Include="images/actionIcon@2x.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="images/Fritz.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="images/manifest.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="appsettings.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="pluginIcon.png">
+		<Content Include="images/pluginIcon.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="pluginIcon@2x.png" />
-		<Content Update="actionDefaultImage%402x.png">
+		<Content Include="images/pluginIcon@2x.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Update="actionIcon%402x.png">
+		<Content Update="images/actionDefaultImage@2x.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Update="pluginIcon%402x.png">
+		<Content Update="images/actionIcon@2x.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Update="images/pluginIcon@2x.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>

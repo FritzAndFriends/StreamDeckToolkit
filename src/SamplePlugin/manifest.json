@@ -1,11 +1,11 @@
 {
   "Actions": [
     {
-      "Icon": "actionIcon",
+      "Icon": "images/actionIcon",
       "Name": "SamplePlugin",
       "States": [
         {
-          "Image": "actionDefaultImage",
+          "Image": "images/actionDefaultImage",
           "TitleAlignment": "middle",
           "FontSize": "16"
         }
@@ -20,7 +20,7 @@
 	"CodePathMac":  "SamplePlugin",
   "Description": "The Sample Plugin",
   "Name": "Sample Plugin",
-  "Icon": "pluginIcon",
+  "Icon": "images/pluginIcon",
   "URL": "https://www.elgato.com/gaming/stream-deck",
   "Version": "1.2",
   "OS": [
