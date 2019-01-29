@@ -2,10 +2,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
    <PropertyGroup>
       <OutputType>Exe</OutputType>
-      <TargetFramework>netcoreapp2.1</TargetFramework>
+      <TargetFramework>netcoreapp2.2</TargetFramework>
       <LangVersion>latest</LangVersion>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
    </PropertyGroup>
+
    <ItemGroup />
+
    <ItemGroup>
       <PackageReference Include="StreamDeckLib" Version="1.*" />
       <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="2.3.0" />
@@ -16,29 +19,36 @@
       <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
       <PackageReference Include="System.Net.WebSockets" Version="4.3.0" />
    </ItemGroup>
+
    <ItemGroup>
-      <Content Include="actionDefaultImage.png">
+      <Content Include="images/actionDefaultImage.png">
          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Include="actionDefaultImage@2x.png" />
-      <Content Include="actionIcon.png">
+      <Content Include="images/actionDefaultImage@2x.png">
          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Include="actionIcon@2x.png" />
+      <Content Include="images/actionIcon.png">
+         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="images/actionIcon@2x.png">
+         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <Content Include="manifest.json">
          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Include="pluginIcon.png">
+      <Content Include="images/pluginIcon.png">
          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Include="pluginIcon@2x.png" />
+      <Content Include="images/pluginIcon@2x.png">
+         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <Content Update="actionDefaultImage%402x.png">
          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Update="actionIcon%402x.png">
+      <Content Update="images/actionIcon@2x.png">
          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Update="pluginIcon%402x.png">
+      <Content Update="images/pluginIcon@2x.png">
          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
    </ItemGroup>

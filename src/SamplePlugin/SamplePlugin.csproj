@@ -1,86 +1,87 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="actionDefaultImage%402x.png" />
-    <None Remove="actionDefaultImage.png" />
-    <None Remove="actionIcon%402x.png" />
-    <None Remove="actionIcon.png" />
-    <None Remove="appsettings.json" />
-    <None Remove="manifest.json" />
-    <None Remove="pluginIcon%402x.png" />
-    <None Remove="pluginIcon.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="actionDefaultImage.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="actionDefaultImage@2x.png" />
-    <Content Include="actionIcon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="actionIcon@2x.png" />
-    <Content Include="manifest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="pluginIcon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="pluginIcon@2x.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\StreamDeckLib\StreamDeckLib.csproj" />
-  </ItemGroup>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netcoreapp2.2</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<RuntimeIdentifier Condition=" '$(OS)' == 'Windows_NT' and '$(Configuration)'=='Debug' ">win-x64</RuntimeIdentifier>		<!-- When building/running on Windows -->
+		<RuntimeIdentifier Condition=" '$(OS)' != 'Windows_NT' and '$(Configuration)'=='Debug' ">osx-x64</RuntimeIdentifier>		<!-- When on non-Windows environment, assume macOS for now -->
+		<RuntimeIdentifiers Condition="'$(Configuration)'=='Release' ">win-x64;osx-x64</RuntimeIdentifiers>		<!-- At this time, the only platforms we are really targetting, and supported by the Stream Deck SDK are Windows and macOS  -->
+		<RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="Fritz.png" />
+	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\StreamDeckLib\StreamDeckLib.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+		<PackageReference Include="Serilog.Settings.Configuration" Version="3.0.1" />
+		<PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="2.3.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
 		<PackageReference Include="Serilog" Version="2.7.1" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
-		<PackageReference Include="Serilog.Settings.Configuration" Version="3.0.1" />
 		<PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
 		<PackageReference Include="System.Net.WebSockets" Version="4.3.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Update="actionDefaultImage%402x.png">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="actionIcon%402x.png">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="pluginIcon%402x.png">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
+		<Content Include="images/actionDefaultImage.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="images/actionDefaultImage@2x.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="images/actionIcon.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="images/actionIcon@2x.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="images/Fritz.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="images/manifest.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="appsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="images/pluginIcon.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="images/pluginIcon@2x.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Update="images/actionDefaultImage@2x.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Update="images/actionIcon@2x.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Update="images/pluginIcon@2x.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="RegisterPluginAndStartStreamDeck.ps1">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </None>
-    <None Update="RegisterPluginAndStartStreamDeck.sh">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </None>
+
+    <None Update="RegisterPluginAndStartStreamDeck.ps1">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</None>
+		<None Update="RegisterPluginAndStartStreamDeck.sh">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)'=='Debug'">
-	  <Exec Condition=" '$(OS)' == 'Windows_NT' " Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)RegisterPluginAndStartStreamDeck.ps1&quot;" />
-    <Exec Condition=" '$(OS)' != 'Windows_NT' " Command="bash $(ProjectDir)RegisterPluginAndStartStreamDeck.sh" />
+		<Exec Condition=" '$(OS)' == 'Windows_NT' " Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)RegisterPluginAndStartStreamDeck.ps1&quot;" />
+		<Exec Condition=" '$(OS)' != 'Windows_NT' " Command="bash $(ProjectDir)RegisterPluginAndStartStreamDeck.sh" />
 	</Target>
 
 </Project>

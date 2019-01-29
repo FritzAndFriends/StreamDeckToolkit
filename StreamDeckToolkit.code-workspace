@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/.vs/": true,
+			"**/obj/": true,
+			"**/bin/": true,
+			"**/TestResults/": true,
+			"**/coverage.json": true,
+			"**/coverage.cobertura.xml": true,
+			"**/lcov.info": true
+		},
+		"dotnet-test-explorer.testProjectPath": "/src/StreamDeckLib.Test"
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.csharp",
+			"ryanluker.vscode-coverage-gutters",
+			"formulahendry.dotnet-test-explorer"
+		]
+	}
+}

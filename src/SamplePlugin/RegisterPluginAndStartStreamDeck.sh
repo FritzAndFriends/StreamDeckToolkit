@@ -1,10 +1,22 @@
-echo 'Killing the stream deck process'
+echo 'Killing the Stream Deck process'
 pkill 'Stream Deck'
-uuid=$(jq .Actions[0].UUID manifest.json)
-suffix=".action"
-pluginName=$(echo "$uuid" | tr -d \" | sed -e "s/$suffix$//")
-echo 'Installing the $pluginName plugin...'
-rm -r ~/Library/Application\ Support/com.elgato.StreamDeck/Plugins/$pluginName.sdPlugin
-mkdir ~/Library/Application\ Support/com.elgato.StreamDeck/Plugins/$pluginName.sdPlugin
-cp bin/Debug/netcoreapp2.2/* ~/Library/Application\ Support/com.elgato.StreamDeck/Plugins/$pluginName.sdPlugin
+
+uuid=$(sed -n 's/.*"UUID": "\(.*\)"/\1/p' manifest.json)
+pluginName=${uuid%.*}
+pluginsDir="$HOME/Library/Application Support/com.elgato.StreamDeck/Plugins"
+projectDir=$(PWD)
+
+
+echo "Installing the $pluginName plugin to $pluginsDir"
+
+pushd "$pluginsDir"
+[ -d "$pluginName.sdPlugin" ] && rm -r $pluginName.sdPlugin
+mkdir $pluginName.sdPlugin
+cp -R "$projectDir/bin/Debug/netcoreapp2.2/osx-x64/." $pluginName.sdPlugin
+popd
+
+echo "Done installing ${pluginName}"
+
+open /Applications/Stream\ Deck.app &
+
 exit
