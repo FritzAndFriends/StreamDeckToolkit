@@ -219,7 +219,8 @@ namespace StreamDeckLib
 			await _Proxy.SendStreamDeckEvent(args);
 		}
 
-		public async Task SetImageAsync(string context, string imageLocation) {
+		public async Task SetImageAsync(string context, string imageLocation)
+		{
 
 			var imgString = Convert.ToBase64String(File.ReadAllBytes(imageLocation), Base64FormattingOptions.None);
 
@@ -266,23 +267,22 @@ namespace StreamDeckLib
         }
 
 		public async Task SetStateAsync(string context, int state)
-        {
+		{
 
 			var args = new SetStateArgs
-            {
+			{
 				context = context,
 				payload = new SetStateArgs.Payload
 				{
 					state = state
 				}
-            };
+			};
 
 			await _Proxy.SendStreamDeckEvent(args);
+		}
 
-
-        }
-
-		public async Task SendToPropertyInspectorAsync(string context, dynamic payload) {
+		public async Task SendToPropertyInspectorAsync(string context, dynamic payload)
+		{
 
 			var args = new SendToPropertyInspectorArgs
         {
@@ -295,7 +295,8 @@ namespace StreamDeckLib
 
 		}
 
-		public async Task SwitchToProfileAsync(string context, string device, string profileName) {
+		public async Task SwitchToProfileAsync(string context, string device, string profileName)
+		{
 
 			var args = new SwitchToProfileArgs
             {
