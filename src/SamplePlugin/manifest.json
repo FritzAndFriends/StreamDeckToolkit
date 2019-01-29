@@ -17,7 +17,7 @@
   ],
   "Author": "Jeffrey T. Fritz",
 	"CodePathWin": "SamplePlugin.exe",
-	"CodePathMac":  "StreamDeck_First",
+	"CodePathMac":  "SamplePlugin",
   "Description": "The Sample Plugin",
   "Name": "Sample Plugin",
   "Icon": "images/pluginIcon",

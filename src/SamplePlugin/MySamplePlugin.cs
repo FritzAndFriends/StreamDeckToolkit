@@ -28,34 +28,41 @@ namespace SamplePlugin
 			_Counter++;
 			await Manager.SetTitleAsync(args.context, _Counter.ToString());
 
-            if (_Counter % 10 == 0)
-            {
-                await Manager.ShowAlertAsync(args.context);
-            }
-            else if (_Counter % 15 == 0)
-            {
-                await Manager.OpenUrlAsync(args.context, "https://www.bing.com");
-            }
-            else if (_Counter % 3 == 0)
-            {
-                await Manager.ShowOkAsync(args.context);
-            } 
-        }
+			if (_Counter % 10 == 0)
+			{
+				await Manager.ShowAlertAsync(args.context);
+			}
+			else if (_Counter % 15 == 0)
+			{
+				await Manager.OpenUrlAsync(args.context, "https://www.bing.com");
+			}
+			else if (_Counter % 3 == 0)
+			{
+				await Manager.ShowOkAsync(args.context);
+			}
+			else if (_Counter % 7 == 0)
+			{
+				await Manager.SetImageAsync(args.context, "Fritz.png");
+			}
+		}
 
-        public override async Task OnWillAppear(StreamDeckEventPayload args)
-        {
-            if(args.payload!= null && args.payload.settings != null && args.payload.settings.counter != null)
-            {
-                _Counter = args.payload.settings.counter;
-            }
-            await Manager.SetTitleAsync(args.context, _Counter.ToString());
-        }
+		public override async Task OnWillAppear(StreamDeckEventPayload args)
+		{
+			if (args.payload != null && args.payload.settings != null && args.payload.settings.counter != null)
+			{
+				_Counter = args.payload.settings.counter;
+			}
+			await Manager.SetTitleAsync(args.context, _Counter.ToString());
+		}
 
-        public override async Task OnWillDisappear(StreamDeckEventPayload args)
-        {
-            dynamic settings = new ExpandoObject();
-            settings.counter = _Counter;
-            await Manager.SetSettingsAsync(args.context, settings);
-        }
-    }
+		public override async Task OnWillDisappear(StreamDeckEventPayload args)
+		{
+			//dynamic settings = new ExpandoObject();
+			//settings.counter = _Counter;
+
+			var settings = new { counter = _Counter };
+
+			await Manager.SetSettingsAsync(args.context, settings);
+		}
+	}
 }
