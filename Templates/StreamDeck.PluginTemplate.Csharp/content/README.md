@@ -16,7 +16,7 @@ Within the directory from which you are reading this file, there exist a few oth
 
 ### The `manifest.json` file
 
-The `manifest.json` file is the mechanism used by the [Stream Deck SDK][] to identify plugins and their unique parameters.
+The [`manifest.json` file][Manifest File] (also referred to as the *manifest*) is the mechanism used by the [Stream Deck SDK][] to uniquely identify plugins, their actions and other parameters.
 
 At the very least, you should set a value for both the **Author** and the **URL** values, representing you and your plugin.
 
@@ -26,51 +26,74 @@ The following are the base set of images/icons which are needed for the plugin. 
 
 Unless otherwise noted, image assets should all be in the "Portable Network Graphics" (PNG) format.
 
-*Note:* While all efforts have been made to ensure the correctness of this information, please refer to the official [Style Guide][] for the lateat, up-to-date, information.
+*Note:* While all efforts have been made to ensure the correctness of this information, please refer to the official [Style Guide][] and [Manifest file definition][Manifest File]  for the latest and most up-to-date information.
 
-#### Plugin Icon
+-----
+
+#### Category Icon (*a.k.a. Plugin Icon*)
+
+**Path to property in manifest.json file:** `Icon`
 
 ##### Purpose
 
-The plugin icon, identified by the **Icon** property in the `manifest.json` file, is the primary visual identifier for your plugin. It is also used to display information about your plugin in the **More Actions...** list and as the category (group) icon in the **Actions** list if your plugin supports more than a single action.
+The category icon, identified by the **Icon** property in the *manifest*, is the primary visual identifier for your plugin. It is also used to display information about your plugin in the **More Actions...** list, which displays the list of available plugins to download to uses, as well as the category (group) icon in the **Actions** list if your plugin supports more than a single action.
 
 ##### Specifications
 
-The **Icon** property in the `manifest.json` file represents the base file name of the image, without a file extension. For example, if your icon's file name is `myPluginIcon.png`, you would set the value as `myPluginIcon`.
+The **Icon** property in the *manifest* represents the base file name of the image, without a file extension. For example, if your icon's file name is `myPluginIcon.png`, you would set the value as `myPluginIcon`.
 
 There are two of these files necessary. A default one for a regular, non-scaled (high-DPI) display, and another for scaled display. The default icon should be 28 pixels squared (28x28px), and named with the base file name and extension. i.e. `_PluginName_.png`.
 
 The other file, for high-DPI displayes, must be 56 pixels squared (56x56px), and the value `@2x` appended to the file name, before the extension. i.e. `_PluginName_@2x.png`
 
-#### Actions Icon
+-----
+
+#### Action Image (Icon)
+
+**Path to property in manifest.json file:** `Actions[x].Icon`
 
 ##### Purpose
 
+The action image, for which there is one for each action available from the plugin, is the icon which helps identify the action item in the **Actions** list, within the category (group) defined by your plugin. Just as with the **Category Icon**, when setting its value in the *manifest*, do not specify an extension.
 
 ##### Specifications
 
+Each element in the **Actions** element of the *manifest* has an **Icon** property which must be set (which one possible exception - see below). While not strictly necessary, each action should have its own, distinct icon for its visual identity. Per the current specifications, the **Action Image** should be a single color - `#d8d8d8` (`rgb(216,216,216)`).
 
+Again, just as with the **Category Icon**, two separate copies of this file are needed, with the same naming rules but different sizes; a default one for a regular, non-scaled (high-DPI) display, and another for scaled display. The default icon should be 20 pixels squared (20x20px), and preferably named in a manner in which it can be easily related to its action, such as `actionIcon.png`. When setting its value in the *manifest*, here too specify only the file name, and do not include the etension.
+
+The other file, for high-DPI displayes, must be 40 pixels squared (40x40px), and the value `@2x` appended to the file name, before the extension. i.e. `actionIcon@2x.png`
+
+##### Exceptions
+
+ An **Action** item is not required to have an icon specified (but still can) if its `VisibleInActionList` property in the *manifest* is set to `false`.
+
+-----
 
 #### Key Icon
 
+**Path to property in manifest.json file:** `Actions[x].States[y].Image`
+
 ##### Purpose
 
+The **Key Icon** is the icon which is displayed on the key(s) to which is is assigned on the Stream Deck, as well as within the Stream Deck software during configuration. If your action supports multiple states, the **Key Icon** will be displayed when its assigned state is active. Each action hast as least one state, and as of this time, has at most two states.
+
+ Once again, just as with the **Category Icon** and **Action Image**, when setting its value in the *manifest*, do not specify an extension.
 
 ##### Specifications
 
-The following
+Again, just as with the **Category Icon** and the **Action Image**,two separate copies of this file are needed, with the same naming rules but different sizes; a default one for a regular, non-scaled (high-DPI) display, and another for scaled display. The default icon should be 72 pixels squared (72x72px). Again, it should preferably named in a manner in which it can be easily related to either the action or state is represents, such as `actionIconButton.png` or `actionIconActive.png`.
 
 ## References
 Here are some helpful references for both this template and the Stream Deck:
+
 * [Plugin Homepage](https://github.com/FritzAndFriends/StreamDeckToolkit)
 * [Stream Deck Page][Stream Deck]
 * [Stream Deck SDK Documentation][Stream Deck SDK]
-
-
-
 
 <!-- References -->
 [Stream Deck]: https://www.elgato.com/en/gaming/stream-deck "Elgato's Stream Deck landing page for the hardware, software, and SDK"
 [Stream Deck software]: https://www.elgato.com/gaming/downloads "Download the Stream Deck software"
 [Stream Deck SDK]: https://developer.elgato.com/documentation/stream-deck "Elgato's online SDK documentation"
 [Style Guide]: https://developer.elgato.com/documentation/stream-deck/sdk/style-guide/ "The Stream Deck SDK Style Guide"
+[Manifest file]: https://developer.elgato.com/documentation/stream-deck/sdk/manifest "Definition of elements in the manifest.json file"
