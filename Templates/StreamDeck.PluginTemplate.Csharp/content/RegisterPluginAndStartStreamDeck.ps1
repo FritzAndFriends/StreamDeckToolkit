@@ -54,5 +54,5 @@ New-Item -Type Directory -Path $destDir -ErrorAction SilentlyContinue | Out-Null
 Copy-Item -Path $bindir -Destination $destDir -Recurse
 
 Write-Host "Deployment complete. Restarting Stream Deck..."
-start $streamDeckExePath
+Start-Process $streamDeckExePath
 exit 0

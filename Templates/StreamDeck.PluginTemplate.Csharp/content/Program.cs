@@ -1,63 +1,81 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Settings.Configuration;
 using StreamDeckLib;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 
 namespace _StreamDeckPlugin_
 {
-	public class Program
-	{
-		static Task<int> Main(string[] args) => CommandLineApplication.ExecuteAsync<Program>(args);
+	    class Program
+    {
+        static ILoggerFactory GetLoggerFactory()
+        {
+            var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Directory.SetCurrentDirectory(dir);
+
+            var configuration = new ConfigurationBuilder()
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+
+            Log.Logger = new LoggerConfiguration()
+                    .ReadFrom.Configuration(configuration)
+                    .CreateLogger();
+
+            var loggerFactory = new LoggerFactory()
+                .AddSerilog(Log.Logger);
+
+            TopLogger = loggerFactory.CreateLogger("top");
+
+            TopLogger.LogInformation("Plugin started");
+
+            return loggerFactory;
+        }
+
+        private static Microsoft.Extensions.Logging.ILogger TopLogger;
+
+        static async Task Main(string[] args)
+        {
 
 
-		[Option(Description = "The port the Elgato StreamDeck software is listening on", ShortName = "port")]
-		public int Port { get; set; }
+#if DEBUG
 
-		[Option(ShortName = "pluginUUID")]
-		public string PluginUUID { get; set; }
+            Debugger.Launch();
 
-		[Option(ShortName = "registerEvent")]
-		public string RegisterEvent { get; set; }
+            while (!Debugger.IsAttached)
+            {
+                await Task.Delay(100);
+            }
 
-		[Option(ShortName = "info")]
-		public string Info { get; set; }
+#endif
+            using (var source = new CancellationTokenSource())
+            {
+                using (var loggerFactory = GetLoggerFactory())
+                {
+                    try
+                    {
 
-		private async Task OnExecuteAsync()
-		{
-			var source = new CancellationTokenSource();
-			var logLocation = Path.Combine(Path.GetTempPath(), $"{GetType().Assembly.GetName().Name}-.log");
+                        await ConnectionManager.Initialize(args, loggerFactory)
+                            .SetPlugin(new $(PluginName)())
+                            .StartAsync(source.Token);
 
-			Log.Logger = new LoggerConfiguration()
-				.MinimumLevel.Verbose()
-				.Enrich
-					.FromLogContext()
-				.WriteTo
-					.File(logLocation, rollingInterval: RollingInterval.Day)
-				.CreateLogger();
+                        Console.ReadLine();
 
-			var loggerFactory = new LoggerFactory()
-				.AddSerilog(Log.Logger);
+                    }
+                    catch (Exception ex)
+                    {
+                        TopLogger.LogError(ex, "Error while running the plugin");
+                    }
+                    source.Cancel();
+                }
 
-			var topLogger = loggerFactory.CreateLogger("top");
-
-			try
-			{
-				await ConnectionManager.Initialize(Port, PluginUUID, RegisterEvent, Info, loggerFactory)
-					.SetPlugin(new $(PluginName)())
-					.StartAsync(source.Token);
-				
-				Console.ReadLine();	
-
-			} catch (Exception ex) {
-				topLogger.LogError(ex, "Error while running the plugin: $(PluginName)");
-			}
-
-			source.Cancel();
-
-		}
-	}
+            }
+        }
+    }
 }
