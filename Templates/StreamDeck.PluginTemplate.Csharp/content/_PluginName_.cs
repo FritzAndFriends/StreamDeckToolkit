@@ -10,7 +10,7 @@ namespace _StreamDeckPlugin_
 		{
 			// Your plugin code goes here.
 
-			return Task.CompletedTask;
+			return;
 		}
 	}
 }

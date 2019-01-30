@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
    <PropertyGroup>
-      <OutputType>Exe</OutputType>
-      <TargetFramework>netcoreapp2.2</TargetFramework>
-      <LangVersion>latest</LangVersion>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+         <OutputType>Exe</OutputType>
+         <TargetFramework>netcoreapp2.1</TargetFramework>
+         <LangVersion>latest</LangVersion>
+         <RuntimeIdentifier Condition=" '$(OS)' == 'Windows_NT' and '$(Configuration)'=='Debug' ">win-x64</RuntimeIdentifier>      <!-- When building/running on Windows -->
+         <RuntimeIdentifier Condition=" '$(OS)' != 'Windows_NT' and '$(Configuration)'=='Debug' ">osx-x64</RuntimeIdentifier>      <!-- When on non-Windows environment, assume macOS for now -->
+         <RuntimeIdentifiers Condition="'$(Configuration)'=='Release' ">win-x64;osx-x64</RuntimeIdentifiers>      <!-- At this time, the only platforms we are really targetting, and supported by the Stream Deck SDK are Windows and macOS  -->
+         <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
    </PropertyGroup>
 
    <ItemGroup />
 
    <ItemGroup>
-      <PackageReference Include="StreamDeckLib" Version="1.*" />
+      <PackageReference Include="StreamDeckLib" />
       <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="2.3.0" />
       <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
       <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
@@ -42,7 +45,7 @@
       <Content Include="images/pluginIcon@2x.png">
          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Update="actionDefaultImage%402x.png">
+      <Content Update="actionDefaultImage@2x.png">
          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
       <Content Update="images/actionIcon@2x.png">
@@ -55,4 +58,20 @@
          <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       </Content>
    </ItemGroup>
+
+   <ItemGroup>
+    <None Update="RegisterPluginAndStartStreamDeck.ps1">
+         <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </None>
+      <None Update="RegisterPluginAndStartStreamDeck.sh">
+         <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </None>
+   </ItemGroup>
+
+   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)'=='Debug'">
+      <Exec Condition=" '$(OS)' == 'Windows_NT' " Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)RegisterPluginAndStartStreamDeck.ps1&quot;" />
+      <Exec Condition=" '$(OS)' != 'Windows_NT' " Command="bash $(ProjectDir)RegisterPluginAndStartStreamDeck.sh" />
+   </Target>
+
+
 </Project>
