@@ -10,7 +10,7 @@
    <ItemGroup />
 
    <ItemGroup>
-      <PackageReference Include="StreamDeckLib" Version="1.*" />
+      <PackageReference Include="StreamDeckLib" Version="0.*" />
       <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="2.3.0" />
       <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
       <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
