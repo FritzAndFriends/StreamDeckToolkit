@@ -20,13 +20,18 @@ While not absolutely necessary, it is **strongly** recommended to have the [Stre
 
 ### From File System
 
-Useful for local testing of the template when developing.
+Installing the template from your filesystem is useful for local testing of the template itself. If you are actively working on the template making changes, this is the route you need to use.
 
-    dotnet new -i /StreamDeckToolkit/Templates/StreamDeck.PluginTemplate.Csharp/
+To install, run the following command from the root of the repository.
 
-Uninstall the local template by running.
+    `dotnet new -i Templates/StreamDeck.PluginTemplate.Csharp`
 
-    dotnet new -u /StreamDeckToolkit/Templates/StreamDeck.PluginTemplate.Csharp/
+To pick up any changes you have made to the template source, you must uninstall the template and reinstall it.
+
+To uninstall, run the following command from the root of the respository.
+
+    Windows: `dotnet new -u Templates/StreamDeck.PluginTemplate.Csharp`
+		OSX/Linux: `dotnet new -u $PWD/Templates/StreamDeck.PluginTemplate.Csharp`
 
 ### From NuGet
 
