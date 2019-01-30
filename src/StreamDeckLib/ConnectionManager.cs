@@ -96,7 +96,7 @@ namespace StreamDeckLib
 
 			await _Proxy.ConnectAsync(new Uri($"ws://localhost:{_Port}"), token);
 			await _Proxy.Register(_RegisterEvent, _Uuid);
-			
+
 
 			var keepRunning = true;
 

@@ -1,35 +1,35 @@
 {
   "Actions": [
     {
-      "Icon": "actionIcon", 
-      "Name": "$(PluginName)", 
+      "Icon": "images/actionIcon",
+      "Name": "$(PluginName)",
       "States": [
         {
-          "Image": "actionDefaultImage",
-          "TitleAlignment": "middle", 
+          "Image": "images/actionDefaultImage",
+          "TitleAlignment": "middle",
           "FontSize": "16"
         }
-      ], 
+      ],
       "SupportedInMultiActions": false,
-      "Tooltip": "", 
+      "Tooltip": "",
       "UUID": "$(UUID)"
     }
-  ], 
+  ],
   "Author": "",
-	"CodePathWin": "_StreamDeckPlugin_.exe", 
+	"CodePathWin": "_StreamDeckPlugin_.exe",
 	"CodePathMac":  "_StreamDeckPlugin_",
-  "Description": "Description of $(PluginName).", 
-  "Name": "$(PluginName)", 
-  "Icon": "pluginIcon", 
-  "URL": "https://www.elgato.com/gaming/stream-deck", 
+  "Description": "Description of $(PluginName).",
+  "Name": "$(PluginName)",
+  "Icon": "images/pluginIcon",
+  "URL": "https://www.elgato.com/gaming/stream-deck",
   "Version": "1.0",
   "OS": [
     {
-        "Platform": "mac", 
+        "Platform": "mac",
         "MinimumVersion" : "10.11"
     },
     {
-        "Platform": "windows", 
+        "Platform": "windows",
         "MinimumVersion" : "10"
     }
   ]
