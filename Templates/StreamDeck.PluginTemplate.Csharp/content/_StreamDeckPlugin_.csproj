@@ -66,6 +66,13 @@
 		</Content>
 	</ItemGroup>
 
+	<!-- Include the README.md as part of the project for easy reference -->
+	<ItemGroup>
+		<Content Include="README.md">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
 	<!-- Post build scripts that must not be deployed with the executable -->
 	<ItemGroup>
 		<None Update="RegisterPluginAndStartStreamDeck.ps1">
