@@ -51,5 +51,8 @@
       <Content Update="images/pluginIcon@2x.png">
          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <Content Update="README.md">
+         <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Content>
    </ItemGroup>
 </Project>
