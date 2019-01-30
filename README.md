@@ -30,9 +30,9 @@ Uninstall the local template by running.
 
 ### From NuGet
 
-    dotnet add package StreamDeckPluginTemplate
+    dotnet new -i StreamDeckPluginTemplate
     - OR -
-    Install-Package StreamDeckPluginTemplate -Version 0.2.286
+    Install-Package StreamDeckPluginTemplate [-Version x.y.zzz]
 
 ## Using the Template
 
