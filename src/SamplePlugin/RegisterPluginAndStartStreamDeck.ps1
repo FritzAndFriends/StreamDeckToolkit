@@ -27,7 +27,7 @@ $bindir = "$basePath\bin\Debug\$targetFrameworkName\win-x64\"
 
 # Make sure we actually have a directory/build to deploy
 If (-not (Test-Path $bindir)) {
-  Write-Error "The output directory `"$bindir`" was not found.`n You must first build the `"_StreamDeckPlugin_`" project before calling this script.";
+  Write-Error "The output directory `"$bindir`" was not found.`n You must first build the `"SamplePlugin.csproj`" project before calling this script.";
   exit 1;
 }
 
@@ -39,7 +39,6 @@ $json = ConvertFrom-JSON $manifestcontent
 $uuidAction = $json.Actions[0].UUID
 
 $pluginID = $uuidAction.substring(0, $uuidAction.Length - ".action".Length)
-$bindir = $basePath + "\bin\$buildConfiguration\$targetFrameworkName"
 $destDir = "$($env:APPDATA)\Elgato\StreamDeck\Plugins\$pluginID.sdPlugin"
 
 $pluginName = Split-Path $basePath -leaf
@@ -50,8 +49,9 @@ Get-Process StreamDeck,$pluginName | Stop-Process –force -ErrorAction Silently
 Remove-Item -Recurse -Path $destDir
 
 # Then copy all deployment items to the plugin directory
-New-Item -Type Directory -Path $destDir -ErrorAction SilentlyContinue | Out-Null
-Copy-Item -Path $bindir -Destination $destDir -Recurse
+New-Item -Type Directory -Path $destDir -ErrorAction SilentlyContinue # | Out-Null
+Push-Location $bindir
+Copy-Item -Path "$bindir\*.*" -Destination $destDir -Recurse
 
 Write-Host "Deployment complete. Restarting Stream Deck..."
 Start-Process $streamDeckExePath
