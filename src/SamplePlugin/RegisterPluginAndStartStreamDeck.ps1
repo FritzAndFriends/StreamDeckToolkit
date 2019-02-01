@@ -52,6 +52,7 @@ Remove-Item -Recurse -Path $destDir
 New-Item -Type Directory -Path $destDir -ErrorAction SilentlyContinue # | Out-Null
 Push-Location $bindir
 Copy-Item -Path "$bindir\*.*" -Destination $destDir -Recurse
+Pop-Location
 
 Write-Host "Deployment complete. Restarting Stream Deck..."
 Start-Process $streamDeckExePath
