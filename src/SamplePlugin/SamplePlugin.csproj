@@ -46,7 +46,7 @@
 		<Content Include="images/Fritz.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="images/manifest.json">
+		<Content Include="manifest.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="appsettings.json">

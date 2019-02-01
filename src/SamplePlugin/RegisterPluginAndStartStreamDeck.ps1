@@ -10,7 +10,7 @@ if ($PSSCriptRoot.Length -eq 0) {
 
 
 # Load and parse the plugin project file
-$pluginProjectFile = "$basePath\_StreamDeckPlugin_.csproj"
+$pluginProjectFile = "$basePath\SamplePlugin.csproj"
 $projectContent = Get-Content $pluginProjectFile | Out-String;
 $projectXML = [xml]$projectContent;
 
