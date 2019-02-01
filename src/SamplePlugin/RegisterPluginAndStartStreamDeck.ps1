@@ -54,6 +54,6 @@ Push-Location $bindir
 Copy-Item -Path "$bindir\*.*" -Destination $destDir -Recurse
 Pop-Location
 
-Write-Host "Deployment complete. Restarting Stream Deck..."
+Write-Host "Deployment complete. We will NOT restart the Stream Deck here, but will from the template..."
 # Start-Process $streamDeckExePath
 exit 0
