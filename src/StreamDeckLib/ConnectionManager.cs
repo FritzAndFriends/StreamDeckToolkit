@@ -96,7 +96,7 @@ namespace StreamDeckLib
 
 			await _Proxy.ConnectAsync(new Uri($"ws://localhost:{_Port}"), token);
 			await _Proxy.Register(_RegisterEvent, _Uuid);
-			
+
 
 			var keepRunning = true;
 
@@ -293,7 +293,7 @@ namespace StreamDeckLib
 			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
 			Dispose(true);
 			// TODO: uncomment the following line if the finalizer is overridden above.
-			// GC.SuppressFinalize(this);
+			//GC.SuppressFinalize(this);
 		}
 		#endregion
 	}

@@ -65,7 +65,7 @@ The action image, for which there is one for each action available from the plug
 
 ##### Specifications
 
-Each element in the **Actions** element of the *manifest* has an **Icon** property which must be set (which one possible exception - see below). While not strictly necessary, each action should have its own, distinct icon for its visual identity. Per the current specifications, the **Action Image** should be a single color - `#d8d8d8` (`rgb(216,216,216)`).
+Each element in the **Actions** element of the *manifest* has an **Icon** property which must be set (which one possible exception - see below). While not strictly necessary, each action should have its own, distinct icon for its visual identity. Per the current specifications, the **Action Image** should be a single color -  <div style="width: 20px;height:20px;background-color:#d8d8d8;display:inline-block"></div> `#d8d8d8` (`rgb(216,216,216)`).
 
 Again, just as with the **Category Icon**, two separate copies of this file are needed, with the same naming rules but different sizes; a default one for a regular, non-scaled (high-DPI) display, and another for scaled display. The default icon should be 20 pixels squared (20x20px), and preferably named in a manner in which it can be easily related to its action, such as `actionIcon.png`. When setting its value in the *manifest*, here too specify only the file name, and do not include the etension.
 
