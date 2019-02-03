@@ -1,4 +1,4 @@
-﻿Write-Host "Gathering deployment items..."
+﻿﻿Write-Host "Gathering deployment items..."
 
 Write-Host "Script root: $PSScriptRoot`n"
 

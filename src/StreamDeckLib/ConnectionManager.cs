@@ -81,7 +81,7 @@ namespace StreamDeckLib
 		{
 			TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
-			await Run(token);
+			await Task.Factory.StartNew(() => Run(token), TaskCreationOptions.LongRunning);
 
 			return this;
 		}
