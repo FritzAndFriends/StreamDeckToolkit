@@ -1,34 +1,38 @@
-#!/usr/bin/env bash
+#Notify user we are killing the process
+echo 'Killing the Stream Deck process'
 
-#Define Plugin Directory
-PLUGIN_DIR="~/Library/Application\ Support/com.elgato.StreamDeck/Plugins/${pluginName.sdPlugin}"
-#Define suffix
-SUFFIX=".action"
-
-#Notify user of action.
-echo 'Killing the stream deck process'
-
-#Kill the process.
+# Kill the process
 pkill 'Stream Deck'
 
-#Pull the UUID from the manifest.json
+# Pull the UUID from the manifest.json
 uuid=$(sed -n 's/.*"UUID": "\(.*\)"/\1/p' manifest.json)
 
-pluginName=$(echo "${uuid}" | tr -d \" | sed -e "s/${SUFFIX}$//")
+# Pull the plugin name from the UUID
+pluginName=${uuid%.*}
 
-#Notify user of Action.
-echo "Installing the ${pluginName} plugin..."
+# Set the plugins and project directories to a variable
+pluginsDir="$HOME/Library/Application Support/com.elgato.StreamDeck/Plugins"
+projectDir=$(PWD)
 
-#On first run the file does not exist, we check if it exists.
-if [ -d ${PLUGIN_DIR} ]; then rm -fr ${PLUGIN_DIR}; fi
+#Notify user we are installing the plugin to the plugins directory
+echo "Installing the $pluginName plugin to $pluginsDir"
 
-#Recreate directory for plugin.
-mkdir -p ${PLUGIN_DIR}
+# Push the plugins directory on the stack
+pushd "$pluginsDir"
+# Check if the plugin direcotyr exists and remove it
+[ -d "$pluginName.sdPlugin" ] && rm -r $pluginName.sdPlugin
+# Create the plugins directory
+mkdir $pluginName.sdPlugin
+# Copy the debug build output to the plugins directory
+cp -R "$projectDir/bin/Debug/netcoreapp2.2/osx-x64/." $pluginName.sdPlugin
+# Pop the plugins directory off the stack returning to where we were
+popd
 
-#Move our build into folder.
-cp bin/Debug/netcoreapp2.2/* ${PLUGIN_DIR}
+#Notify user we successfully installed the plugin
+echo "Done installing ${pluginName}"
 
-#Notify user of Action.
-echo "Done installing ${pluginName}."
+# Reopen the Stream Deck app and background it
+open /Applications/Stream\ Deck.app &
 
+# terminiate execution of the script
 exit
