@@ -1,14 +1,23 @@
-﻿namespace StreamDeckLib.Messages
+﻿using System;
+using System.ComponentModel;
+
+namespace StreamDeckLib.Messages
 {
   public static class PropertyInspectorEventPayloadExtensions
   {
 	public static bool PayloadHasProperty(this PropertyInspectorEventPayload obj, string propertyName)
 	{
-	  if (obj == null || obj.payload == null)
+	  return obj.payload[propertyName] != null;
+	}
+
+
+	public static T GetPayloadValue<T>(this PropertyInspectorEventPayload obj, string propertyName) where T: IConvertible
+	{
+	  if (obj.PayloadHasProperty(propertyName))
 	  {
-		return false;
+		return (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromInvariantString(obj.payload[propertyName].Value);
 	  }
-	  return obj.payload.GetType().GetProperty(propertyName) != null;
+	  return default(T);
 	}
   }
 }

@@ -78,10 +78,10 @@ namespace SamplePlugin
 	{
 	  if (args.PayloadHasProperty("starting_number"))
 	  {
-		_Counter = (int)args.payload.starting_number;
+		_Counter = args.GetPayloadValue<int>("starting_number");
 		await Manager.SetTitleAsync(args.context, _Counter.ToString());
 	  }
-	 
+
 	}
 
   }

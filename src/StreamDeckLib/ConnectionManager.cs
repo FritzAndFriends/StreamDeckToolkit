@@ -130,18 +130,23 @@ namespace StreamDeckLib
 			  if (piMsg.PayloadHasProperty("property_inspector"))
 			  {
 				//property inspector event
-				if (!_PropertyInspectorActionDictionary.ContainsKey(piMsg.payload.property_inspector))
+				var piEvent = piMsg.GetPayloadValue<string>("property_inspector");
+				if (!_PropertyInspectorActionDictionary.ContainsKey(piEvent))
 				{
-				  _Logger.LogWarning($"Plugin does not handle the Property Inspector event '{piMsg.payload.property_inspector}'");
+				  _Logger.LogWarning($"Plugin does not handle the Property Inspector event '{piEvent}'");
 				  continue;
 				}
-			  }
-			  else
-			  {
-				_PropertyInspectorActionDictionary[piMsg.Event]?.Invoke(_Plugin, piMsg);
-				continue;
-			  }
+				else
+				{
+				  _PropertyInspectorActionDictionary[piEvent]?.Invoke(_Plugin, piMsg);
+				  continue;
 
+				}
+
+			  }
+			  //property inspector property value event
+			  _PropertyInspectorActionDictionary[piMsg.Event]?.Invoke(_Plugin, piMsg);
+			  continue;
 			}
 			if (!_ActionDictionary.ContainsKey(msg.Event))
 			{
