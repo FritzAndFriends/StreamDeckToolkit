@@ -1,4 +1,4 @@
-﻿using McMaster.Extensions.CommandLineUtils;
+using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
@@ -70,13 +70,6 @@ namespace StreamDeckLib
 			return manager;
 		}
 
-		public ConnectionManager SetPlugin(BaseStreamDeckPlugin plugin)
-		{
-			this._Plugin = plugin;
-			plugin.Manager = this;
-			return this;
-		}
-
 		public async Task<ConnectionManager> StartAsync(CancellationToken token)
 		{
 			TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
@@ -125,12 +118,21 @@ namespace StreamDeckLib
 							_Logger.LogError($"Unknown message received: {jsonString}");
 							continue;
 						}
-						if (!_ActionDictionary.ContainsKey(msg.Event))
+
+												// Make sure we have a registered BaseStreamDeckAction instance registered for the received action (UUID)
+						if (!_ActionsDictionary.ContainsKey(msg.action))
+						{
+							_Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
+						}
+
+						var action = _ActionsDictionary[msg.action];
+
+						if (!_EventDictionary.ContainsKey(msg.Event))
 						{
 							_Logger.LogWarning($"Plugin does not handle the event '{msg.Event}'");
 							continue;
 						}
-						_ActionDictionary[msg.Event]?.Invoke(_Plugin, msg);
+						_EventDictionary[msg.Event]?.Invoke(action, msg);
 					}
 					catch (Exception ex)
 					{
@@ -270,7 +272,6 @@ namespace StreamDeckLib
 		#region IDisposable Support
 
 		private bool disposedValue = false; // To detect redundant calls
-		private BaseStreamDeckPlugin _Plugin;
 		private static ILoggerFactory _LoggerFactory;
 		private static ILogger _Logger;
 

@@ -61,7 +61,7 @@ namespace SamplePlugin
 
 			// codingbandit: I had to take out the using statement as it was causing the dispose method to be called (and disposing the socket connection)
 			await ConnectionManager.Initialize(args, loggerFactory)
-				.SetPlugin(new MySamplePlugin())
+				.RegisterAction(new MySampleAction())
 				.StartAsync(source.Token);
 
 			Console.ReadLine();
