@@ -48,14 +48,14 @@ Get-Process -Name ("StreamDeck", $pluginName) -ErrorAction SilentlyContinue | St
 # Delete the target directory, make sure the deployment/copy is clean
 If (Test-Path $destDir) {
   Remove-Item -Recurse -Force -Path $destDir 
-  $bindir = $bindir +"\*"
 }
 
 # Then copy all deployment items to the plugin directory
 New-Item -Type Directory -Path $destDir -ErrorAction SilentlyContinue # | Out-Null
+$bindir = $bindir +"\*"
 Copy-Item -Path $bindir -Destination $destDir -Recurse
 
 
-Write-Host "Deployment complete. We will NOT restart the Stream Deck here, but will from the template..."
+Write-Host "Deployment complete. We will NOT restart the Stream Deck desktop application here, but will from the template..."
 # Start-Process $streamDeckExePath
 exit 0
