@@ -1,4 +1,4 @@
-﻿﻿Write-Host "Gathering deployment items..."
+﻿Write-Host "Gathering deployment items..."
 
 Write-Host "Script root: $PSScriptRoot`n"
 
@@ -43,11 +43,13 @@ $destDir = "$($env:APPDATA)\Elgato\StreamDeck\Plugins\$pluginID.sdPlugin"
 
 $pluginName = Split-Path $basePath -leaf
 
-Get-Process StreamDeck,$pluginName | Stop-Process –force -ErrorAction SilentlyContinue
+Get-Process -Name ("StreamDeck", $pluginName) -ErrorAction SilentlyContinue | Stop-Process –force -ErrorAction SilentlyContinue
 
 # Delete the target directory, make sure the deployment/copy is clean
-Remove-Item -Recurse -Force -Path $destDir
-$bindir = $bindir +"\*"
+If (Test-Path $destDir) {
+  Remove-Item -Recurse -Force -Path $destDir 
+  $bindir = $bindir +"\*"
+}
 
 # Then copy all deployment items to the plugin directory
 New-Item -Type Directory -Path $destDir -ErrorAction SilentlyContinue # | Out-Null
