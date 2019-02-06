@@ -8,6 +8,7 @@ namespace _StreamDeckPlugin_
 	internal class $(PluginName) : BaseStreamDeckPlugin
 	{
 		private static int _Counter = 0;
+		private static bool _IsPropertyInspectorConnected = false;
 
 		public override async Task OnKeyUp(StreamDeckEventPayload args)
 		{
@@ -47,6 +48,28 @@ namespace _StreamDeckPlugin_
 			var settings = new { counter = _Counter };
 
 			await Manager.SetSettingsAsync(args.context, settings);
+		}
+
+		public override Task OnPropertyInspectorConnected(PropertyInspectorEventPayload args)
+		{
+	  		_IsPropertyInspectorConnected = true;
+	  		return Task.CompletedTask;
+		}
+
+		public override Task OnPropertyInspectorDisconnected(PropertyInspectorEventPayload args)
+		{
+		  _IsPropertyInspectorConnected = false;
+		  return Task.CompletedTask;
+		}
+
+		public async override Task OnPropertyInspectorMessageReceived(PropertyInspectorEventPayload args)
+		{
+		  if (args.PayloadHasProperty("starting_number"))
+		  {
+			_Counter = args.GetPayloadValue<int>("starting_number");
+			await Manager.SetTitleAsync(args.context, _Counter.ToString());
+		  }
+
 		}
 	}
 }
