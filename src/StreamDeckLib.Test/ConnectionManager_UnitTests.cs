@@ -25,12 +25,12 @@ namespace StreamDeckLib.Test
 		[Fact]
 		public async Task ShouldRegisterEvent_WhenInitializedWithCorrectArgs() {
 
-			// Arrange 
+			// Arrange
 			var stub = new StubProxy() {
 				InspectRegister = (e, uuid) => {
 					Assert.Equal(StubProxy.TEST_EVENT, e);
 					Assert.Equal(uuid, uuid);
-				} 
+				}
 			};
 
 			// Act

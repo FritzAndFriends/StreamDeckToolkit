@@ -42,7 +42,7 @@ namespace SamplePlugin
 			}
 			else if (_Counter % 7 == 0)
 			{
-				await Manager.SetImageAsync(args.context, "Fritz.png");
+				await Manager.SetImageAsync(args.context, "images/Fritz.png");
 			}
 		}
 
