@@ -70,8 +70,7 @@ namespace StreamDeckLib
 			if (!disposedValue)
 			{
 				if (disposing)
-				{
-					// TODO: dispose managed state (managed objects).
+				{           // TODO: dispose managed state (managed objects).
 				}
 
 				_Socket.Dispose();

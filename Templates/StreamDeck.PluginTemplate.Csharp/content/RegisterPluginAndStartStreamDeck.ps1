@@ -1,4 +1,4 @@
-﻿﻿Write-Host "Gathering deployment items..."
+﻿Write-Host "Gathering deployment items..."
 
 Write-Host "Script root: $PSScriptRoot`n"
 
@@ -23,7 +23,7 @@ $targetFrameworkName = $projectXML.Project.PropertyGroup.TargetFramework;
 $streamDeckExePath = "$($ENV:ProgramFiles)\Elgato\StreamDeck\StreamDeck.exe"
 
 # For now, this PS script will only be run on Windows.
-$bindir = "$basePath\bin\Debug\$targetFrameworkName\win-x64\"
+$bindir = "$basePath\bin\Debug\$targetFrameworkName\win-x64"
 
 # Make sure we actually have a directory/build to deploy
 If (-not (Test-Path $bindir)) {
@@ -43,17 +43,19 @@ $destDir = "$($env:APPDATA)\Elgato\StreamDeck\Plugins\$pluginID.sdPlugin"
 
 $pluginName = Split-Path $basePath -leaf
 
-Get-Process StreamDeck,$pluginName | Stop-Process –force -ErrorAction SilentlyContinue
+Get-Process -Name ("StreamDeck", $pluginName) -ErrorAction SilentlyContinue | Stop-Process –force -ErrorAction SilentlyContinue
 
 # Delete the target directory, make sure the deployment/copy is clean
-Remove-Item -Recurse -Path $destDir
+If (Test-Path $destDir) {
+  Remove-Item -Recurse -Force -Path $destDir 
+}
 
 # Then copy all deployment items to the plugin directory
 New-Item -Type Directory -Path $destDir -ErrorAction SilentlyContinue # | Out-Null
-Push-Location $bindir
-Copy-Item -Path "$bindir\*.*" -Destination $destDir -Recurse
-Pop-Location
+$bindir = $bindir +"\*"
+Copy-Item -Path $bindir -Destination $destDir -Recurse
 
-Write-Host "Deployment complete. Restarting Stream Deck..."
+
+Write-Host "Deployment complete. Restarting the Stream Deck desktop application..."
 Start-Process $streamDeckExePath
 exit 0
