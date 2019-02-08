@@ -1,4 +1,4 @@
-﻿using StreamDeckLib.Messages;
+using StreamDeckLib.Messages;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,27 +10,28 @@ namespace StreamDeckLib
 
 	// Cheer ramblinggeek 100 January 21, 2019
 
-	private static readonly Dictionary<string, Func<BaseStreamDeckPlugin, StreamDeckEventPayload, Task>> _ActionDictionary
-	= new Dictionary<string, Func<BaseStreamDeckPlugin, StreamDeckEventPayload, Task>>()
+		private static readonly Dictionary<string, Func<BaseStreamDeckAction, StreamDeckEventPayload, Task>> _EventDictionary
+		= new Dictionary<string, Func<BaseStreamDeckAction, StreamDeckEventPayload, Task>>()
 	{
-	  ["keyDown"] = (plugin, args) => plugin.OnKeyDown(args),
-	  ["keyUp"] = (plugin, args) => plugin.OnKeyUp(args),
-	  ["willAppear"] = (plugin, args) => plugin.OnWillAppear(args),
-	  ["willDisappear"] = (plugin, args) => plugin.OnWillDisappear(args),
-	  ["titleParametersDidChange"] = (plugin, args) => plugin.OnTitleParametersDidChange(args),
-	  ["deviceDidConnect"] = (plugin, args) => plugin.OnDeviceDidConnect(args),
-	  ["deviceDidDisconnect"] = (plugin, args) => plugin.OnDeviceDidDisconnect(args),
-	  ["applicationDidLaunch"] = (plugin, args) => plugin.OnApplicationDidLaunch(args),
-	  ["applicationDidTerminate"] = (plugin, args) => plugin.OnApplicationDidTerminate(args),
+			["keyDown"] = (action, args) => action.OnKeyDown(args),
+			["keyUp"] = (action, args) => action.OnKeyUp(args),
+			["willAppear"] = (action, args) => action.OnWillAppear(args),
+			["willDisappear"] = (action, args) => action.OnWillDisappear(args),
+			["titleParametersDidChange"] = (action, args) => action.OnTitleParametersDidChange(args),
+			["deviceDidConnect"] = (action, args) => action.OnDeviceDidConnect(args),
+			["deviceDidDisconnect"] = (action, args) => action.OnDeviceDidDisconnect(args),
+			["applicationDidLaunch"] = (action, args) => action.OnApplicationDidLaunch(args),
+			["applicationDidTerminate"] = (action, args) => action.OnApplicationDidTerminate(args),
 	};
 
-	private static readonly Dictionary<string, Func<BaseStreamDeckPlugin, PropertyInspectorEventPayload, Task>> _PropertyInspectorActionDictionary
-= new Dictionary<string, Func<BaseStreamDeckPlugin, PropertyInspectorEventPayload, Task>>()
+	private static readonly Dictionary<string, Func<BaseStreamDeckAction, PropertyInspectorEventPayload, Task>> _PropertyInspectorActionDictionary
+= new Dictionary<string, Func<BaseStreamDeckAction, PropertyInspectorEventPayload, Task>>()
 {
-  ["propertyInspectorConnected"] = (plugin, args) => plugin.OnPropertyInspectorConnected(args),
-  ["propertyInspectorDisconnected"] = (plugin, args) => plugin.OnPropertyInspectorDisconnected(args),
-  ["sendToPlugin"] = (plugin, args) => plugin.OnPropertyInspectorMessageReceived(args)
+  ["propertyInspectorConnected"] = (action, args) => action.OnPropertyInspectorConnected(args),
+  ["propertyInspectorDisconnected"] = (action, args) => action.OnPropertyInspectorDisconnected(args),
+  ["sendToPlugin"] = (action, args) => action.OnPropertyInspectorMessageReceived(args)
 };
 
   }
+
 }

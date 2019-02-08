@@ -62,16 +62,14 @@ namespace SamplePlugin
 			}
 #endif
 
-			using (var source = new CancellationTokenSource())
-			{
 				using (var loggerFactory = GetLoggerFactory())
 				{
 					try
 					{
 						// codingbandit: I had to take out the using statement as it was causing the dispose method to be called (and disposing the socket connection)
 						await ConnectionManager.Initialize(args, loggerFactory)
-                                   .SetPlugin(new MySamplePlugin())
-						                       .StartAsync(source.Token);
+                                   .RegisterAction(new MySampleAction())
+						                       .StartAsync();
 						
 					}
 					catch (Exception ex)
@@ -79,8 +77,6 @@ namespace SamplePlugin
 						TopLogger.LogError(ex, "Error while running the plugin");
 					}
 
-					source.Cancel();
-				}
 			}
       
 			if (Debugger.IsAttached)

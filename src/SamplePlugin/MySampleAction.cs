@@ -1,10 +1,10 @@
-﻿using StreamDeckLib;
+using StreamDeckLib;
 using StreamDeckLib.Messages;
 using System.Threading.Tasks;
 
 namespace SamplePlugin
 {
-  internal class MySamplePlugin : BaseStreamDeckPlugin
+	internal class MySampleAction : BaseStreamDeckAction
   {
 
 	// Cheer 200 kevin_downs Jan 11, 2019
@@ -19,6 +19,8 @@ namespace SamplePlugin
 	// Cheer 600 yarrgh Jan 15, 2019
 	// Cheer 1030 kulu83 Jan 15, 2019
 	// Cheer 2500 Auth0Bobby Jan 15, 2019
+
+		public override string UUID => "com.csharpfritz.samplePlugin.action";
 
 	private static int _Counter = 0;
 	private static bool _IsPropertyInspectorConnected = false;
@@ -81,8 +83,6 @@ namespace SamplePlugin
 		_Counter = args.GetPayloadValue<int>("starting_number");
 		await Manager.SetTitleAsync(args.context, _Counter.ToString());
 	  }
-
-	}
 
   }
 }
