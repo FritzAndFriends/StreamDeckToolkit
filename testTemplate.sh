@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
+set -e
+set -o pipefail
+set -o nounset
+
 ## Supported by
 ## Cheer 100 svavablount February 1, 2019
 ## Cheer 1000 Auth0bobby February 1, 2019
 ## Cheer 100 devlead February 1, 2019
 ## Cheer 100 ramblinggeek February 1, 2019
-
-set -e
-set -o pipefail 
-set -o nounset
 
 dotnet new -i Templates/StreamDeck.PluginTemplate.Csharp
 
