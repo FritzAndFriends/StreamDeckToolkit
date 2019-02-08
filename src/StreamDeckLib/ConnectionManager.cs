@@ -81,7 +81,9 @@ namespace StreamDeckLib
 
 		await Run(token);
 
-	}
+	  return this;
+
+  }
 
 	private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
 	{
