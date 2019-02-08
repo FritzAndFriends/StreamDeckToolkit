@@ -1,4 +1,4 @@
-﻿﻿Write-Host "Gathering deployment items..."
+﻿Write-Host "Gathering deployment items..."
 
 Write-Host "Script root: $PSScriptRoot`n"
 
@@ -50,7 +50,7 @@ if($IsMacOS) {
 
 $pluginName = Split-Path $basePath -leaf
 
-Get-Process StreamDeck,$pluginName | Stop-Process –force -ErrorAction SilentlyContinue
+Get-Process -Name ("StreamDeck", $pluginName) -ErrorAction SilentlyContinue | Stop-Process –force -ErrorAction SilentlyContinue
 
 # Delete the target directory, make sure the deployment/copy is clean
 Remove-Item -Recurse -Force -Path $destDir -ErrorAction SilentlyContinue
@@ -58,8 +58,9 @@ $bindir =  Join-Path $bindir "*"
 
 # Then copy all deployment items to the plugin directory
 New-Item -Type Directory -Path $destDir -ErrorAction SilentlyContinue # | Out-Null
+$bindir = $bindir +"\*"
 Copy-Item -Path $bindir -Destination $destDir -Recurse
 
 
-Write-Host "Deployment complete. We will NOT restart the Stream Deck here, but will from the template..."
+Write-Host "Deployment complete. We will NOT restart the Stream Deck desktop application here, but will from the template..."
 # Start-Process $streamDeckExePath

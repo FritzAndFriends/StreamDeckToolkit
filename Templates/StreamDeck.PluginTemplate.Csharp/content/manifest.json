@@ -18,6 +18,7 @@
   "Author": "",
 	"CodePathWin": "_StreamDeckPlugin_.exe",
 	"CodePathMac":  "_StreamDeckPlugin_",
+  "PropertyInspectorPath": "property_inspector/property_inspector.html",
   "Description": "Description of $(PluginName).",
   "Name": "$(PluginName)",
   "Icon": "images/pluginIcon",
