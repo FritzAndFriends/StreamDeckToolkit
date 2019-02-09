@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
 		<LangVersion>latest</LangVersion>
     <IsPackable>false</IsPackable>
+    <Configurations>Debug;Release;DebugWithNtfsJunction</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
