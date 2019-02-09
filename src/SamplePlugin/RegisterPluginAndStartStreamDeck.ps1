@@ -1,9 +1,18 @@
-﻿# create a switch for the option to create and check a NTFS Junciton
+﻿# create a switch for the option to create or check an existing NTFS Junciton
 # Further named param must be declared here. This also leverages tap-completion on commandline.
 param (
-		[switch]$NtfsJunction = $false, # Adds the -NtfsJunction switch
+		[switch]$NtfsJunction = $false, # Adds the -NtfsJunction switch, default is false so the default is to copy to destDir
 		[switch]$J = $NtfsJunction # Adds the -J switch (alias for -NtfsJunction)
 )
+
+# create functions for often used lines/commands to adhere to DRY principles
+function Remove-DestDir($destDir) {
+  Remove-Item -Recurse -Force -Path $destDir -ErrorAction SilentlyContinue
+}
+function New-Junciton($destDir, $bindir) {
+  # using the cmd /c mklink because a "New-Item" needs admin rights!
+  cmd /c mklink /j $destDir $bindir
+}
 
 Write-Host "Gathering deployment items..."
 
@@ -66,7 +75,7 @@ If (!$useJunction) {
   # default behavior
 
   # Delete the target directory, make sure the deployment/copy is clean
-  Remove-Item -Recurse -Force -Path $destDir -ErrorAction SilentlyContinue
+  Remove-DestDir $destDir
 
   $bindir = Join-Path $bindir "*"
 
@@ -79,8 +88,7 @@ else {
   # checks if NtfsJunction exists and creates it, if it does not exist
   if (!(Test-Path $destDir)) {
     # $destDir doesn't exist
-    cmd /c mklink /j $destDir $bindir # create the junction pointing to $binddir
-    # using the cmd /c mklink because a "New-Item" needs admin rights!
+    New-Junciton $destDir $bindir # create the junction pointing to $binddir
   }
   else {
     # something exists as $destDir
@@ -88,8 +96,8 @@ else {
     # Checks if the $destDir is a junction and is pointing to the correct $bindir
     if (!($junction.Target.Contains($bindir))) {
       # $destDir is either already a Junction but not targeting $bindir or it is someting else we can't use
-      Remove-Item -Recurse -Force -Path $destDir -ErrorAction SilentlyContinue # remove whatever $destDir is
-      cmd /c mklink /j $destDir $bindir # creates the junction to $binddir
+      Remove-DestDir $destDir # remove whatever $destDir is
+      New-Junciton $destDir $bindir # creates the junction to $binddir
     }
   }
 }
