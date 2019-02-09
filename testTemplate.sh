@@ -17,4 +17,4 @@ cd testPlugin
 
 dotnet restore -s $1
 
-dotnet build
+dotnet build --no-restore
