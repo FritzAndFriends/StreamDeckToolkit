@@ -79,11 +79,11 @@ namespace StreamDeckLib
 	{
 	  TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
-		await Run(token);
+	  await Run(token);
 
 	  return this;
 
-  }
+	}
 
 	private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
 	{
@@ -122,31 +122,6 @@ namespace StreamDeckLib
 			if (msg == null)
 			{
 			  _Logger.LogError($"Unknown message received: {jsonString}");
-			  continue;
-			}
-			//property inspector payload
-			if (msg.Event == "sendToPlugin")
-			{
-			  var piMsg = JsonConvert.DeserializeObject<PropertyInspectorEventPayload>(jsonString);
-			  if (piMsg.PayloadHasProperty("property_inspector"))
-			  {
-				//property inspector event
-				var piEvent = piMsg.GetPayloadValue<string>("property_inspector");
-				if (!_PropertyInspectorActionDictionary.ContainsKey(piEvent))
-				{
-				  _Logger.LogWarning($"Plugin does not handle the Property Inspector event '{piEvent}'");
-				  continue;
-				}
-				else
-				{
-				  _PropertyInspectorActionDictionary[piEvent]?.Invoke(_Plugin, piMsg);
-				  continue;
-
-				}
-
-			  }
-			  //property inspector property value event
-			  _PropertyInspectorActionDictionary[piMsg.Event]?.Invoke(_Plugin, piMsg);
 			  continue;
 			}
 			if (!_ActionDictionary.ContainsKey(msg.Event))
@@ -231,6 +206,34 @@ namespace StreamDeckLib
 	  await _Proxy.SendStreamDeckEvent(args);
 	}
 
+	public async Task GetSettingsAsync(string context)
+	{
+	  var args = new GetSettingsArgs()
+	  {
+		context = context
+	  };
+	  await _Proxy.SendStreamDeckEvent(args);
+	}
+
+	public async Task SetGlobalSettingsAsync(string context, dynamic value)
+	{
+	  var args = new SetGlobalSettingsArgs()
+	  {
+		context = context,
+		payload = value
+	  };
+	  await _Proxy.SendStreamDeckEvent(args);
+	}
+
+	public async Task GetGobalSettingsAsync(string context)
+	{
+	  var args = new GetGlobalSettingsArgs()
+	  {
+		context = context
+	  };
+	  await _Proxy.SendStreamDeckEvent(args);
+	}
+
 	public async Task SetStateAsync(string context, int state)
 	{
 
@@ -244,22 +247,6 @@ namespace StreamDeckLib
 	  };
 
 	  await _Proxy.SendStreamDeckEvent(args);
-
-
-	}
-
-	public async Task SendToPropertyInspectorAsync(string context, dynamic payload)
-	{
-
-	  var args = new SendToPropertyInspectorArgs
-	  {
-		action = _Uuid,
-		context = context,
-		payload = payload
-	  };
-
-	  await _Proxy.SendStreamDeckEvent(args);
-
 	}
 
 	public async Task SwitchToProfileAsync(string context, string device, string profileName)
