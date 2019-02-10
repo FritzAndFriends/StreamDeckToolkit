@@ -58,7 +58,6 @@ $bindir =  Join-Path $bindir "*"
 
 # Then copy all deployment items to the plugin directory
 New-Item -Type Directory -Path $destDir -ErrorAction SilentlyContinue # | Out-Null
-$bindir = $bindir +"\*"
 Copy-Item -Path $bindir -Destination $destDir -Recurse
 
 
