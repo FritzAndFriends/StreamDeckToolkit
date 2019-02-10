@@ -2,15 +2,13 @@
 
 Write-Host "Script root: $PSScriptRoot`n"
 
-$basePath = $PSScriptRoot
+Write-Host "Current Working Directory: $(get-location)"
 
-if ($PSSCriptRoot.Length -eq 0) {
-  $basePath = $PWD.Path;
-}
+$basePath = $(get-location)
 
 
-# Load and parse the plugin project file
-$pluginProjectFile = "$basePath\_StreamDeckPlugin_.csproj"
+# Load and parse the plugin project file - Fully expects there to be only one csproj file in there
+$pluginProjectFile = Get-ChildItem -Filter *.csproj | Select-Object -First 1
 $projectContent = Get-Content $pluginProjectFile | Out-String;
 $projectXML = [xml]$projectContent;
 
