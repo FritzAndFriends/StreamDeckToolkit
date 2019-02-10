@@ -22,15 +22,11 @@ namespace StreamDeckLib
 	  ["deviceDidDisconnect"] = (plugin, args) => plugin.OnDeviceDidDisconnect(args),
 	  ["applicationDidLaunch"] = (plugin, args) => plugin.OnApplicationDidLaunch(args),
 	  ["applicationDidTerminate"] = (plugin, args) => plugin.OnApplicationDidTerminate(args),
+	  ["propertyInspectorDidAppear"] = (plugin, args) => plugin.OnPropertyInspectorDidAppear(args),
+	  ["propertyInspectorDidDisappear"] = (plugin, args) => plugin.OnPropertyInspectorDidDisappear(args),
+	  ["didReceiveSettings"] = (plugin, args) => plugin.OnDidReceiveSettingsAsync(args),
+		["didReceiveGlobalSettings"] = (plugin, args) => plugin.OnDidReceiveGlobalSettings(args)
 	};
-
-	private static readonly Dictionary<string, Func<BaseStreamDeckPlugin, PropertyInspectorEventPayload, Task>> _PropertyInspectorActionDictionary
-= new Dictionary<string, Func<BaseStreamDeckPlugin, PropertyInspectorEventPayload, Task>>()
-{
-  ["propertyInspectorConnected"] = (plugin, args) => plugin.OnPropertyInspectorConnected(args),
-  ["propertyInspectorDisconnected"] = (plugin, args) => plugin.OnPropertyInspectorDisconnected(args),
-  ["sendToPlugin"] = (plugin, args) => plugin.OnPropertyInspectorMessageReceived(args)
-};
 
   }
 }

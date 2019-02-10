@@ -2,7 +2,7 @@
 // as well as some info about our plugin, as sent by Stream Deck software 
 var websocket = null,
   uuid = null,
-	inInfo = null,
+  inInfo = null,
   actionInfo = {};
 
 function connectSocket(inPort, inUUID, inRegisterEvent, inInfo, inActionInfo) {
@@ -12,29 +12,49 @@ function connectSocket(inPort, inUUID, inRegisterEvent, inInfo, inActionInfo) {
   websocket = new WebSocket('ws://localhost:' + inPort);
 
   websocket.onopen = function () {
-		var json = { event: inRegisterEvent, uuid: inUUID };
-		// register property inspector to Stream Deck
-		websocket.send(JSON.stringify(json));
-		sendValueToPlugin('propertyInspectorConnected', 'property_inspector');
+	var json = { event: inRegisterEvent, uuid: inUUID };
+	// register property inspector to Stream Deck
+	websocket.send(JSON.stringify(json));
+	// initiate call to receive settings async
+	getSettings();
+  };
+
+  websocket.onmessage = function (evt) {
+	// Received message from Stream Deck
+	var jsonObj = JSON.parse(evt.data);
+	var sdEvent = jsonObj['event'];
+	switch (sdEvent) {
+	  case "didReceiveSettings":
+		if (jsonObj.payload.settings.counter) {
+		  document.getElementById('txtCounterValue').value = jsonObj.payload.settings.counter;
+		}
+		break;
+	  default:
+		break;
+	}
   };
 }
 
-window.addEventListener('unload', function (event) {
-  sendValueToPlugin('propertyInspectorDisconnected', 'property_inspector');
-});
-
-function sendValueToPlugin(value, param) {
+const getSettings = () => {
   if (websocket) {
-		const json = {
-			"action": actionInfo['action'],
-			"event": "sendToPlugin",
-			"context": uuid,
-			"payload": {
-			[param]: value
-			}
-		};
-		websocket.send(JSON.stringify(json));
-	}
-}
+	var json = {
+	  "event": "getSettings",
+	  "context": uuid
+	};
+	websocket.send(JSON.stringify(json));
+  }
+};
 
+const setSettings = (value, param) => {
+  if (websocket) {
+	var json = {
+	  "event": "setSettings",
+	  "context": uuid,
+	  "payload": {
+		[param]: value
+	  }
+	};
+	websocket.send(JSON.stringify(json));
+  }
+};
 
