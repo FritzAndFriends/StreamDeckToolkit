@@ -25,7 +25,7 @@ namespace StreamDeckLib
 
 	public virtual Task OnApplicationDidTerminate(StreamDeckEventPayload args) => Task.CompletedTask;
 
-	public virtual Task OnDidReceiveSettingsAsync(StreamDeckEventPayload args) => Task.CompletedTask;
+	public virtual Task OnDidReceiveSettings(StreamDeckEventPayload args) => Task.CompletedTask;
 
 	public virtual Task OnDidReceiveGlobalSettings(StreamDeckEventPayload args) => Task.CompletedTask;
 

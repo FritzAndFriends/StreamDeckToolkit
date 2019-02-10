@@ -1,0 +1,37 @@
+{
+  "Actions": [
+    {
+      "Icon": "images/actionIcon",
+      "Name": "Custom Light Color",
+      "States": [
+        {
+          "Image": "images/actionDefaultImage",
+          "TitleAlignment": "middle",
+          "FontSize": "16"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Define your own custom color for your light",
+      "UUID": "com.trilliuminnovations.philipshuecustom.action"
+    }
+  ],
+  "Author": "Carey Payette",
+	"CodePathWin": "PhilipsHuePlugin.exe",
+	"CodePathMac": "PhilipsHuePlugin",
+	"PropertyInspectorPath": "property_inspector/property_inspector.html",
+  "Description": "Philips Hue Plugin",
+  "Name": "Philips Hue Plugin",
+  "Icon": "images/pluginIcon",
+  "URL": "https://www.elgato.com/gaming/stream-deck",
+  "Version": "1.2",
+  "OS": [
+    {
+        "Platform": "mac",
+        "MinimumVersion" : "10.11"
+    },
+    {
+        "Platform": "windows",
+        "MinimumVersion" : "10"
+    }
+  ]
+}

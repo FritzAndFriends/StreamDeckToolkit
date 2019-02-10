@@ -24,7 +24,7 @@ namespace StreamDeckLib
 	  ["applicationDidTerminate"] = (plugin, args) => plugin.OnApplicationDidTerminate(args),
 	  ["propertyInspectorDidAppear"] = (plugin, args) => plugin.OnPropertyInspectorDidAppear(args),
 	  ["propertyInspectorDidDisappear"] = (plugin, args) => plugin.OnPropertyInspectorDidDisappear(args),
-	  ["didReceiveSettings"] = (plugin, args) => plugin.OnDidReceiveSettingsAsync(args),
+	  ["didReceiveSettings"] = (plugin, args) => plugin.OnDidReceiveSettings(args),
 		["didReceiveGlobalSettings"] = (plugin, args) => plugin.OnDidReceiveGlobalSettings(args)
 	};
 
