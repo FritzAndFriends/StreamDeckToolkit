@@ -54,7 +54,10 @@
 	"Name": "Philips Hue Plugin",
   "Icon": "images/pluginIcon",
   "URL": "https://www.elgato.com/gaming/stream-deck",
-  "Version": "1.2",
+	"Version": "1.2",
+	"Software": {
+		"MinimumVersion": "4.1"
+	},
   "OS": [
     {
         "Platform": "mac",
