@@ -1,4 +1,7 @@
 ﻿using StreamDeckLib.Messages;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace StreamDeckLib
@@ -6,32 +9,39 @@ namespace StreamDeckLib
   public abstract class BaseStreamDeckPlugin
   {
 	protected internal ConnectionManager Manager { get; set; }
+	//string is the action UUID, type is the class type of the action
+	private Dictionary<string, Type> _actions = new Dictionary<string, Type>();
+	//string is the context, there will only ever be one action per context
+	private Dictionary<string, BaseStreamDeckAction> _contextActions = new Dictionary<string, BaseStreamDeckAction>();
 
-	public virtual Task OnKeyDown(StreamDeckEventPayload args) => Task.CompletedTask;
+	public abstract void RegisterActionTypes();
+	
+	public void RegisterActionType(string actionUuid, Type actionType)
+	{
+		_actions.Add(actionUuid, actionType);
+	}
 
-	public virtual Task OnKeyUp(StreamDeckEventPayload args) => Task.CompletedTask;
-
-	public virtual Task OnWillAppear(StreamDeckEventPayload args) => Task.CompletedTask;
-
-	public virtual Task OnWillDisappear(StreamDeckEventPayload args) => Task.CompletedTask;
-
-	public virtual Task OnTitleParametersDidChange(StreamDeckEventPayload args) => Task.CompletedTask;
-
-	public virtual Task OnDeviceDidConnect(StreamDeckEventPayload args) => Task.CompletedTask;
-
-	public virtual Task OnDeviceDidDisconnect(StreamDeckEventPayload args) => Task.CompletedTask;
-
-	public virtual Task OnApplicationDidLaunch(StreamDeckEventPayload args) => Task.CompletedTask;
-
-	public virtual Task OnApplicationDidTerminate(StreamDeckEventPayload args) => Task.CompletedTask;
-
-	public virtual Task OnDidReceiveSettings(StreamDeckEventPayload args) => Task.CompletedTask;
-
-	public virtual Task OnDidReceiveGlobalSettings(StreamDeckEventPayload args) => Task.CompletedTask;
-
-	public virtual Task OnPropertyInspectorDidAppear(StreamDeckEventPayload args) => Task.CompletedTask;
-
-	public virtual Task OnPropertyInspectorDidDisappear(StreamDeckEventPayload args) => Task.CompletedTask;
-
+	public BaseStreamDeckAction GetInstanceOfAction(string context, string actionUuid)
+	{
+			//see if context exists, if so, return the associated action
+			if(_contextActions.Any(x=>x.Key.Equals(context)))
+			{
+				return _contextActions[context];
+			}
+			else
+			{
+				//see if we have a recorded type for the action
+				if(_actions.Any(x=>x.Key.Equals(actionUuid)))
+				{
+					var t = _actions[actionUuid];
+					var action = Activator.CreateInstance(t) as BaseStreamDeckAction;
+					action.Manager = this.Manager;
+					_contextActions.Add(context, action);
+				}
+					
+			}
+	  return null;
+	}
+	
   }
 }

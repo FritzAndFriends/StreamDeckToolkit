@@ -2,7 +2,11 @@
 {
   public class CustomColorSettingsModel : BaseSettingsModel
   {
-	public string ColorHex { get; set; }
-	public int LightIndex { get; set; }
+	public string colorHex { get; set; } = string.Empty;
+	public int lightIndex { get; set; } = 1;
+	public override bool IsValid()
+	{
+	  return base.IsValid() && !string.IsNullOrEmpty(colorHex);
+	}
   }
 }

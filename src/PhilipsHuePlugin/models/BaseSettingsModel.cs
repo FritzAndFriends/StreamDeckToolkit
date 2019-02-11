@@ -2,7 +2,11 @@
 {
   public class BaseSettingsModel
   {
-		public string HueHubIp { get; set; }
-		public string AppUserId { get; set; }
+	public string hueHubIp { get; set; } = string.Empty;
+	public string appUserId { get; set; } = string.Empty;
+	public virtual bool IsValid()
+	{
+	  return !(string.IsNullOrEmpty(hueHubIp) || string.IsNullOrEmpty(appUserId));
+	}
   }
 }

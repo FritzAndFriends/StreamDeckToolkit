@@ -20,5 +20,14 @@ namespace StreamDeckLib.Messages
 	  return default(T);
 	}
 
+	public static object GetPayloadSettingsValue(this StreamDeckEventPayload obj, string propertyName)
+	{
+	  if (obj.PayloadSettingsHasProperty(propertyName))
+	  {
+			return obj.payload.settings.settingsModel[propertyName].Value;
+	  }
+	  return null;
+	}
+
   }
 }

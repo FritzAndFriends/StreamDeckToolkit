@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
 using StreamDeckLib.Messages;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.WebSockets;
 using System.Threading;
@@ -22,6 +23,8 @@ namespace StreamDeckLib
 	private IStreamDeckProxy _Proxy;
 	private ConnectionManager() { }
 	public Messages.Info Info { get; private set; }
+	
+
 	public static ConnectionManager Initialize(string[] commandLineArgs,
 			ILoggerFactory loggerFactory = null, IStreamDeckProxy streamDeckProxy = null)
 	{
@@ -95,7 +98,7 @@ namespace StreamDeckLib
 
 	  await _Proxy.ConnectAsync(new Uri($"ws://localhost:{_Port}"), token);
 	  await _Proxy.Register(_RegisterEvent, _Uuid);
-
+	  _Plugin.RegisterActionTypes();
 
 	  var keepRunning = true;
 
@@ -119,9 +122,16 @@ namespace StreamDeckLib
 		  try
 		  {
 			var msg = JsonConvert.DeserializeObject<StreamDeckEventPayload>(jsonString);
+						
 			if (msg == null)
 			{
 			  _Logger.LogError($"Unknown message received: {jsonString}");
+			  continue;
+			}
+			var action = _Plugin.GetInstanceOfAction(msg.context, msg.action);
+			if(action == null)
+			{
+			  _Logger.LogError($"No action matching {msg.action} registered");
 			  continue;
 			}
 			if (!_ActionDictionary.ContainsKey(msg.Event))
@@ -129,7 +139,7 @@ namespace StreamDeckLib
 			  _Logger.LogWarning($"Plugin does not handle the event '{msg.Event}'");
 			  continue;
 			}
-			_ActionDictionary[msg.Event]?.Invoke(_Plugin, msg);
+			_ActionDictionary[msg.Event]?.Invoke(action, msg);
 		  }
 		  catch (Exception ex)
 		  {

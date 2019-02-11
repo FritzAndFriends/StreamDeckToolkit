@@ -10,8 +10,8 @@ namespace StreamDeckLib
 
 	// Cheer ramblinggeek 100 January 21, 2019
 
-	private static readonly Dictionary<string, Func<BaseStreamDeckPlugin, StreamDeckEventPayload, Task>> _ActionDictionary
-	= new Dictionary<string, Func<BaseStreamDeckPlugin, StreamDeckEventPayload, Task>>()
+	private static readonly Dictionary<string, Func<BaseStreamDeckAction, StreamDeckEventPayload, Task>> _ActionDictionary
+	= new Dictionary<string, Func<BaseStreamDeckAction, StreamDeckEventPayload, Task>>()
 	{
 	  ["keyDown"] = (plugin, args) => plugin.OnKeyDown(args),
 	  ["keyUp"] = (plugin, args) => plugin.OnKeyUp(args),

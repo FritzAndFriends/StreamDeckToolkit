@@ -59,7 +59,6 @@ namespace PhilipsHuePlugin
 		  try
 		  {
 
-			// codingbandit: I had to take out the using statement as it was causing the dispose method to be called (and disposing the socket connection)
 			await ConnectionManager.Initialize(args, loggerFactory)
 				.SetPlugin(new PhilipsHuePlugin())
 				.StartAsync(source.Token);
