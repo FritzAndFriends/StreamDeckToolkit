@@ -10,9 +10,10 @@ using System.Threading.Tasks;
 
 namespace PhilipsHuePlugin
 {
-  public class PhilipsHueCustomAction : BaseStreamDeckActionWithSettingsModel<CustomColorSettingsModel>
+  public class PhilipsHueRedAction : BaseStreamDeckActionWithSettingsModel<RedSettingsModel>
   {
-	public override string ActionUuid => ActionUuidConstants.CUSTOM_COLOR_ACTION;
+	public override string ActionUuid => ActionUuidConstants.RED_COLOR_ACTION;
+
 	public override async Task OnKeyUp(StreamDeckEventPayload args)
 	{
 	  if (SettingsModel.IsValid())
@@ -20,7 +21,7 @@ namespace PhilipsHuePlugin
 		ILocalHueClient client = new LocalHueClient(SettingsModel.hueHubIp);
 		client.Initialize(SettingsModel.appUserId);
 		var cmd = new LightCommand();
-		cmd.TurnOn().SetColor(new RGBColor(SettingsModel.colorHex));
+		cmd.TurnOn().SetColor(new RGBColor("#FF0000"));
 		await client.SendCommandAsync(cmd, new List<string> { SettingsModel.lightIndex.ToString() });
 	  }
 
@@ -30,5 +31,6 @@ namespace PhilipsHuePlugin
 	{
 	  await this.Manager.GetSettingsAsync(args.context);
 	}
+
   }
 }

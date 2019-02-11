@@ -1,26 +1,57 @@
 {
-  "Actions": [
-    {
-      "Icon": "images/actionIcon",
-      "Name": "Custom Light Color",
-      "States": [
-        {
-          "Image": "images/actionDefaultImage",
-          "TitleAlignment": "middle",
-          "FontSize": "16"
-        }
-      ],
-      "SupportedInMultiActions": false,
-      "Tooltip": "Define your own custom color for your light",
-      "UUID": "com.trilliuminnovations.philipshuecustom.action"
-    }
-  ],
-  "Author": "Carey Payette",
+	"Actions": [
+		{
+			"Icon": "images/actionIcon",
+			"Name": "Custom Light Color",
+			"States": [
+				{
+					"Image": "images/actionDefaultImage",
+					"TitleAlignment": "middle",
+					"FontSize": "16"
+				}
+			],
+			"SupportedInMultiActions": false,
+			"Tooltip": "Define your own custom color for your light",
+			"UUID": "com.trilliuminnovations.philipshuecustom.action"
+		},
+		{
+			"Icon": "images/actionIcon",
+			"Name": "Red Light",
+			"PropertyInspectorPath": "property_inspector/property_inspector_red.html",
+			"States": [
+				{
+					"Image": "images/actionDefaultImage",
+					"TitleAlignment": "middle",
+					"FontSize": "16"
+				}
+			],
+			"SupportedInMultiActions": false,
+			"Tooltip": "Pre-defined Red Light",
+			"UUID": "com.trilliuminnovations.philipshuered.action"
+		},
+		{
+			"Icon": "images/actionIcon",
+			"Name": "Green Light",
+			"PropertyInspectorPath": "property_inspector/property_inspector_green.html",
+			"States": [
+				{
+					"Image": "images/actionDefaultImage",
+					"TitleAlignment": "middle",
+					"FontSize": "16"
+				}
+			],
+			"SupportedInMultiActions": false,
+			"Tooltip": "Pre-defined Green Light",
+			"UUID": "com.trilliuminnovations.philipshuegreen.action"
+		}
+	],
+	"Author": "Carey Payette",
+	"Category":  "Philips Hue",
 	"CodePathWin": "PhilipsHuePlugin.exe",
 	"CodePathMac": "PhilipsHuePlugin",
 	"PropertyInspectorPath": "property_inspector/property_inspector.html",
   "Description": "Philips Hue Plugin",
-  "Name": "Philips Hue Plugin",
+	"Name": "Philips Hue Plugin",
   "Icon": "images/pluginIcon",
   "URL": "https://www.elgato.com/gaming/stream-deck",
   "Version": "1.2",

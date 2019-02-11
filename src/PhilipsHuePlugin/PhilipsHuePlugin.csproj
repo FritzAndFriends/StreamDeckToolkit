@@ -17,7 +17,11 @@
 		<None Remove="property_inspector\css\property-inspector.css" />
 		<None Remove="property_inspector\css\sdpi.css" />
 		<None Remove="property_inspector\js\property-inspector.js" />
+		<None Remove="property_inspector\js\property-inspector_green.js" />
+		<None Remove="property_inspector\js\property-inspector_red.js" />
 		<None Remove="property_inspector\property_inspector.html" />
+		<None Remove="property_inspector\property_inspector_green.html" />
+		<None Remove="property_inspector\property_inspector_red.html" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -73,8 +77,20 @@
 		<Content Include="property_inspector\css\sdpi.css">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+		<Content Include="property_inspector\js\property-inspector_red.js">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="property_inspector\js\property-inspector_green.js">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 		<Content Include="property_inspector\js\property-inspector.js">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="property_inspector\property_inspector_red.html">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="property_inspector\property_inspector_green.html">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="property_inspector\property_inspector.html">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
