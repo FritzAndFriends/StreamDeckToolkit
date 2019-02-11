@@ -25,10 +25,5 @@ namespace PhilipsHuePlugin
 	  }
 	}
 
-	public override async Task OnWillAppear(StreamDeckEventPayload args)
-	{
-	  await this.Manager.GetSettingsAsync(args.context);
-	}
-
   }
 }
