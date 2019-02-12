@@ -4,6 +4,12 @@ using System.Threading.Tasks;
 
 namespace StreamDeckLib
 {
+	[Obsolete("This class has been superseded by the \"BaseStreamDeckAction\" class. Please update your references accordingly", false)]
+	public abstract class BaseStreamDeckPlugin : BaseStreamDeckAction
+	{
+
+	}
+
   public abstract class BaseStreamDeckAction
   {
     /// <summary>
@@ -12,7 +18,7 @@ namespace StreamDeckLib
     /// </summary>
     /// <value>The manager.</value>
     protected internal ConnectionManager Manager { get; set; }
-
+		
     /// <summary>
     /// Gets the UUID which uniquely identifies the individual actions within a plugin.
     /// </summary>
@@ -43,5 +49,12 @@ namespace StreamDeckLib
     public virtual Task OnApplicationDidLaunch(StreamDeckEventPayload args) => Task.CompletedTask;
 
     public virtual Task OnApplicationDidTerminate(StreamDeckEventPayload args) => Task.CompletedTask;
+
+    public virtual Task OnPropertyInspectorMessageReceived(PropertyInspectorEventPayload args) => Task.CompletedTask;
+
+    public virtual Task OnPropertyInspectorConnected(PropertyInspectorEventPayload args) => Task.CompletedTask;
+
+    public virtual Task OnPropertyInspectorDisconnected(PropertyInspectorEventPayload args) => Task.CompletedTask;
+		
   }
 }
