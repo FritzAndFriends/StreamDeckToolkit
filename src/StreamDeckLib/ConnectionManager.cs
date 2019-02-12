@@ -89,6 +89,12 @@ namespace StreamDeckLib
 			return manager;
 		}
 
+		[Obsolete("This method is obsolete, and the cancellation token \"token\" will not be used. Update your code to use the parameterless StartAsync() method", false)]
+		public async Task<ConnectionManager> StartAsync(CancellationToken token)
+		{
+			return await this.StartAsync();
+		}
+
 		public async Task<ConnectionManager> StartAsync()
 		{
 			TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;

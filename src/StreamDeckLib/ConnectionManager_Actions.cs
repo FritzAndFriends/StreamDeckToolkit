@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace StreamDeckLib
@@ -6,6 +6,9 @@ namespace StreamDeckLib
 	partial class ConnectionManager
 	{
 		private static readonly Dictionary<string, BaseStreamDeckAction> _ActionsDictionary = new Dictionary<string, BaseStreamDeckAction>();
+
+		[Obsolete("This method is obsolete, and has been replaced with the \"RegisterAction()\" method. Update your code to make use of this new method.", false )]
+		public ConnectionManager SetPlugin(BaseStreamDeckAction plugin) => this.RegisterAction(plugin);
 
 		public ConnectionManager RegisterAction(BaseStreamDeckAction action) => RegisterActionInternal(this, action);
 

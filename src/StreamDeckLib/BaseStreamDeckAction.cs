@@ -4,6 +4,12 @@ using System.Threading.Tasks;
 
 namespace StreamDeckLib
 {
+	[Obsolete("This class has been superceded by the \"BaseStreamDeckAction\" class. Please update your references accordingly", false)]
+	public abstract class BaseStreamDeckPlugin : BaseStreamDeckAction
+	{
+
+	}
+
   public abstract class BaseStreamDeckAction
   {
     /// <summary>
