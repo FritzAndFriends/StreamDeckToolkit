@@ -24,8 +24,7 @@ function New-Junciton($destDir, $bindir) {
 }
 
 Write-Host "Gathering deployment items..."
-
-Write-Host "Script root: $PSScriptRoot`n"
+Write-Host "Script root: $PSScriptRoot"
 
 $basePath = $PSScriptRoot
 
@@ -37,7 +36,9 @@ if(!($pluginName)) {
 	$pluginName =	Split-Path $basePath -leaf
 }
 
-Write-Host "Plugin Name: $pluginName`n"
+Write-Host "Plugin Name: $pluginName"
+Write-Host "Used Configuration: $Configuration"
+Write-Host "TargetFramework: $TargetFramework"
 
 # Load and parse the plugin project file
 $pluginProjectFile = Join-Path $basePath "$pluginName.csproj"
@@ -116,5 +117,5 @@ else {
 }
 
 #$ENV:ProgramFiles ${env:ProgramFiles(x86)}
-Write-Host "Deployment complete. We will NOT restart the Stream Deck desktop application here, but will from the template..."
+Write-Host "Deployment complete. Restart the Stream Deck desktop application here."
 Start-Process "$streamDeckExePath"

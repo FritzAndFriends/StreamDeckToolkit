@@ -11,9 +11,10 @@
 		<RuntimeIdentifiers Condition="'$(Configuration)'=='Release' ">win-x64;osx-x64</RuntimeIdentifiers>
 		<!-- At this time, the only platforms we are really targetting, and supported by the Stream Deck SDK are Windows and macOS  -->
 		<Configurations>Debug;Release;DebugWithNtfsJunction</Configurations>
-		<RunPostBuildEvent>Always</RunPostBuildEvent>
+		<RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugWithNtfsJunction|AnyCPU'">
+		<DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
 		<DefineConstants>DEBUG;TRACE</DefineConstants>
 		<Optimize>false</Optimize>
 	</PropertyGroup>
