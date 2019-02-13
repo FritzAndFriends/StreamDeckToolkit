@@ -2,8 +2,17 @@
 # Further named param must be declared here. This also leverages tap-completion on commandline.
 param (
 		[switch]$NtfsJunction = $false, # Adds the -NtfsJunction switch, default is false so the default is to copy to destDir
-		[switch]$J = $NtfsJunction # Adds the -J switch (alias for -NtfsJunction)
+		[switch]$J = $NtfsJunction, # Adds the -J switch (alias for -NtfsJunction)
+		[string]$Configuration = "Debug", # have the Configuration value available. Defaults to 'Debug'
+		[string]$pluginName = "",
+		[string]$TargetFramework = ""
 )
+
+if($Configuration.Contains("Release")){
+	# This script is not soposed to do anything in 'Release' configurations
+	Write-Host "This script is only intended to do something in Debug configuration! Exit now!"
+	exit 1
+}
 
 # create functions for often used lines/commands to adhere to DRY principles
 function Remove-DestDir($destDir) {
@@ -24,31 +33,37 @@ if (!($PSSCriptRoot)) {
   $basePath = $PWD.Path;
 }
 
+if(!($pluginName)) {
+	$pluginName =	Split-Path $basePath -leaf
+}
+
+Write-Host "Plugin Name: $pluginName`n"
+
 # Load and parse the plugin project file
-$pluginProjectFile = Join-Path $basePath "SamplePlugin.csproj"
+$pluginProjectFile = Join-Path $basePath "$pluginName.csproj"
 $projectContent = Get-Content $pluginProjectFile | Out-String;
 $projectXML = [xml]$projectContent;
 
-$buildConfiguration = "Debug"
+
 
 # Get the target .net core framework
-$targetFrameworkName = $projectXML.Project.PropertyGroup.TargetFramework;
+if (!($TargetFramework)) {$TargetFramework = $projectXML.Project.PropertyGroup.TargetFramework;}
 
 # Set local path references
 if ($IsMacOS) {
   $useJunction = $false # There is no NtfsJunction available on MacOS so we can NOT use it here
   $streamDeckExePath = "/Applications/Stream Deck.app"
-  $bindir = "$basePath/bin/Debug/$targetFrameworkName/osx-x64"
+  $bindir = "$basePath/bin/$Configuration/$TargetFramework/osx-x64"
 }
 else {
-  $streamDeckExePath = "$($ENV:ProgramFiles)\Elgato\StreamDeck\StreamDeck.exe"
-  $bindir = "$basePath\bin\Debug\$targetFrameworkName\win-x64"
+  $streamDeckExePath = "$($ENV:ProgramW6432)\Elgato\StreamDeck\StreamDeck.exe"
+  $bindir = "$basePath\bin\$Configuration\$TargetFramework\win-x64"
   $useJunction = $j.IsPresent # Uses NtfsJunction when the -NtfsJunction switch is present
 }
 
 # Make sure we actually have a directory/build to deploy
 If (-not (Test-Path $bindir)) {
-  Write-Error "The output directory `"$bindir`" was not found.`n You must first build the `"SamplePlugin.csproj`" project before calling this script.";
+  Write-Error "The output directory `"$bindir`" was not found.`n You must first build the `"$pluginName.csproj`" project before calling this script.";
   exit 1;
 }
 
@@ -67,7 +82,6 @@ else {
   $destDir = "$($env:APPDATA)\Elgato\StreamDeck\Plugins\$pluginID.sdPlugin"
 }
 
-$pluginName = Split-Path $basePath -leaf
 
 Get-Process -Name ("StreamDeck", $pluginName) -ErrorAction SilentlyContinue | Stop-Process –force -ErrorAction SilentlyContinue
 
@@ -80,7 +94,7 @@ If (!$useJunction) {
   $bindir = Join-Path $bindir "*"
 
   # Then copy all deployment items to the plugin directory
-  New-Item -Type Directory -Path $destDir -ErrorAction SilentlyContinue # | Out-Null
+  New-Item -Type Directory -Path $destDir -ErrorAction SilentlyContinue | Out-Null
   Copy-Item -Path $bindir -Destination $destDir -Recurse
 }
 else {
@@ -101,5 +115,6 @@ else {
   }
 }
 
+#$ENV:ProgramFiles ${env:ProgramFiles(x86)}
 Write-Host "Deployment complete. We will NOT restart the Stream Deck desktop application here, but will from the template..."
-# Start-Process $streamDeckExePath
+Start-Process "$streamDeckExePath"

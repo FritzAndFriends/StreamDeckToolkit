@@ -4,10 +4,12 @@
 		<OutputType>Exe</OutputType>
 		<TargetFramework>netcoreapp2.2</TargetFramework>
 		<LangVersion>latest</LangVersion>
-		<RuntimeIdentifier Condition=" '$(OS)' == 'Windows_NT' and ('$(Configuration)'=='Debug' or '$(Configuration)'=='DebugWithNtfsJunction')">win-x64</RuntimeIdentifier>		<!-- When building/running on Windows -->
-		<RuntimeIdentifier Condition=" '$(OS)' != 'Windows_NT' and ('$(Configuration)'=='Debug' or '$(Configuration)'=='DebugWithNtfsJunction') ">osx-x64</RuntimeIdentifier>		<!-- When on non-Windows environment, assume macOS for now -->
-		<RuntimeIdentifiers Condition="'$(Configuration)'=='Release' ">win-x64;osx-x64</RuntimeIdentifiers>		<!-- At this time, the only platforms we are really targetting, and supported by the Stream Deck SDK are Windows and macOS  -->
-		<RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+		<RuntimeIdentifier Condition=" '$(OS)' == 'Windows_NT' and ('$(Configuration)'=='Debug' or '$(Configuration)'=='DebugWithNtfsJunction') ">win-x64</RuntimeIdentifier>
+		<!-- When building/running on Windows -->
+		<RuntimeIdentifier Condition=" '$(OS)' != 'Windows_NT' and ('$(Configuration)'=='Debug' or '$(Configuration)'=='DebugWithNtfsJunction') ">osx-x64</RuntimeIdentifier>
+		<!-- When on non-Windows environment, assume macOS for now -->
+		<RuntimeIdentifiers Condition="'$(Configuration)'=='Release' ">win-x64;osx-x64</RuntimeIdentifiers>
+		<!-- At this time, the only platforms we are really targetting, and supported by the Stream Deck SDK are Windows and macOS  -->
 		<Configurations>Debug;Release;DebugWithNtfsJunction</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
@@ -96,11 +98,10 @@
 		</None>
 	</ItemGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)'=='Debug'">
-		<Exec Condition=" '$(OS)' == 'Windows_NT' " Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)DeployPluginForDebug.Win-MacOs.ps1&quot;" />
-		<Exec Condition=" '$(OS)' == 'Windows_NT' and '$(Configuration)'=='DebugWithNtfsJunction' " Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)DeployPluginForDebug.Win-MacOs.ps1 -NtfsJunction&quot;" />
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)'=='Debug' or '$(Configuration)'=='DebugWithNtfsJunction'">
+		<Exec Condition=" '$(OS)' == 'Windows_NT' and '$(Configuration)'!='DebugWithNtfsJunction' " Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)DeployPluginForDebug.Win-MacOs.ps1&quot; -pluginName $(ProjectName) -Configuration $(Configuration) -TargetFramework $(TargetFramework)" />
+		<Exec Condition=" '$(OS)' == 'Windows_NT' and '$(Configuration)'=='DebugWithNtfsJunction' " Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)DeployPluginForDebug.Win-MacOs.ps1&quot; -NtfsJunction -Configuration $(Configuration) -TargetFramework $(TargetFramework)" />
 
 		<Exec Condition=" '$(OS)' != 'Windows_NT' " Command="bash $(ProjectDir)DeployPluginForDebug.MacOs.sh" />
 	</Target>
-
 </Project>
