@@ -11,6 +11,11 @@
 		<RuntimeIdentifiers Condition="'$(Configuration)'=='Release' ">win-x64;osx-x64</RuntimeIdentifiers>
 		<!-- At this time, the only platforms we are really targetting, and supported by the Stream Deck SDK are Windows and macOS  -->
 		<Configurations>Debug;Release;DebugWithNtfsJunction</Configurations>
+		<RunPostBuildEvent>Always</RunPostBuildEvent>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugWithNtfsJunction|AnyCPU'">
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<Optimize>false</Optimize>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Remove="Fritz.png" />
@@ -103,5 +108,9 @@
 		<Exec Condition=" '$(OS)' == 'Windows_NT' and '$(Configuration)'=='DebugWithNtfsJunction' " Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)DeployPluginForDebug.Win-MacOs.ps1&quot; -NtfsJunction -Configuration $(Configuration) -TargetFramework $(TargetFramework)" />
 
 		<Exec Condition=" '$(OS)' != 'Windows_NT' " Command="bash $(ProjectDir)DeployPluginForDebug.MacOs.sh" />
+	</Target>
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'=='DebugWithNtfsJunction'">
+		<Exec Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)StopStreamDeck.Win-MacOs.ps1&quot; -pluginName $(ProjectName)" />
 	</Target>
 </Project>
