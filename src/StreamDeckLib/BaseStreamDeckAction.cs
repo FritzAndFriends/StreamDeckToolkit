@@ -30,7 +30,7 @@ namespace StreamDeckLib
     /// lookups and comparison without concern for letter casing.
     /// </summary>
     /// <value>The registration key.</value>
-    protected internal string RegistrationKey => UUID.ToLowerInvariant();
+    protected internal string RegistrationKey => UUID;
 
     public virtual Task OnKeyDown(StreamDeckEventPayload args) => Task.CompletedTask;
 

@@ -1,0 +1,1 @@
+SamplePlugin.exe -break %*

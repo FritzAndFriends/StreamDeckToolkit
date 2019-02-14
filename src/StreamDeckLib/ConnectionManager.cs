@@ -49,6 +49,8 @@ namespace StreamDeckLib
 
 				var optionInfo = app.Option("-info <INFO>", "Some information", CommandOptionType.SingleValue);
 
+				var optionBreak = app.Option("-break", "Attach the debugger", CommandOptionType.NoValue);
+
 				app.Parse(commandLineArgs);
 
 				try
@@ -96,7 +98,7 @@ namespace StreamDeckLib
 		{
 			TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
-			await Task.Factory.StartNew(() => Run(), TaskCreationOptions.LongRunning);
+			await Run();
 
 			return this;
 

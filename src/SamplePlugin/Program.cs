@@ -88,6 +88,8 @@ namespace SamplePlugin
 			}
 #endif
 
+			Console.WriteLine("I did a thing...");
+
 		}
 	}
 
