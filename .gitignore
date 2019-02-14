@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+**/content/RegisterPluginAndStartStreamDeck.sh
+**/content/RegisterPluginAndStartStreamDeck.ps1
+
 # User-specific files
 *.suo
 *.user

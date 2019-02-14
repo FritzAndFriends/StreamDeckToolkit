@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamDeckLib", "StreamDeckLib\StreamDeckLib.csproj", "{19F24D43-79DB-47B6-AEDA-BAEA3B2F1962}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SamplePlugin", "SamplePlugin\SamplePlugin.csproj", "{7FCB0FEF-FC38-4187-858C-425FB0664F4E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamplePlugin", "SamplePlugin\SamplePlugin.csproj", "{7FCB0FEF-FC38-4187-858C-425FB0664F4E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{87F0DB03-6058-40D9-9510-D516FDA578AE}"
 	ProjectSection(SolutionItems) = preProject
