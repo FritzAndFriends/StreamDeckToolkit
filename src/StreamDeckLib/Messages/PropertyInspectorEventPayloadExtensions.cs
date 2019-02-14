@@ -4,6 +4,8 @@ using System.ComponentModel;
 namespace StreamDeckLib.Messages
 {
 	public static class PropertyInspectorEventPayloadExtensions
+  {
+	public static bool PayloadHasProperty(this PropertyInspectorEventPayload obj, string propertyName)
 	{
 	  return obj.payload.settingsModel[propertyName] != null;
 	}
@@ -16,6 +18,6 @@ namespace StreamDeckLib.Messages
 		return (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromInvariantString(obj.payload.settingsModel[propertyName].Value);
 	  }
 	  return default(T);
-
+	}
   }
 }
