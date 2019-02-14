@@ -2,8 +2,11 @@
 // as well as some info about our plugin, as sent by Stream Deck software 
 var websocket = null,
   uuid = null,
-	inInfo = null,
-  actionInfo = {};
+  inInfo = null,
+  actionInfo = {},
+  settingsModel = {
+		counter: 0
+  };
 
 function connectSocket(inPort, inUUID, inRegisterEvent, inInfo, inActionInfo) {
   uuid = inUUID;
@@ -15,26 +18,42 @@ function connectSocket(inPort, inUUID, inRegisterEvent, inInfo, inActionInfo) {
 		var json = { event: inRegisterEvent, uuid: inUUID };
 		// register property inspector to Stream Deck
 		websocket.send(JSON.stringify(json));
-		sendValueToPlugin('propertyInspectorConnected', 'property_inspector');
+		sendEventToPlugin('propertyInspectorConnected');
   };
 }
 
 window.addEventListener('unload', function (event) {
-  sendValueToPlugin('propertyInspectorDisconnected', 'property_inspector');
+  sendEventToPlugin('propertyInspectorDisconnected');
 });
 
 function sendValueToPlugin(value, param) {
   if (websocket) {
+		settingsModel[param] = value;
 		const json = {
 			"action": actionInfo['action'],
 			"event": "sendToPlugin",
 			"context": uuid,
 			"payload": {
-			[param]: value
+				"settingsModel": settingsModel
 			}
 		};
 		websocket.send(JSON.stringify(json));
 	}
+}
+
+function sendEventToPlugin(value) {
+  if (websocket) {
+	settingsModel[param] = value;
+	const json = {
+	  "action": actionInfo['action'],
+	  "event": "sendToPlugin",
+	  "context": uuid,
+	  "payload": {
+		  "property_inspector": value
+	  }
+	};
+	websocket.send(JSON.stringify(json));
+  }
 }
 
 

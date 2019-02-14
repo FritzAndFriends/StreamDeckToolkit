@@ -7,7 +7,7 @@ namespace StreamDeckLib.Messages
   {
 	public static bool PayloadHasProperty(this PropertyInspectorEventPayload obj, string propertyName)
 	{
-	  return obj.payload[propertyName] != null;
+	  return obj.payload.settingsModel[propertyName] != null;
 	}
 
 
@@ -15,7 +15,7 @@ namespace StreamDeckLib.Messages
 	{
 	  if (obj.PayloadHasProperty(propertyName))
 	  {
-		return (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromInvariantString(obj.payload[propertyName].Value);
+		return (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFromInvariantString(obj.payload.settingsModel[propertyName].Value);
 	  }
 	  return default(T);
 	}
