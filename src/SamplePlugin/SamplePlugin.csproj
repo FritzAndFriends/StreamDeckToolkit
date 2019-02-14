@@ -87,17 +87,17 @@
 
 	<ItemGroup>
 
-    <None Update="RegisterPluginAndStartStreamDeck.ps1">
+    <None Update="../../scripts/RegisterPluginAndStartStreamDeck.ps1">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</None>
-		<None Update="RegisterPluginAndStartStreamDeck.sh">
+		<None Update="../../scripts/RegisterPluginAndStartStreamDeck.sh">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)'=='Debug'">
-		<Exec Condition=" '$(OS)' == 'Windows_NT' " Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)RegisterPluginAndStartStreamDeck.ps1&quot;" />
-		<Exec Condition=" '$(OS)' != 'Windows_NT' " Command="bash $(ProjectDir)RegisterPluginAndStartStreamDeck.sh" />
+		<Exec Condition=" '$(OS)' == 'Windows_NT' " Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)../../scripts/registration/RegisterPluginAndStartStreamDeck.ps1&quot;" />
+		<Exec Condition=" '$(OS)' != 'Windows_NT' " Command="bash $(ProjectDir)../../scripts/registration/RegisterPluginAndStartStreamDeck.sh" />
 	</Target>
 
 </Project>
