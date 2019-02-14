@@ -17,8 +17,9 @@ function connectElgatoStreamDeckSocket(inPort, inUUID, inRegisterEvent, inInfo, 
   //initialize values
   if (actionInfo.payload.settings.settingsModel) {
 	settingsModel.Counter = actionInfo.payload.settings.settingsModel.Counter;
-	document.getElementById('txtCounterValue').value = settingsModel.Counter;
   }
+
+  document.getElementById('txtCounterValue').value = settingsModel.Counter;
 
   websocket.onopen = function () {
 	var json = { event: inRegisterEvent, uuid: inUUID };
