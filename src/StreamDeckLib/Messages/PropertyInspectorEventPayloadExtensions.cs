@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace StreamDeckLib.Messages
 {
-  public static class PropertyInspectorEventPayloadExtensions
+	public static class PropertyInspectorEventPayloadExtensions
   {
 	public static bool PayloadHasProperty(this PropertyInspectorEventPayload obj, string propertyName)
 	{
