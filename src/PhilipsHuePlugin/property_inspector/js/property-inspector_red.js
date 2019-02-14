@@ -5,13 +5,13 @@ var websocket = null,
   inInfo = null,
   actionInfo = {},
   settingsModel = {
-		hueHubIp: '',
-		appUserId: '',
-		lightIndex: 1,
-		colorHex: ''
+	hueHubIp: '',
+	appUserId: '',
+	lightIndex: 1,
+	colorHex: ''
   };
 
-function connectSocket(inPort, inUUID, inRegisterEvent, inInfo, inActionInfo) {
+function connectElgatoStreamDeckSocket(inPort, inUUID, inRegisterEvent, inInfo, inActionInfo) {
   uuid = inUUID;
   actionInfo = JSON.parse(inActionInfo);
   inInfo = JSON.parse(inInfo);

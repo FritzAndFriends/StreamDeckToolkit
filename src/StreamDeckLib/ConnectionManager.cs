@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
 using StreamDeckLib.Messages;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net.WebSockets;
 using System.Threading;
@@ -23,7 +22,7 @@ namespace StreamDeckLib
 	private IStreamDeckProxy _Proxy;
 	private ConnectionManager() { }
 	public Messages.Info Info { get; private set; }
-	
+
 
 	public static ConnectionManager Initialize(string[] commandLineArgs,
 			ILoggerFactory loggerFactory = null, IStreamDeckProxy streamDeckProxy = null)
@@ -122,14 +121,14 @@ namespace StreamDeckLib
 		  try
 		  {
 			var msg = JsonConvert.DeserializeObject<StreamDeckEventPayload>(jsonString);
-						
+
 			if (msg == null)
 			{
 			  _Logger.LogError($"Unknown message received: {jsonString}");
 			  continue;
 			}
 			var action = _Plugin.GetInstanceOfAction(msg.context, msg.action);
-			if(action == null)
+			if (action == null)
 			{
 			  _Logger.LogError($"No action matching {msg.action} registered");
 			  continue;
@@ -211,7 +210,7 @@ namespace StreamDeckLib
 	  var args = new SetSettingsArgs()
 	  {
 		context = context,
-		payload = value
+		payload = new { settingsModel = value }
 	  };
 	  await _Proxy.SendStreamDeckEvent(args);
 	}
