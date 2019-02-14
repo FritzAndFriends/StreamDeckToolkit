@@ -42,7 +42,7 @@ namespace SamplePlugin
 
 		static async Task Main(string[] args)
 		{
-			
+
 #if DEBUG
 			// This gives us our "first chance" debugging, before even parsing the command
 			// line args, without the need to manually edit the code to toggle the feature
@@ -70,7 +70,7 @@ namespace SamplePlugin
 						await ConnectionManager.Initialize(args, loggerFactory)
                                    .RegisterAction(new MySampleAction())
 						                       .StartAsync();
-						
+
 					}
 					catch (Exception ex)
 					{
@@ -78,13 +78,15 @@ namespace SamplePlugin
 					}
 
 			}
-      
+
+#if DEBUG
 			if (Debugger.IsAttached)
 			{
 				// If a debugger is attached, give the developer a last chance to inspect
 				// variables, state, etc. before the process terminates.
 				Debugger.Break();
 			}
+#endif
 
 		}
 	}
