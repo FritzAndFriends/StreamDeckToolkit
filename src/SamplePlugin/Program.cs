@@ -15,6 +15,12 @@ namespace SamplePlugin
 
 	class Program
 	{
+
+		// Cheer 200 careypayette February 14, 2019
+		// Cheer 100 roberttables February 14, 2019
+		// Cheer 100 careypayette February 15, 2019
+		// Cheer 100 devlead 15/2/2019 
+
 		static ILoggerFactory GetLoggerFactory()
 		{
 			var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

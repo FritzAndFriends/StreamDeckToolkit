@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using StreamDeckLib.Messages;
 using System;
 using System.Threading.Tasks;
@@ -30,7 +31,9 @@ namespace StreamDeckLib
     /// lookups and comparison without concern for letter casing.
     /// </summary>
     /// <value>The registration key.</value>
-    protected internal string RegistrationKey => UUID.ToLowerInvariant();
+    protected internal string RegistrationKey => UUID;
+
+		public ILogger Logger { get; internal set; }
 
     public virtual Task OnKeyDown(StreamDeckEventPayload args) => Task.CompletedTask;
 

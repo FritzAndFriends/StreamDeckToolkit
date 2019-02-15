@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using StreamDeckLib.Messages;
 using System;
 using System.IO;
+using System.Linq;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,6 +49,8 @@ namespace StreamDeckLib
 																						 CommandOptionType.SingleValue);
 
 				var optionInfo = app.Option("-info <INFO>", "Some information", CommandOptionType.SingleValue);
+
+				var optionBreak = app.Option("-break", "Attach the debugger", CommandOptionType.NoValue);
 
 				app.Parse(commandLineArgs);
 
@@ -96,7 +99,7 @@ namespace StreamDeckLib
 		{
 			TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
-			await Task.Factory.StartNew(() => Run(), TaskCreationOptions.LongRunning);
+			await Run();
 
 			return this;
 
@@ -148,6 +151,8 @@ namespace StreamDeckLib
 
 								continue;
 							}
+
+							if (_ActionEventsIgnore.Contains(msg.Event)) { continue; }
 
 							// Make sure we have a registered BaseStreamDeckAction instance registered for the received action (UUID)
 							if (!_ActionsDictionary.ContainsKey(msg.action))
