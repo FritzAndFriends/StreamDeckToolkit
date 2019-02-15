@@ -14,9 +14,13 @@ namespace StreamDeckLib
 
 		private static ConnectionManager RegisterActionInternal(ConnectionManager manager, BaseStreamDeckAction action)
 		{
+
+			// Cheer 100 svavablount 15/2/19 
+
 			ValidateActionForRegistration(action);
 
 			action.Manager = manager;
+			action.Logger = _LoggerFactory.CreateLogger(action.UUID);
 
 			_ActionsDictionary.Add(action.RegistrationKey, action);
 

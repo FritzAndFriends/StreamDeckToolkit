@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+using Serilog.Core;
 using StreamDeckLib;
 using StreamDeckLib.Messages;
 using System.Threading.Tasks;
@@ -27,6 +29,12 @@ namespace SamplePlugin
 
 		public override async Task OnKeyUp(StreamDeckEventPayload args)
 		{
+
+			// Cheer 342 cpayette 15/2/19
+			// Cheer 100 devlead 15/2/19 
+
+			Logger.LogTrace($"Button pressed: {args}");
+
 			_Counter++;
 			await Manager.SetTitleAsync(args.context, _Counter.ToString());
 

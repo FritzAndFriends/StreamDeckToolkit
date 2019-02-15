@@ -24,6 +24,10 @@ namespace StreamDeckLib
 			["applicationDidTerminate"] = (action, args) => action.OnApplicationDidTerminate(args),
 		};
 
+		private static readonly string[] _ActionEventsIgnore = new[] {
+			"deviceDidConnect", "deviceDidDisconnect", "applicationDidLaunch", "applicationDidTerminate"
+		};
+
 		private static readonly Dictionary<string, Func<BaseStreamDeckAction, PropertyInspectorEventPayload, Task>> _PropertyInspectorActionDictionary
 	= new Dictionary<string, Func<BaseStreamDeckAction, PropertyInspectorEventPayload, Task>>()
 	{
