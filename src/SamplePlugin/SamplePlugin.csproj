@@ -19,6 +19,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\StreamDeckLib.Config\StreamDeckLib.Config.csproj" />
 		<ProjectReference Include="..\StreamDeckLib\StreamDeckLib.csproj" />
 	</ItemGroup>
 
