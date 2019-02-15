@@ -1,18 +1,32 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.168
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28606.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamDeckLib", "StreamDeckLib\StreamDeckLib.csproj", "{19F24D43-79DB-47B6-AEDA-BAEA3B2F1962}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamplePlugin", "SamplePlugin\SamplePlugin.csproj", "{7FCB0FEF-FC38-4187-858C-425FB0664F4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SamplePlugin", "SamplePlugin\SamplePlugin.csproj", "{7FCB0FEF-FC38-4187-858C-425FB0664F4E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{87F0DB03-6058-40D9-9510-D516FDA578AE}"
 	ProjectSection(SolutionItems) = preProject
 		..\.editorconfig = ..\.editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamDeckLib.Test", "StreamDeckLib.Test\StreamDeckLib.Test.csproj", "{CAD3C79B-E603-4356-B5BD-5B2E57DFD8BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamDeckLib.Test", "StreamDeckLib.Test\StreamDeckLib.Test.csproj", "{CAD3C79B-E603-4356-B5BD-5B2E57DFD8BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{A337DDA4-B15C-43B9-AB51-04267D151BB0}"
+	ProjectSection(SolutionItems) = preProject
+		..\scripts\install.ps1 = ..\scripts\install.ps1
+		..\scripts\install.sh = ..\scripts\install.sh
+		..\scripts\uninstall.ps1 = ..\scripts\uninstall.ps1
+		..\scripts\uninstall.sh = ..\scripts\uninstall.sh
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Registration", "Registration", "{403D021A-9770-41ED-8554-34FEE375BADA}"
+	ProjectSection(SolutionItems) = preProject
+		..\scripts\registration\RegisterPluginAndStartStreamDeck.ps1 = ..\scripts\registration\RegisterPluginAndStartStreamDeck.ps1
+		..\scripts\registration\RegisterPluginAndStartStreamDeck.sh = ..\scripts\registration\RegisterPluginAndStartStreamDeck.sh
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +49,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{403D021A-9770-41ED-8554-34FEE375BADA} = {A337DDA4-B15C-43B9-AB51-04267D151BB0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C5036C4A-EAB6-4A37-9D02-1E6D5E77D257}

@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using StreamDeckLib.Messages;
 using System;
 using System.IO;
+using System.Linq;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -150,6 +151,8 @@ namespace StreamDeckLib
 
 								continue;
 							}
+
+							if (_ActionEventsIgnore.Contains(msg.Event)) { continue; }
 
 							// Make sure we have a registered BaseStreamDeckAction instance registered for the received action (UUID)
 							if (!_ActionsDictionary.ContainsKey(msg.action))
