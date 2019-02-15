@@ -2,7 +2,7 @@
   "Actions": [
     {
       "Icon": "images/actionIcon",
-      "Name": "$(PluginName)",
+      "Name": "$(PluginName)Action",
       "States": [
         {
           "Image": "images/actionDefaultImage",

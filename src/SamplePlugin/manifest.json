@@ -2,7 +2,7 @@
 	"Actions": [
 		{
 			"Icon": "images/actionIcon",
-			"Name": "SamplePlugin",
+			"Name": "SamplePluginAction",
 			"States": [
 				{
 					"Image": "images/actionDefaultImage",

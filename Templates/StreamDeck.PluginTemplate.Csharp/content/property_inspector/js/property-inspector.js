@@ -3,20 +3,29 @@
 var websocket = null,
   uuid = null,
   inInfo = null,
-  actionInfo = {};
+  actionInfo = {},
+  settingsModel = {
+	Counter: 0
+  };
 
-function connectSocket(inPort, inUUID, inRegisterEvent, inInfo, inActionInfo) {
+function connectElgatoStreamDeckSocket(inPort, inUUID, inRegisterEvent, inInfo, inActionInfo) {
   uuid = inUUID;
   actionInfo = JSON.parse(inActionInfo);
   inInfo = JSON.parse(inInfo);
   websocket = new WebSocket('ws://localhost:' + inPort);
 
+  //initialize values
+  if (actionInfo.payload.settings.settingsModel) {
+	settingsModel.Counter = actionInfo.payload.settings.settingsModel.Counter;
+  }
+
+  document.getElementById('txtCounterValue').value = settingsModel.Counter;
+
   websocket.onopen = function () {
 	var json = { event: inRegisterEvent, uuid: inUUID };
 	// register property inspector to Stream Deck
 	websocket.send(JSON.stringify(json));
-	// initiate call to receive settings async
-	getSettings();
+
   };
 
   websocket.onmessage = function (evt) {
@@ -25,8 +34,9 @@ function connectSocket(inPort, inUUID, inRegisterEvent, inInfo, inActionInfo) {
 	var sdEvent = jsonObj['event'];
 	switch (sdEvent) {
 	  case "didReceiveSettings":
-		if (jsonObj.payload.settings.counter) {
-		  document.getElementById('txtCounterValue').value = jsonObj.payload.settings.counter;
+		if (jsonObj.payload.settings.settingsModel.Counter) {
+		  settingsModel.Counter = jsonObj.payload.settings.settingsModel.Counter;
+		  document.getElementById('txtCounterValue').value = settingsModel.Counter;
 		}
 		break;
 	  default:
@@ -35,23 +45,14 @@ function connectSocket(inPort, inUUID, inRegisterEvent, inInfo, inActionInfo) {
   };
 }
 
-const getSettings = () => {
-  if (websocket) {
-	var json = {
-	  "event": "getSettings",
-	  "context": uuid
-	};
-	websocket.send(JSON.stringify(json));
-  }
-};
-
 const setSettings = (value, param) => {
   if (websocket) {
+	settingsModel[param] = value;
 	var json = {
 	  "event": "setSettings",
 	  "context": uuid,
 	  "payload": {
-		[param]: value
+		"settingsModel": settingsModel
 	  }
 	};
 	websocket.send(JSON.stringify(json));
