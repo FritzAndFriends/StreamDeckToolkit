@@ -20,6 +20,7 @@ namespace SamplePlugin
 
 				await ConnectionManager.Initialize(args, config.LoggerFactory)
 															 .RegisterAction(new MySampleAction())
+															 .RegisterAction(new Mysecon())
 															 .StartAsync();
 
 			}

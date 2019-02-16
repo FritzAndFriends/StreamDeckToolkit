@@ -23,7 +23,7 @@ namespace SamplePlugin
 	// Cheer 1030 kulu83 Jan 15, 2019
 	// Cheer 2500 Auth0Bobby Jan 15, 2019
 		
-	public override string ActionUuid => "com.csharpfritz.samplePlugin.action";
+	public override string ActionUuid =>  "com.csharpfritz.samplePlugin.action";
 
 	public override async Task OnKeyUp(StreamDeckEventPayload args)
 	{

@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace StreamDeckLib
 {
+	private static class UUIDs
+  {
+	public static string MyFirstAction = "";
+  }
+
   public abstract class BaseStreamDeckAction 
   {
 	  protected internal ConnectionManager Manager { get; set; }
