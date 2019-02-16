@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace StreamDeckLib
 {
+
   /// <summary>
   /// This class manages the connection to the StreamDeck hardware
   /// </summary>
@@ -21,336 +22,238 @@ namespace StreamDeckLib
 	private string _Uuid;
 	private string _RegisterEvent;
 	private IStreamDeckProxy _Proxy;
-	private ConnectionManager() { }
+
+	private ConnectionManager()
+	{
+	}
+
 	public Messages.Info Info { get; private set; }
 
-
 	public static ConnectionManager Initialize(string[] commandLineArgs,
-			ILoggerFactory loggerFactory = null, IStreamDeckProxy streamDeckProxy = null)
+																						 ILoggerFactory loggerFactory = null,
+																						 IStreamDeckProxy streamDeckProxy = null)
 	{
-
 	  using (var app = new CommandLineApplication())
 	  {
 		app.HelpOption();
 
-	/// <summary>
-	/// This class manages the connection to the StreamDeck hardware
-	/// </summary>
-	public partial class ConnectionManager : IDisposable
-	{
-		private int _Port;
-		private string _Uuid;
-		private string _RegisterEvent;
-		private IStreamDeckProxy _Proxy;
+		var optionPort = app.Option<int>("-port|--port <PORT>",
+																		 "The port the Elgato StreamDeck software is listening on",
+																		 CommandOptionType.SingleValue);
 
-		private ConnectionManager()
-		{
-		}
+		var optionPluginUUID = app.Option("-pluginUUID <UUID>",
+																			"The UUID that the Elgato StreamDeck software knows this plugin as.",
+																			CommandOptionType.SingleValue);
 
-		public Messages.Info Info { get; private set; }
-
-		public static ConnectionManager Initialize(string[] commandLineArgs,
-																							 ILoggerFactory loggerFactory = null,
-																							 IStreamDeckProxy streamDeckProxy = null)
-		{
-			using (var app = new CommandLineApplication())
-			{
-				app.HelpOption();
-
-				var optionPort = app.Option<int>("-port|--port <PORT>",
-																				 "The port the Elgato StreamDeck software is listening on",
+		var optionRegisterEvent = app.Option("-registerEvent <REGEVENT>", "The registration event",
 																				 CommandOptionType.SingleValue);
 
-				var optionPluginUUID = app.Option("-pluginUUID <UUID>",
-																					"The UUID that the Elgato StreamDeck software knows this plugin as.",
-																					CommandOptionType.SingleValue);
+		var optionInfo = app.Option("-info <INFO>", "Some information", CommandOptionType.SingleValue);
 
-				var optionRegisterEvent = app.Option("-registerEvent <REGEVENT>", "The registration event",
-																						 CommandOptionType.SingleValue);
+		var optionBreak = app.Option("-break", "Attach the debugger", CommandOptionType.NoValue);
 
-	  await Run(token);
-				var optionInfo = app.Option("-info <INFO>", "Some information", CommandOptionType.SingleValue);
+		app.Parse(commandLineArgs);
 
-				var optionBreak = app.Option("-break", "Attach the debugger", CommandOptionType.NoValue);
+		try
+		{
+		  return Initialize(optionPort.ParsedValue, optionPluginUUID.Values[0], optionRegisterEvent.Values[0],
+											  optionInfo.Values[0], loggerFactory,
+											  streamDeckProxy ?? new StreamDeckProxy());
+		}
+		catch
+		{
+		  throw new ArgumentException($"{nameof(commandLineArgs)} must be the commandline args that the StreamDeck application calls this program with.");
+		}
+	  }
+	}
+
+	private static ConnectionManager Initialize(int port, string uuid,
+																							string registerEvent, string info,
+																							ILoggerFactory loggerFactory, IStreamDeckProxy streamDeckProxy)
+	{
+	  // TODO: Validate the info parameter
+	  var myInfo = JsonConvert.DeserializeObject<Messages.Info>(info);
+
+	  _LoggerFactory = loggerFactory;
+	  _Logger = loggerFactory?.CreateLogger("ConnectionManager") ?? NullLogger.Instance;
+
+	  var manager = new ConnectionManager()
+	  {
+		_Port = port,
+		_Uuid = uuid,
+		_RegisterEvent = registerEvent,
+		Info = myInfo,
+		_Proxy = streamDeckProxy
+	  };
+
+	  return manager;
+	}
+
+	[Obsolete("This method is obsolete, and the cancellation token \"token\" will not be used. Update your code to use the parameterless StartAsync() method", false)]
+	public async Task<ConnectionManager> StartAsync(CancellationToken token)
+	{
+	  return await this.StartAsync();
+	}
+
+	public async Task<ConnectionManager> StartAsync()
+	{
+	  TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+
+	  await Run();
+
+	  return this;
 
 	}
-				app.Parse(commandLineArgs);
 
-				try
-				{
-					return Initialize(optionPort.ParsedValue, optionPluginUUID.Values[0], optionRegisterEvent.Values[0],
-														optionInfo.Values[0], loggerFactory,
-														streamDeckProxy ?? new StreamDeckProxy());
-				}
-				catch
-				{
-					throw new ArgumentException($"{nameof(commandLineArgs)} must be the commandline args that the StreamDeck application calls this program with.");
-				}
-			}
-		}
+	private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+	{
+	  throw new NotImplementedException();
+	}
 
-		private static ConnectionManager Initialize(int port, string uuid,
-																								string registerEvent, string info,
-																								ILoggerFactory loggerFactory, IStreamDeckProxy streamDeckProxy)
+	private async Task Run()
+	{
+	  using (var cancellationSource = new CancellationTokenSource())
+	  {
+		var token = cancellationSource.Token;
+
+		await _Proxy.ConnectAsync(new Uri($"ws://localhost:{_Port}"), token);
+		await _Proxy.Register(_RegisterEvent, _Uuid);
+
+		var keepRunning = true;
+
+		while (!token.IsCancellationRequested)
 		{
-			// TODO: Validate the info parameter
-			var myInfo = JsonConvert.DeserializeObject<Messages.Info>(info);
-
-	  await _Proxy.ConnectAsync(new Uri($"ws://localhost:{_Port}"), token);
-	  await _Proxy.Register(_RegisterEvent, _Uuid);
-	  _Plugin.RegisterActionTypes();
-			_LoggerFactory = loggerFactory;
-			_Logger = loggerFactory?.CreateLogger("ConnectionManager") ?? NullLogger.Instance;
-
-			var manager = new ConnectionManager()
-			{
-				_Port = port,
-				_Uuid = uuid,
-				_RegisterEvent = registerEvent,
-				Info = myInfo,
-				_Proxy = streamDeckProxy
-			};
-
-			return manager;
-		}
-
-		[Obsolete("This method is obsolete, and the cancellation token \"token\" will not be used. Update your code to use the parameterless StartAsync() method", false)]
-		public async Task<ConnectionManager> StartAsync(CancellationToken token)
-		{
-			return await this.StartAsync();
-		}
-
-		public async Task<ConnectionManager> StartAsync()
-		{
-			TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
-
-			await Run();
-
-			return this;
-
-		}
-
-		private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
-		{
-			throw new NotImplementedException();
-		}
-
-		private async Task Run()
-		{
-		  try
+		  // Exit loop if the socket is closed or aborted
+		  switch (_Proxy.State)
 		  {
-			var msg = JsonConvert.DeserializeObject<StreamDeckEventPayload>(jsonString);
+			case WebSocketState.CloseReceived:
+			case WebSocketState.Closed:
+			case WebSocketState.Aborted:
+			  cancellationSource.Cancel();
+			  keepRunning = false;
 
-			if (msg == null)
-			{
-			  _Logger.LogError($"Unknown message received: {jsonString}");
-			  continue;
-			}
-			var action = _Plugin.GetInstanceOfAction(msg.context, msg.action);
-			if (action == null)
-			{
-			  _Logger.LogError($"No action matching {msg.action} registered");
-			  continue;
-			}
-			if (!_ActionDictionary.ContainsKey(msg.Event))
-			{
-			  _Logger.LogWarning($"Plugin does not handle the event '{msg.Event}'");
-			  continue;
-			}
-			_ActionDictionary[msg.Event]?.Invoke(action, msg);
+			  break;
 		  }
-		  catch (Exception ex)
+
+		  if (!keepRunning) break;
+
+		  var jsonString = await _Proxy.GetMessageAsString(token);
+
+		  if (!string.IsNullOrEmpty(jsonString) && !jsonString.StartsWith("\0"))
 		  {
-			_Logger.LogError(ex, "Error while processing payload from StreamDeck");
-		  }
-		}
-			using (var cancellationSource = new CancellationTokenSource())
+			try
 			{
-				var token = cancellationSource.Token;
+			  var msg = JsonConvert.DeserializeObject<StreamDeckEventPayload>(jsonString);
 
-				await _Proxy.ConnectAsync(new Uri($"ws://localhost:{_Port}"), token);
-				await _Proxy.Register(_RegisterEvent, _Uuid);
+			  if (msg == null)
+			  {
+				_Logger.LogError($"Unknown message received: {jsonString}");
 
-				var keepRunning = true;
+				continue;
+			  }
 
-				while (!token.IsCancellationRequested)
-				{
-					// Exit loop if the socket is closed or aborted
-					switch (_Proxy.State)
-					{
-						case WebSocketState.CloseReceived:
-						case WebSocketState.Closed:
-						case WebSocketState.Aborted:
-							cancellationSource.Cancel();
-							keepRunning = false;
+			  if (_ActionEventsIgnore.Contains(msg.Event)) { continue; }
 
-							break;
-					}
+			  // Make sure we have a registered BaseStreamDeckAction instance registered for the received action (UUID)
+			  if (!_ActionsDictionary.ContainsKey(msg.action))
+			  {
+				_Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
+			  }
 
-					if (!keepRunning) break;
-
-					var jsonString = await _Proxy.GetMessageAsString(token);
-
-					if (!string.IsNullOrEmpty(jsonString) && !jsonString.StartsWith("\0"))
-					{
-						try
-						{
-							var msg = JsonConvert.DeserializeObject<StreamDeckEventPayload>(jsonString);
-
-							if (msg == null)
-							{
-								_Logger.LogError($"Unknown message received: {jsonString}");
-
-								continue;
-							}
-
-							if (_ActionEventsIgnore.Contains(msg.Event)) { continue; }
-
-							// Make sure we have a registered BaseStreamDeckAction instance registered for the received action (UUID)
-							if (!_ActionsDictionary.ContainsKey(msg.action))
-							{
-								_Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
-							}
-
-							var action = _ActionsDictionary[msg.action];
+			  var action = _ActionsDictionary[msg.action];
 
 
-							//property inspector payload
-							if (msg.Event == "sendToPlugin")
-							{
-								var piMsg = JsonConvert.DeserializeObject<PropertyInspectorEventPayload>(jsonString);
-								if (piMsg.PayloadHasProperty("property_inspector"))
-								{
-									//property inspector event
-									var piEvent = piMsg.GetPayloadValue<string>("property_inspector");
-									if (!_PropertyInspectorActionDictionary.ContainsKey(piEvent))
-									{
-										_Logger.LogWarning($"Plugin does not handle the Property Inspector event '{piEvent}'");
-										continue;
-									}
-									else
-									{
-										_PropertyInspectorActionDictionary[piEvent]?.Invoke(action, piMsg);
-										continue;
+			  if (!_EventDictionary.ContainsKey(msg.Event))
+			  {
+				_Logger.LogWarning($"Plugin does not handle the event '{msg.Event}'");
 
-									}
+				continue;
+			  }
 
-								}
+			  _EventDictionary[msg.Event]?.Invoke(action, msg);
 
-								//property inspector property value event
-								_PropertyInspectorActionDictionary[piMsg.Event]?.Invoke(action, piMsg);
-								continue;
-							}
-
-							if (!_EventDictionary.ContainsKey(msg.Event))
-							{
-								_Logger.LogWarning($"Plugin does not handle the event '{msg.Event}'");
-
-								continue;
-							}
-
-							_EventDictionary[msg.Event]?.Invoke(action, msg);
-
-						}
-						catch (Exception ex)
-						{
-							_Logger.LogError(ex, "Error while processing payload from StreamDeck");
-						}
-					}
-
-					await Task.Delay(100);
-				}
 			}
-
-			Dispose();
-		}
-
-		#region StreamDeck Methods
-
-		public async Task SetTitleAsync(string context, string newTitle)
-		{
-			var args = new SetTitleArgs()
+			catch (Exception ex)
 			{
-				context = context,
-				payload = new SetTitleArgs.Payload
-				{
-					title = newTitle,
-					TargetType = SetTitleArgs.TargetType.HardwareAndSoftware
-				}
-			};
+			  _Logger.LogError(ex, "Error while processing payload from StreamDeck");
+			}
+		  }
 
-			await _Proxy.SendStreamDeckEvent(args);
+		  await Task.Delay(100);
 		}
+	  }
 
-		public async Task SetImageAsync(string context, string imageLocation)
+	  Dispose();
+	}
+
+	#region StreamDeck Methods
+
+	public async Task SetTitleAsync(string context, string newTitle)
+	{
+	  var args = new SetTitleArgs()
+	  {
+		context = context,
+		payload = new SetTitleArgs.Payload
 		{
-
-			var imgString = Convert.ToBase64String(File.ReadAllBytes(imageLocation), Base64FormattingOptions.None);
-
-			var args = new SetImageArgs
-			{
-				context = context,
-				payload = new SetImageArgs.Payload
-				{
-					TargetType = SetTitleArgs.TargetType.HardwareAndSoftware,
-					image = $"data:image/{new FileInfo(imageLocation).Extension.ToLowerInvariant().Substring(1)};base64, {imgString}"
-				}
-			};
-
-			await _Proxy.SendStreamDeckEvent(args);
+		  title = newTitle,
+		  TargetType = SetTitleArgs.TargetType.HardwareAndSoftware
 		}
+	  };
 
-		public async Task ShowAlertAsync(string context)
+	  await _Proxy.SendStreamDeckEvent(args);
+	}
+
+	public async Task SetImageAsync(string context, string imageLocation)
+	{
+
+	  var imgString = Convert.ToBase64String(File.ReadAllBytes(imageLocation), Base64FormattingOptions.None);
+
+	  var args = new SetImageArgs
+	  {
+		context = context,
+		payload = new SetImageArgs.Payload
 		{
-			var args = new ShowAlertArgs()
-			{
-				context = context
-			};
-
-			await _Proxy.SendStreamDeckEvent(args);
+		  TargetType = SetTitleArgs.TargetType.HardwareAndSoftware,
+		  image = $"data:image/{new FileInfo(imageLocation).Extension.ToLowerInvariant().Substring(1)};base64, {imgString}"
 		}
+	  };
+
+	  await _Proxy.SendStreamDeckEvent(args);
+	}
+
+	public async Task ShowAlertAsync(string context)
+	{
+	  var args = new ShowAlertArgs()
+	  {
+		context = context
+	  };
+
+	  await _Proxy.SendStreamDeckEvent(args);
+	}
+
+	public async Task ShowOkAsync(string context)
+	{
+	  var args = new ShowOkArgs()
+	  {
+		context = context
+	  };
+
+	  await _Proxy.SendStreamDeckEvent(args);
+	}
 
 	public async Task SetSettingsAsync(string context, dynamic value)
 	{
 	  var args = new SetSettingsArgs()
 	  {
 		context = context,
-		payload = new { settingsModel = value }
-	  };
-	  await _Proxy.SendStreamDeckEvent(args);
-	}
-
-	public async Task GetSettingsAsync(string context)
-	{
-	  var args = new GetSettingsArgs()
-	  {
-		context = context
-	  };
-	  await _Proxy.SendStreamDeckEvent(args);
-	}
-
-	public async Task SetGlobalSettingsAsync(string context, dynamic value)
-	{
-	  var args = new SetGlobalSettingsArgs()
-	  {
-		context = context,
 		payload = value
 	  };
-	  await _Proxy.SendStreamDeckEvent(args);
-	}
 
-	public async Task GetGobalSettingsAsync(string context)
-	{
-	  var args = new GetGlobalSettingsArgs()
-	  {
-		context = context
-	  };
 	  await _Proxy.SendStreamDeckEvent(args);
 	}
 
 	public async Task SetStateAsync(string context, int state)
 	{
-
 	  var args = new SetStateArgs
 	  {
 		context = context,
@@ -362,115 +265,70 @@ namespace StreamDeckLib
 
 	  await _Proxy.SendStreamDeckEvent(args);
 	}
-		public async Task ShowOkAsync(string context)
+
+	
+
+	public async Task SwitchToProfileAsync(string context, string device, string profileName)
+	{
+
+	  var args = new SwitchToProfileArgs
+	  {
+		context = context,
+		device = device,
+		payload = new SwitchToProfileArgs.Payload
 		{
-			var args = new ShowOkArgs()
-			{
-				context = context
-			};
-
-			await _Proxy.SendStreamDeckEvent(args);
+		  profile = profileName
 		}
+	  };
 
-		public async Task SetSettingsAsync(string context, dynamic value)
-		{
-			var args = new SetSettingsArgs()
-			{
-				context = context,
-				payload = value
-			};
-
-			await _Proxy.SendStreamDeckEvent(args);
-		}
-
-		public async Task SetStateAsync(string context, int state)
-		{
-			var args = new SetStateArgs
-			{
-				context = context,
-				payload = new SetStateArgs.Payload
-				{
-					state = state
-				}
-			};
-
-			await _Proxy.SendStreamDeckEvent(args);
-		}
-
-		public async Task SendToPropertyInspectorAsync(string context, dynamic payload)
-		{
-
-			var args = new SendToPropertyInspectorArgs
-			{
-				action = _Uuid,
-				context = context,
-				payload = payload
-			};
-
-			await _Proxy.SendStreamDeckEvent(args);
-		}
-
-		public async Task SwitchToProfileAsync(string context, string device, string profileName)
-		{
-
-			var args = new SwitchToProfileArgs
-			{
-				context = context,
-				device = device,
-				payload = new SwitchToProfileArgs.Payload
-				{
-					profile = profileName
-				}
-			};
-
-			await _Proxy.SendStreamDeckEvent(args);
-		}
-
-		public async Task OpenUrlAsync(string context, string url)
-		{
-			var args = new OpenUrlArgs()
-			{
-				context = context,
-				payload = new OpenUrlArgs.Payload()
-				{
-					url = url
-				}
-			};
-
-			await _Proxy.SendStreamDeckEvent(args);
-		}
-
-		#endregion
-
-		#region IDisposable Support
-
-		private bool disposedValue = false; // To detect redundant calls
-		private static ILoggerFactory _LoggerFactory;
-		private static ILogger _Logger;
-
-		void Dispose(bool disposing)
-		{
-			if (!disposedValue)
-			{
-				if (disposing)
-				{
-					_Proxy.Dispose();
-				}
-
-				disposedValue = true;
-			}
-		}
-
-		// This code added to correctly implement the disposable pattern.
-		public void Dispose()
-		{
-			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-			Dispose(true);
-			// TODO: uncomment the following line if the finalizer is overridden above.
-			//GC.SuppressFinalize(this);
-		}
-
-		#endregion
+	  await _Proxy.SendStreamDeckEvent(args);
 	}
+
+	public async Task OpenUrlAsync(string context, string url)
+	{
+	  var args = new OpenUrlArgs()
+	  {
+		context = context,
+		payload = new OpenUrlArgs.Payload()
+		{
+		  url = url
+		}
+	  };
+
+	  await _Proxy.SendStreamDeckEvent(args);
+	}
+
+	#endregion
+
+	#region IDisposable Support
+
+	private bool disposedValue = false; // To detect redundant calls
+	private static ILoggerFactory _LoggerFactory;
+	private static ILogger _Logger;
+
+	void Dispose(bool disposing)
+	{
+	  if (!disposedValue)
+	  {
+		if (disposing)
+		{
+		  _Proxy.Dispose();
+		}
+
+		disposedValue = true;
+	  }
+	}
+
+	// This code added to correctly implement the disposable pattern.
+	public void Dispose()
+	{
+	  // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+	  Dispose(true);
+	  // TODO: uncomment the following line if the finalizer is overridden above.
+	  //GC.SuppressFinalize(this);
+	}
+
+	#endregion
+  }
 
 }
