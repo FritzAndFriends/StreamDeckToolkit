@@ -10,7 +10,7 @@ Within the directory from which you are reading this file, there exist a few oth
 
 * `_StreamDeckPlugin_.csproj`: The C# project file used to build the plugin
 * `Program.cs`: The code for the application which will be called by the [Stream Deck software][] when loading and running your plugin.
-* `_PluginName_.cs`: The file in which the functionality of the plugin will be written. This file provides the proverbial guts of your plugin.
+* `DefaultPluginAction.cs`: The file in which the functionality of the first (default) action for the plugin will be written. This file provides a basic implementation of an action for your plugin, following a pattern which can be repeated.
 
 ## What's Next?
 
@@ -90,6 +90,19 @@ The **Key Icon** is the icon which is displayed on the key(s) to which is is ass
 ##### Specifications
 
 Again, just as with the **Category Icon** and the **Action Image**,two separate copies of this file are needed, with the same naming rules but different sizes; a default one for a regular, non-scaled (high-DPI) display, and another for scaled display. The default icon should be 72 pixels squared (72x72px). Again, it should preferably named in a manner in which it can be easily related to either the action or state is represents, such as `actionIconButton.png` or `actionIconActive.png`.
+
+### Can I do any more?
+
+Of course! First, congratulations on getting your first action for your Stream Deck plugin working! To allow your plugin to do more, you will need to create (and implement) a new Action definition. Here is how you do this:
+
+1. Create a new class (in a new file or an existing one), and make sure it inherits from the `BaseStreamDeckAction` class
+e.g.: `internal class MyNextPluginAction : BaseStreamDeckAction`
+2. Implement the required properties and methods, such as `UUID`
+3. Register it with the `ConnectionManager` instance within the `Program.cs` file. Look for the `.RegisterAction(new DefaultPluginAction()` code line, copy it, and change the type `DefaultPluginAction` to your new class' name. From the example in step 1, this would look like `.RegisterAction(new MyNextPluginAction())`.
+4. Add a definition for the new action in the `manifest.json` file, ensuring that the value for the `UUID` field in the manifest matches the `UUID` property of your new class.
+
+That's it! Repeat this process for any additional actions you wish to include and perform as part of your plugin.
+
 
 ## References
 Here are some helpful references for both this template and the Stream Deck:

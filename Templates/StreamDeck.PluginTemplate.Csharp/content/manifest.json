@@ -11,8 +11,8 @@
         }
       ],
       "SupportedInMultiActions": false,
-      "Tooltip": "",
-      "UUID": "$(UUID)"
+      "Tooltip": "The first action for the $(PluginName) Stream Deck plugin",
+      "UUID": "$(UUID).DefaultPluginAction"
     }
   ],
   "Author": "",

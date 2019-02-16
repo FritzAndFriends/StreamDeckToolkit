@@ -5,6 +5,7 @@ using Serilog.Settings.Configuration;
 using StreamDeckLib;
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ using System.Diagnostics;
 
 namespace _StreamDeckPlugin_
 {
-	    class Program
+		class Program
     {
         static ILoggerFactory GetLoggerFactory()
         {
@@ -43,39 +44,50 @@ namespace _StreamDeckPlugin_
         static async Task Main(string[] args)
         {
 
+#if DEBUG
+      // This gives us our "first chance" debugging, before even parsing the command
+      // line args, without the need to manually edit the code to toggle the feature
+      // ability on or off.
+
+						if (args.Select(arg => arg.Replace("--", "-"))
+										.Any(arg => arg.Equals("-break")))
+						{
+							Console.WriteLine("Debugging has been requested. Waiting for a debugger to attach...");
+							Debugger.Launch();
+
+							while (!Debugger.IsAttached)
+							{
+								await Task.Delay(500);
+								Console.Write(".");
+							}
+						}
+#endif
+
+						using (var loggerFactory = GetLoggerFactory())
+						{
+								try
+								{
+
+										await ConnectionManager.Initialize(args, loggerFactory)
+																					.RegisterAction(new DefaultPluginAction())
+																					.StartAsync();
+
+								}
+								catch (Exception ex)
+								{
+										TopLogger.LogError(ex, "Error while running the plugin");
+								}
+						}
 
 #if DEBUG
-
-            Debugger.Launch();
-
-            while (!Debugger.IsAttached)
-            {
-                await Task.Delay(100);
-            }
-
+						if (Debugger.IsAttached)
+						{
+							// If a debugger is attached, give the developer a last chance to inspect
+							// variables, state, etc. before the process terminates.
+							Debugger.Break();
+						}
 #endif
-            using (var source = new CancellationTokenSource())
-            {
-                using (var loggerFactory = GetLoggerFactory())
-                {
-                    try
-                    {
 
-                        await ConnectionManager.Initialize(args, loggerFactory)
-                            .SetPlugin(new $(PluginName)())
-                            .StartAsync(source.Token);
-
-                        Console.ReadLine();
-
-                    }
-                    catch (Exception ex)
-                    {
-                        TopLogger.LogError(ex, "Error while running the plugin");
-                    }
-                    source.Cancel();
-                }
-
-            }
-        }
-    }
+				}
+		}
 }
