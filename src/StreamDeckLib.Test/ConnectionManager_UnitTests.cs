@@ -135,6 +135,20 @@ namespace StreamDeckLib.Test
 				.NotThrow("registering multiple unique actions is valid");
 		}
 
+		[Fact]
+		public async Task ShouldRegisterAllActions_WhenRegisteringAllActions()
+		{
+
+			Func<ConnectionManager> action = () => ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments)
+		.RegisterAllActions(this.GetType().Assembly);
+
+			action.Should()
+				.NotThrow("No problems when registering All Actions");
+
+
+		}
+
+
 	}
 
 }
