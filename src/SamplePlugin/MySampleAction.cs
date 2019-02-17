@@ -22,7 +22,7 @@ namespace SamplePlugin
 		// Cheer 1030 kulu83 Jan 15, 2019
 		// Cheer 2500 Auth0Bobby Jan 15, 2019
 
-		public override string UUID => "com.csharpfritz.samplePlugin.action";
+		public override string ActionUUID => "com.csharpfritz.samplePlugin.action";
 
 		private static int  _Counter                      = 0;
 		private static bool _IsPropertyInspectorConnected = false;

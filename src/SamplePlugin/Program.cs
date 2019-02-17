@@ -1,4 +1,4 @@
-﻿using StreamDeckLib;
+using StreamDeckLib;
 using System.Threading.Tasks;
 
 namespace SamplePlugin
@@ -20,7 +20,6 @@ namespace SamplePlugin
 
 				await ConnectionManager.Initialize(args, config.LoggerFactory)
 															 .RegisterAction(new MySampleAction())
-															 .RegisterAction(new Mysecon())
 															 .StartAsync();
 
 			}

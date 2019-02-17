@@ -20,7 +20,7 @@ namespace StreamDeckLib
 			ValidateActionForRegistration(action);
 
 			action.Manager = manager;
-			action.Logger = _LoggerFactory.CreateLogger(action.UUID);
+			action.Logger = _LoggerFactory.CreateLogger(action.ActionUUID);
 
 			_ActionsDictionary.Add(action.RegistrationKey, action);
 
@@ -33,7 +33,7 @@ namespace StreamDeckLib
 
 			if (IsActionRegistered(action.RegistrationKey))
 			{
-				throw new DuplicateActionRegistrationException(action.UUID);
+				throw new DuplicateActionRegistrationException(action.ActionUUID);
 			}
 
 		}

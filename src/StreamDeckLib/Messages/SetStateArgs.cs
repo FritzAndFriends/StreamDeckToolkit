@@ -1,4 +1,4 @@
-﻿namespace StreamDeckLib.Messages
+namespace StreamDeckLib.Messages
 {
 	public class SetStateArgs : BaseStreamDeckArgs
 	{
@@ -6,7 +6,7 @@
 		public Payload payload { get; set; }
 		public class Payload
 		{
-			public int state{ get; set; }
+			public int state { get; set; }
 		}
 
 	}

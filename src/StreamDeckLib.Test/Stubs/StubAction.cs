@@ -15,7 +15,7 @@ namespace StreamDeckLib.Test
 		}
 		
 		private         string _uuid;
-		public override string UUID => this._uuid;
+		public override string ActionUUID => this._uuid;
 
 
 		public StubAction SetUUID(string uuid)
