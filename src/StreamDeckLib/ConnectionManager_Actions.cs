@@ -22,7 +22,12 @@ namespace StreamDeckLib
 			action.Manager = manager;
 			action.Logger = _LoggerFactory.CreateLogger(action.UUID);
 
-			_ActionsDictionary.Add(action.RegistrationKey, action);
+			try
+			{
+				_ActionsDictionary.Add(action.RegistrationKey, action);
+			} catch (ArgumentException ex) {
+				throw new DuplicateActionRegistrationException(action.UUID, ex);
+			}
 
 			return manager;
 		}

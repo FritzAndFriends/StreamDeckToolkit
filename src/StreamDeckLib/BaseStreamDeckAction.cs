@@ -13,6 +13,16 @@ namespace StreamDeckLib
 
   public abstract class BaseStreamDeckAction
   {
+
+		public BaseStreamDeckAction() { }
+
+		public BaseStreamDeckAction(string uuid)
+		{
+
+			this.UUID = uuid;
+
+		}
+
     /// <summary>
     /// The <seealso cref="ConnectionManager"/> with which this instance
     /// of the <seealso cref="BaseStreamDeckAction"/> is registered.
@@ -24,7 +34,7 @@ namespace StreamDeckLib
     /// Gets the UUID which uniquely identifies the individual actions within a plugin.
     /// </summary>
     /// <value>The UUID representing the action, which matches the value in the &quot;manifest.json&quot; file.</value>
-    public abstract string UUID { get; }
+    public virtual string UUID { get; private set; }
 
     /// <summary>
     /// Gets the value of <seealso cref="UUID"/> in a format which can be used for 
