@@ -74,7 +74,7 @@ namespace StreamDeckLib
 			// TODO: Validate the info parameter
 			var myInfo = JsonConvert.DeserializeObject<Messages.Info>(info);
 
-			_LoggerFactory = loggerFactory;
+			_LoggerFactory = loggerFactory ?? NullLoggerFactory.Instance;
 			_Logger = loggerFactory?.CreateLogger("ConnectionManager") ?? NullLogger.Instance;
 
 			var manager = new ConnectionManager()
@@ -92,7 +92,7 @@ namespace StreamDeckLib
 		[Obsolete("This method is obsolete, and the cancellation token \"token\" will not be used. Update your code to use the parameterless StartAsync() method", false)]
 		public async Task<ConnectionManager> StartAsync(CancellationToken token)
 		{
-			return await this.StartAsync();
+			return this.StartAsync();
 		}
 
 		public async Task<ConnectionManager> StartAsync()
@@ -110,76 +110,75 @@ namespace StreamDeckLib
 			throw new NotImplementedException();
 		}
 
-		private async Task Run()
+		private async Task Run(CancellationToken token)
 		{
-			using (var cancellationSource = new CancellationTokenSource())
+
+			await _Proxy.ConnectAsync(new Uri($"ws://localhost:{_Port}"), token);
+			await _Proxy.Register(_RegisterEvent, _Uuid);
+
+			var keepRunning = true;
+
+			while (!token.IsCancellationRequested && keepRunning)
 			{
-				var token = cancellationSource.Token;
-
-				await _Proxy.ConnectAsync(new Uri($"ws://localhost:{_Port}"), token);
-				await _Proxy.Register(_RegisterEvent, _Uuid);
-
-				var keepRunning = true;
-
-				while (!token.IsCancellationRequested)
+				// Exit loop if the socket is closed or aborted
+				switch (_Proxy.State)
 				{
-					// Exit loop if the socket is closed or aborted
-					switch (_Proxy.State)
+					case WebSocketState.CloseReceived:
+					case WebSocketState.Closed:
+					case WebSocketState.Aborted:
+				        cancellationSource.Cancel();
+						keepRunning = false;
+
+						break;
+				}
+
+				if (!keepRunning) break;
+
+				var jsonString = await _Proxy.GetMessageAsString(token);
+
+				if (!string.IsNullOrEmpty(jsonString) && !jsonString.StartsWith("\0"))
+				{
+					try
 					{
-						case WebSocketState.CloseReceived:
-						case WebSocketState.Closed:
-						case WebSocketState.Aborted:
-							cancellationSource.Cancel();
-							keepRunning = false;
+						var msg = JsonConvert.DeserializeObject<StreamDeckEventPayload>(jsonString);
 
-							break;
+						if (msg == null)
+						{
+							_Logger.LogError($"Unknown message received: {jsonString}");
+
+							continue;
+						}
+
+						if (_ActionEventsIgnore.Contains(msg.Event)) { continue; }
+
+						// Make sure we have a registered BaseStreamDeckAction instance registered for the received action (UUID)
+						if (!_ActionsDictionary.ContainsKey(msg.action))
+						{
+							_Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
+						}
+
+						var action = _ActionsDictionary[msg.action];
+
+
+							//property inspector payload
+									//property inspector event
+						if (!_EventDictionary.ContainsKey(msg.Event))
+						{
+							_Logger.LogWarning($"Plugin does not handle the event '{msg.Event}'");
+
+							continue;
+						}
+
+						_EventDictionary[msg.Event]?.Invoke(action, msg);
+
 					}
-
-					if (!keepRunning) break;
-
-					var jsonString = await _Proxy.GetMessageAsString(token);
-
-					if (!string.IsNullOrEmpty(jsonString) && !jsonString.StartsWith("\0"))
+					catch (Exception ex)
 					{
-						try
-						{
-							var msg = JsonConvert.DeserializeObject<StreamDeckEventPayload>(jsonString);
-
-							if (msg == null)
-							{
-								_Logger.LogError($"Unknown message received: {jsonString}");
-
-								continue;
-							}
-
-							if (_ActionEventsIgnore.Contains(msg.Event)) { continue; }
-
-							// Make sure we have a registered BaseStreamDeckAction instance registered for the received action (UUID)
-							if (!_ActionsDictionary.ContainsKey(msg.action))
-							{
-								_Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
-							}
-
-							var action = _ActionsDictionary[msg.action];
-
-
-							if (!_EventDictionary.ContainsKey(msg.Event))
-							{
-								_Logger.LogWarning($"Plugin does not handle the event '{msg.Event}'");
-
-								continue;
-							}
-
-							_EventDictionary[msg.Event]?.Invoke(action, msg);
-
-						}
-						catch (Exception ex)
-						{
-							_Logger.LogError(ex, "Error while processing payload from StreamDeck");
-						}
+						_Logger.LogError(ex, "Error while processing payload from StreamDeck");
 					}
+				}
 
-					await Task.Delay(100);
+				await Task.Delay(100);
 				}
 			}
 

@@ -4,7 +4,7 @@ namespace StreamDeckLib.Test
 	public class StubAction : BaseStreamDeckAction
 	{
 
-		public StubAction() : this(string.Empty)
+		public StubAction() : this("Test UUID")
 		{
 			
 		}
