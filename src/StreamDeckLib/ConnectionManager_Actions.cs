@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace StreamDeckLib
 {
@@ -12,6 +14,21 @@ namespace StreamDeckLib
 
 		public ConnectionManager RegisterAction(BaseStreamDeckAction action) => RegisterActionInternal(this, action);
 
+		public ConnectionManager RegisterAllActions(Assembly assembly)
+		{
+
+			var actions = assembly.GetTypes().Where(t => typeof(BaseStreamDeckAction).IsAssignableFrom(t));
+
+			foreach (var actionType in actions)
+			{
+				var newAction = Activator.CreateInstance(actionType) as BaseStreamDeckAction;
+				RegisterActionInternal(this, newAction);
+			}
+
+			return this;
+
+		}
+
 		private static ConnectionManager RegisterActionInternal(ConnectionManager manager, BaseStreamDeckAction action)
 		{
 
@@ -22,7 +39,12 @@ namespace StreamDeckLib
 			action.Manager = manager;
 			action.Logger = _LoggerFactory.CreateLogger(action.UUID);
 
-			_ActionsDictionary.Add(action.RegistrationKey, action);
+			try
+			{
+				_ActionsDictionary.Add(action.RegistrationKey, action);
+			} catch (ArgumentException ex) {
+				throw new DuplicateActionRegistrationException(action.UUID, ex);
+			}
 
 			return manager;
 		}

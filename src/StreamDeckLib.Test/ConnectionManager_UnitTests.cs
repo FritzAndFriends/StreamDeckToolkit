@@ -37,10 +37,14 @@ namespace StreamDeckLib.Test
 			           };
 
 			// Act
-			await ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments, null, stub)
-			                       .StartAsync();
+			var tokenSource = new CancellationTokenSource();
+			var task = ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments, null, stub)
+			                       .StartAsync(tokenSource.Token);
 
 			// Assert
+			Assert.Null(task.Exception);
+			tokenSource.Cancel();
+
 		}
 
 		[Fact]
@@ -100,16 +104,11 @@ namespace StreamDeckLib.Test
 			                                                        .RegisterAction(new StubAction("UniqueID"));
 
 			//
-			// Act
-			//
-			action.
-				
-			//
 			// Assert
 			//
 
 			//TODO: Wording? "unique UUID" is like saying "PIN number". It's "just" a test, but still syntactically incorrect. 
-			Should()
+			action.Should()
 			.Throw<DuplicateActionRegistrationException>("each BaseStreamDeckAction type should have its own unique UUID.");
 		}
 
@@ -123,22 +122,32 @@ namespace StreamDeckLib.Test
 
 
 			Func<ConnectionManager> action = () => ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments)
-			                                                        .RegisterAction(new StubAction("Unique_Action_ID_1"))
-			                                                        .RegisterAction(new StubAction("Unique_Action_ID_2"));
+				.RegisterAction(new StubAction("Unique_Action_ID_1"))
+				.RegisterAction(new StubAction("Unique_Action_ID_2"));
 
-			//
-			// Act
-			//
-			action.
 
 				//
 				// Assert
 				//
 
 				//TODO: Wording? "unique UUID" is like saying "PIN number". It's "just" a test, but still syntactically incorrect. 
-				Should()
+				action.Should()
 				.NotThrow("registering multiple unique actions is valid");
 		}
+
+		[Fact]
+		public async Task ShouldRegisterAllActions_WhenRegisteringAllActions()
+		{
+
+			Func<ConnectionManager> action = () => ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments)
+		.RegisterAllActions(this.GetType().Assembly);
+
+			action.Should()
+				.NotThrow("No problems when registering All Actions");
+
+
+		}
+
 
 	}
 
