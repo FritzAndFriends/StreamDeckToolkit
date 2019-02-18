@@ -24,7 +24,7 @@ namespace StreamDeckLib.Test
 		}
 
 		[Fact]
-		public async Task ShouldRegisterEvent_WhenInitializedWithCorrectArgs()
+		public void ShouldRegisterEvent_WhenInitializedWithCorrectArgs()
 		{
 			// Arrange
 			var stub = new StubProxy()
@@ -37,14 +37,13 @@ namespace StreamDeckLib.Test
 			           };
 
 			// Act
-			await ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments, null, stub)
-			                       .StartAsync();
+			ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments, null, stub);
 
 			// Assert
 		}
 
 		[Fact]
-		public async Task ShouldThrowArgumentNullException_WhenRegisteringANullAction()
+		public void ShouldThrowArgumentNullException_WhenRegisteringANullAction()
 		{
 			//
 			// Arrange
@@ -67,7 +66,7 @@ namespace StreamDeckLib.Test
 
 
 		[Fact]
-		public async Task ShouldThrowArgumentException_WhenRegisteringAnActionWithoutAUUID()
+		public void ShouldThrowArgumentException_WhenRegisteringAnActionWithoutAUUID()
 		{
 			//
 			// Arrange
@@ -88,7 +87,7 @@ namespace StreamDeckLib.Test
 		}
 
 		[Fact]
-		public async Task ShouldThrowDuplicateActionRegistrationException_WhenRegisteringMultipleInstancesOfTheSameAction()
+		public void ShouldThrowDuplicateActionRegistrationException_WhenRegisteringMultipleInstancesOfTheSameAction()
 		{
 			//
 			// Arrange
@@ -110,7 +109,7 @@ namespace StreamDeckLib.Test
 
 
 		[Fact]
-		public async Task ShouldNotThrowAnyExceptions_WhenRegistringMultipleUniqueActions()
+		public void ShouldNotThrowAnyExceptions_WhenRegistringMultipleUniqueActions()
 		{
 			//
 			// Arrange
@@ -132,7 +131,7 @@ namespace StreamDeckLib.Test
 		}
 
 		[Fact]
-		public async Task ShouldRegisterAllActions_WhenRegisteringAllActions()
+		public void ShouldRegisterAllActions_WhenRegisteringAllActions()
 		{
 
 			Func<ConnectionManager> action = () => ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments)
