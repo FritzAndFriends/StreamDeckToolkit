@@ -37,14 +37,10 @@ namespace StreamDeckLib.Test
 			           };
 
 			// Act
-			var tokenSource = new CancellationTokenSource();
-			var task = ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments, null, stub)
-			                       .StartAsync(tokenSource.Token);
+			await ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments, null, stub)
+			                       .StartAsync();
 
 			// Assert
-			Assert.Null(task.Exception);
-			tokenSource.Cancel();
-
 		}
 
 		[Fact]
