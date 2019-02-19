@@ -1,16 +1,11 @@
 ﻿Write-Host "Gathering deployment items..."
 
-Write-Host "Script root: $PSScriptRoot`n"
+Write-Host "Current Working Directory: $(get-location)"
 
-$basePath = $PSScriptRoot
+$basePath = $(get-location)
 
-if (!($PSSCriptRoot)) {
-  $basePath = $PWD.Path;
-}
-
-
-# Load and parse the plugin project file
-$pluginProjectFile = Join-Path $basePath "SamplePlugin.csproj"
+# Load and parse the plugin project file - Fully expects there to be only one csproj file in there
+$pluginProjectFile = Get-ChildItem -Filter *.csproj | Select-Object -First 1
 $projectContent = Get-Content $pluginProjectFile | Out-String;
 $projectXML = [xml]$projectContent;
 
@@ -30,7 +25,7 @@ if ($IsMacOS) {
 
 # Make sure we actually have a directory/build to deploy
 If (-not (Test-Path $bindir)) {
-  Write-Error "The output directory `"$bindir`" was not found.`n You must first build the `"SamplePlugin.csproj`" project before calling this script.";
+  Write-Error "The output directory `"$bindir`" was not found.`n You must first build the project before calling this script.";
   exit 1;
 }
 
@@ -58,9 +53,8 @@ $bindir =  Join-Path $bindir "*"
 
 # Then copy all deployment items to the plugin directory
 New-Item -Type Directory -Path $destDir -ErrorAction SilentlyContinue # | Out-Null
-$bindir = $bindir +"\*"
 Copy-Item -Path $bindir -Destination $destDir -Recurse
-
 
 Write-Host "Deployment complete. We will NOT restart the Stream Deck desktop application here, but will from the template..."
 # Start-Process $streamDeckExePath
+exit 0
