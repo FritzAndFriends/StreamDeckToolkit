@@ -39,7 +39,7 @@ namespace StreamDeckLib.Config
 
 		public static ConfigurationBuilder BuildDefaultConfiguration(string[] args) {
 
-			var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			var dir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 			Directory.SetCurrentDirectory(dir);
 
 			var configuration = new CONFIG.ConfigurationBuilder()
