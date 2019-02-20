@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
 using StreamDeckLib.Messages;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.WebSockets;
@@ -230,6 +231,9 @@ namespace StreamDeckLib
 
 		public async Task SetImageAsync(string context, string imageLocation)
 		{
+
+			Debug.WriteLine($"Getting Image from {new FileInfo(imageLocation).FullName} on disk");
+			_Logger.LogDebug($"Getting Image from {new FileInfo(imageLocation).FullName} on disk");
 
 			var imgString = Convert.ToBase64String(File.ReadAllBytes(imageLocation), Base64FormattingOptions.None);
 
