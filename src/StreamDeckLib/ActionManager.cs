@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 namespace StreamDeckLib
 {
-  internal partial class ActionManager
+  public partial class ActionManager : IDisposable
   {
 		private readonly Dictionary<string, Type> _Actions = new Dictionary<string, Type>();
 
@@ -62,5 +62,50 @@ namespace StreamDeckLib
 			return this;
 		}
 
-  }
+		public BaseStreamDeckAction GetAction(string actionUUID)
+		{
+			if (this._ActionInstances.ContainsKey(actionUUID))
+			{
+				return this._ActionInstances[actionUUID];
+			}
+
+			throw new ActionNotRegisteredException(actionUUID);
+		}
+
+		#region IDisposable Support
+		private bool disposedValue = false; // To detect redundant calls
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (!disposedValue)
+			{
+				if (disposing)
+				{
+					// TODO: dispose managed state (managed objects).
+				}
+
+				// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+				// TODO: set large fields to null.
+
+				disposedValue = true;
+			}
+		}
+
+		// TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+		// ~ActionManager() {
+		//   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+		//   Dispose(false);
+		// }
+
+		// This code added to correctly implement the disposable pattern.
+		public void Dispose()
+		{
+			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+			Dispose(true);
+			// TODO: uncomment the following line if the finalizer is overridden above.
+			// GC.SuppressFinalize(this);
+		}
+		#endregion
+
+	}
 }

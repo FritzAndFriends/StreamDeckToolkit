@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
@@ -80,10 +80,10 @@
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
-
+	<!--
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)'=='Debug'">
 		<Exec Condition=" '$(OS)' == 'Windows_NT' " Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)../../scripts/registration/RegisterPluginAndStartStreamDeck.ps1&quot;" />
 		<Exec Condition=" '$(OS)' != 'Windows_NT' " Command="bash $(ProjectDir)../../scripts/registration/RegisterPluginAndStartStreamDeck.sh" />
 	</Target>
-
+	-->
 </Project>
