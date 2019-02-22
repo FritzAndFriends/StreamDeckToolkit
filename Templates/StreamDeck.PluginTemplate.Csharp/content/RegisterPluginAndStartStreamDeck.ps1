@@ -31,14 +31,7 @@ If (-not (Test-Path $bindir)) {
   exit 1;
 }
 
-# Load and parse the plugin's manifest file
-$manifestFile = $bindir +"\manifest.json"
-$manifestContent = Get-Content $manifestFile | Out-String
-$json = ConvertFrom-JSON $manifestcontent
-
-$uuidAction = $json.Actions[0].UUID
-
-$pluginID = $uuidAction.substring(0, $uuidAction.Length - ".action".Length)
+$pluginID = "$(UUID)"
 $destDir = "$($env:APPDATA)\Elgato\StreamDeck\Plugins\$pluginID.sdPlugin"
 
 $pluginName = Split-Path $basePath -leaf
@@ -47,7 +40,7 @@ Get-Process -Name ("StreamDeck", $pluginName) -ErrorAction SilentlyContinue | St
 
 # Delete the target directory, make sure the deployment/copy is clean
 If (Test-Path $destDir) {
-  Remove-Item -Recurse -Force -Path $destDir 
+  Remove-Item -Recurse -Force -Path $destDir
 }
 
 # Then copy all deployment items to the plugin directory
