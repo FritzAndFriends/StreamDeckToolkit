@@ -22,6 +22,7 @@
 	<!--Dependencies-->
 	<ItemGroup>
 		<PackageReference Include="StreamDeckLib" Version="0.*" />
+		<PackageReference Include="StreamDeckLib.Config" Version="0.*" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
 		<PackageReference Include="Serilog.Settings.Configuration" Version="3.0.1" />
