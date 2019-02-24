@@ -23,11 +23,9 @@ namespace StreamDeckLib
 		private string _Uuid;
 		private string _RegisterEvent;
 		private IStreamDeckProxy _Proxy;
-		private BaseStreamDeckPlugin _Plugin;
-
+	
 		private ConnectionManager()
 		{
-	  _Plugin = new BaseStreamDeckPlugin(this);
 		}
 
 		public Messages.Info Info { get; private set; }
@@ -155,7 +153,7 @@ namespace StreamDeckLib
 						}
 
 
-						var action = _Plugin.GetInstanceOfAction(msg.context, msg.action);
+						var action = GetInstanceOfAction(msg.context, msg.action);
 						if (action == null)
 						{
 							_Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
