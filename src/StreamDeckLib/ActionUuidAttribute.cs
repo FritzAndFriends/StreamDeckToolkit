@@ -4,6 +4,6 @@ namespace StreamDeckLib
 {
   public class ActionUuidAttribute : Attribute
   {
-		public string Uuid { get; set; }
+	public string Uuid { get; set; }
   }
 }

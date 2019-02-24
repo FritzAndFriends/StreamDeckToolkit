@@ -19,12 +19,4 @@
   <ItemGroup>
     <Folder Include="Exceptions\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Remove="Messages\SamplePlugin.cmd" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Messages\SamplePlugin.cmd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
 </Project>

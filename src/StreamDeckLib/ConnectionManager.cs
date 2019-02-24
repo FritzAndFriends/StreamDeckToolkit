@@ -226,7 +226,7 @@ namespace StreamDeckLib
 	  var args = new SetSettingsArgs()
 	  {
 		context = context,
-		payload = value
+		payload = new { settingsModel = value }
 	  };
 
 	  await _Proxy.SendStreamDeckEvent(args);
