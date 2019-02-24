@@ -23,9 +23,11 @@ namespace StreamDeckLib
 		private string _Uuid;
 		private string _RegisterEvent;
 		private IStreamDeckProxy _Proxy;
+		private BaseStreamDeckPlugin _Plugin;
 
 		private ConnectionManager()
 		{
+	  _Plugin = new BaseStreamDeckPlugin(this);
 		}
 
 		public Messages.Info Info { get; private set; }
@@ -152,41 +154,11 @@ namespace StreamDeckLib
 							continue;
 						}
 
-						if (_ActionEventsIgnore.Contains(msg.Event)) { continue; }
 
-						// Make sure we have a registered BaseStreamDeckAction instance registered for the received action (UUID)
-						if (!_ActionsDictionary.ContainsKey(msg.action))
+						var action = _Plugin.GetInstanceOfAction(msg.context, msg.action);
+						if (action == null)
 						{
 							_Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
-						}
-
-						var action = _ActionsDictionary[msg.action];
-
-
-						//property inspector payload
-						if (msg.Event == "sendToPlugin")
-						{
-							var piMsg = JsonConvert.DeserializeObject<PropertyInspectorEventPayload>(jsonString);
-							if (piMsg.PayloadHasProperty("property_inspector"))
-							{
-								//property inspector event
-								var piEvent = piMsg.GetPayloadValue<string>("property_inspector");
-								if (!_PropertyInspectorActionDictionary.ContainsKey(piEvent))
-								{
-									_Logger.LogWarning($"Plugin does not handle the Property Inspector event '{piEvent}'");
-									continue;
-								}
-								else
-								{
-									_PropertyInspectorActionDictionary[piEvent]?.Invoke(action, piMsg);
-									continue;
-
-								}
-
-							}
-
-							//property inspector property value event
-							_PropertyInspectorActionDictionary[piMsg.Event]?.Invoke(action, piMsg);
 							continue;
 						}
 
@@ -275,7 +247,7 @@ namespace StreamDeckLib
 			var args = new SetSettingsArgs()
 			{
 				context = context,
-				payload = value
+				payload = new { settingsModel = value }
 			};
 
 			await _Proxy.SendStreamDeckEvent(args);
@@ -290,19 +262,6 @@ namespace StreamDeckLib
 				{
 					state = state
 				}
-			};
-
-			await _Proxy.SendStreamDeckEvent(args);
-		}
-
-		public async Task SendToPropertyInspectorAsync(string context, dynamic payload)
-		{
-
-			var args = new SendToPropertyInspectorArgs
-			{
-				action = _Uuid,
-				context = context,
-				payload = payload
 			};
 
 			await _Proxy.SendStreamDeckEvent(args);
