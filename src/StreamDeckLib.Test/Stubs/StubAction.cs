@@ -1,6 +1,6 @@
 namespace StreamDeckLib.Test
 {
-
+	[ActionUuid(Uuid = "Test UUID")]
 	public class StubAction : BaseStreamDeckAction
 	{
 
@@ -14,9 +14,8 @@ namespace StreamDeckLib.Test
 			this._uuid = uuid;
 		}
 		
-		private         string _uuid;
-		public override string ActionUUID => this._uuid;
-
+		private string _uuid;
+	
 
 		public StubAction SetUUID(string uuid)
 		{

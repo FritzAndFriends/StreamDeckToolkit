@@ -1,13 +1,11 @@
-﻿using SamplePlugin.models;
+﻿using SamplePlugin.Models;
 using StreamDeckLib;
 using StreamDeckLib.Messages;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SamplePlugin
 {
+	[ActionUuid(Uuid = "com.csharpfritz.samplePlugin.action")]
   public class MySamplePluginAction : BaseStreamDeckActionWithSettingsModel<CounterSettingsModel>
   {
 	// Cheer 342 cpayette 15/2/19
@@ -24,8 +22,6 @@ namespace SamplePlugin
 	// Cheer 600 yarrgh Jan 15, 2019
 	// Cheer 1030 kulu83 Jan 15, 2019
 	// Cheer 2500 Auth0Bobby Jan 15, 2019
-
-	public override string ActionUuid =>  "com.csharpfritz.samplePlugin.action";
 
 	public override async Task OnKeyUp(StreamDeckEventPayload args)
 	{

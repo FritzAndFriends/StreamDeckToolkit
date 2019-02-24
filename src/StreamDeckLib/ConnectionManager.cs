@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using StreamDeckLib.Messages;
 using System;
 using System.IO;
-using System.Linq;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,9 +21,11 @@ namespace StreamDeckLib
 	private string _Uuid;
 	private string _RegisterEvent;
 	private IStreamDeckProxy _Proxy;
+	private BaseStreamDeckPlugin _Plugin;
 
 	private ConnectionManager()
 	{
+	  _Plugin = new BaseStreamDeckPlugin(this);
 	}
 
 	public Messages.Info Info { get; private set; }
@@ -85,24 +86,20 @@ namespace StreamDeckLib
 		Info = myInfo,
 		_Proxy = streamDeckProxy
 	  };
-
 	  return manager;
 	}
 
-	[Obsolete("This method is obsolete, and the cancellation token \"token\" will not be used. Update your code to use the parameterless StartAsync() method", false)]
 	public async Task<ConnectionManager> StartAsync(CancellationToken token)
 	{
-	  return await this.StartAsync();
+	  TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+	  await Run(token);
+	  return this;
 	}
 
 	public async Task<ConnectionManager> StartAsync()
 	{
-	  TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
-
-	  await Run();
-
-	  return this;
-
+	  var source = new CancellationTokenSource();
+	  return await this.StartAsync(source.Token);
 	}
 
 	private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
@@ -110,76 +107,62 @@ namespace StreamDeckLib
 	  throw new NotImplementedException();
 	}
 
-	private async Task Run()
+	private async Task Run(CancellationToken token)
 	{
-	  using (var cancellationSource = new CancellationTokenSource())
+	  await _Proxy.ConnectAsync(new Uri($"ws://localhost:{_Port}"), token);
+	  await _Proxy.Register(_RegisterEvent, _Uuid);
+
+	  var keepRunning = true;
+
+	  while (!token.IsCancellationRequested && keepRunning)
 	  {
-		var token = cancellationSource.Token;
-
-		await _Proxy.ConnectAsync(new Uri($"ws://localhost:{_Port}"), token);
-		await _Proxy.Register(_RegisterEvent, _Uuid);
-
-		var keepRunning = true;
-
-		while (!token.IsCancellationRequested)
+		// Exit loop if the socket is closed or aborted
+		switch (_Proxy.State)
 		{
-		  // Exit loop if the socket is closed or aborted
-		  switch (_Proxy.State)
-		  {
-			case WebSocketState.CloseReceived:
-			case WebSocketState.Closed:
-			case WebSocketState.Aborted:
-			  cancellationSource.Cancel();
-			  keepRunning = false;
-
-			  break;
-		  }
-
-		  if (!keepRunning) break;
-
-		  var jsonString = await _Proxy.GetMessageAsString(token);
-
-		  if (!string.IsNullOrEmpty(jsonString) && !jsonString.StartsWith("\0"))
-		  {
-			try
-			{
-			  var msg = JsonConvert.DeserializeObject<StreamDeckEventPayload>(jsonString);
-
-			  if (msg == null)
-			  {
-				_Logger.LogError($"Unknown message received: {jsonString}");
-
-				continue;
-			  }
-			  // Make sure we have a registered BaseStreamDeckAction instance registered for the received action (UUID)
-			  if (!_ActionsDictionary.ContainsKey(msg.action))
-			  {
-				_Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
-			  }
-
-			  var action = _ActionsDictionary[msg.action];
-
-
-			  if (!_EventDictionary.ContainsKey(msg.Event))
-			  {
-				_Logger.LogWarning($"Plugin does not handle the event '{msg.Event}'");
-
-				continue;
-			  }
-
-			  _EventDictionary[msg.Event]?.Invoke(action, msg);
-
-			}
-			catch (Exception ex)
-			{
-			  _Logger.LogError(ex, "Error while processing payload from StreamDeck");
-			}
-		  }
-
-		  await Task.Delay(100);
+		  case WebSocketState.CloseReceived:
+		  case WebSocketState.Closed:
+		  case WebSocketState.Aborted:
+			keepRunning = false;
+			break;
 		}
-	  }
+		if (!keepRunning) break;
+		var jsonString = await _Proxy.GetMessageAsString(token);
+		if (!string.IsNullOrEmpty(jsonString) && !jsonString.StartsWith("\0"))
 
+		{
+
+		  try
+		  {
+
+			var msg = JsonConvert.DeserializeObject<StreamDeckEventPayload>(jsonString);
+
+			if (msg == null)
+			{
+			  _Logger.LogError($"Unknown message received: {jsonString}");
+			  continue;
+			}
+
+			var action = _Plugin.GetInstanceOfAction(msg.context, msg.action);
+			if (action == null)
+			{
+			  _Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
+			  continue;
+			}
+
+			if (!_EventDictionary.ContainsKey(msg.Event))
+			{
+			  _Logger.LogWarning($"Plugin does not handle the event '{msg.Event}'");
+			  continue;
+			}
+			_EventDictionary[msg.Event]?.Invoke(action, msg);
+		  }
+		  catch (Exception ex)
+		  {
+			_Logger.LogError(ex, "Error while processing payload from StreamDeck");
+		  }
+		}
+		await Task.Delay(100);
+	  }
 	  Dispose();
 	}
 
@@ -263,7 +246,7 @@ namespace StreamDeckLib
 	  await _Proxy.SendStreamDeckEvent(args);
 	}
 
-	
+
 
 	public async Task SwitchToProfileAsync(string context, string device, string profileName)
 	{

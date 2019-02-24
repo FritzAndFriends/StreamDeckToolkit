@@ -3,28 +3,20 @@ using System.Threading.Tasks;
 
 namespace SamplePlugin
 {
-
-	class Program
+  class Program
+  {
+	// Cheer 200 careypayette February 14, 2019
+	// Cheer 100 roberttables February 14, 2019
+	// Cheer 100 careypayette February 15, 2019
+	// Cheer 100 devlead 15/2/2019
+	static async Task Main(string[] args)
 	{
-
-		// Cheer 200 careypayette February 14, 2019
-		// Cheer 100 roberttables February 14, 2019
-		// Cheer 100 careypayette February 15, 2019
-		// Cheer 100 devlead 15/2/2019
-
-		static async Task Main(string[] args)
-		{
-
-			using (var config = StreamDeckLib.Config.ConfigurationBuilder.BuildDefaultConfiguration(args))
-			{
-
-				await ConnectionManager.Initialize(args, config.LoggerFactory)
-															 .RegisterAllActions(typeof(Program).Assembly)
-															 .StartAsync();
-
-			}
-
-		}
+	  using (var config = StreamDeckLib.Config.ConfigurationBuilder.BuildDefaultConfiguration(args))
+	  {
+		await ConnectionManager.Initialize(args, config.LoggerFactory)
+												 .RegisterAllActions(typeof(Program).Assembly)
+												 .StartAsync();
+	  }
 	}
-
+  }
 }
