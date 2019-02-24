@@ -7,7 +7,7 @@ namespace StreamDeckLib
 	private string _uuid;
 	public ActionUuidAttribute(string uuid = "")
 	{
-	  _uuid = uuid;
+	  this.Uuid = uuid;
 	}
 
 	public string Uuid { get => _uuid; set => _uuid = value; }
