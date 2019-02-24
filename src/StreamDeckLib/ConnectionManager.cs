@@ -253,7 +253,18 @@ namespace StreamDeckLib
 			await _Proxy.SendStreamDeckEvent(args);
 		}
 
-		public async Task SetStateAsync(string context, int state)
+	public async Task SetGlobalSettingsAsync(string context, dynamic value)
+	{
+	  var args = new SetGlobalSettingsArgs()
+	  {
+		context = context,
+		payload = new { settingsModel = value }
+	  };
+
+	  await _Proxy.SendStreamDeckEvent(args);
+	}
+
+	public async Task SetStateAsync(string context, int state)
 		{
 			var args = new SetStateArgs
 			{
@@ -297,6 +308,20 @@ namespace StreamDeckLib
 			await _Proxy.SendStreamDeckEvent(args);
 		}
 
+
+	public async Task GetSettingsAsync(string context)
+	{
+	  var args = new GetSettingsArgs() { context = context };
+	  await _Proxy.SendStreamDeckEvent(args);
+	}
+
+
+	public async Task GetGlobalSettingsAsync(string context)
+	{
+		var args = new GetGlobalSettingsArgs() { context = context };
+		await _Proxy.SendStreamDeckEvent(args);
+	}
+		
 		#endregion
 
 		#region IDisposable Support

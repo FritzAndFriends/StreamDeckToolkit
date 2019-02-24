@@ -22,7 +22,9 @@ namespace StreamDeckLib
 	  ["applicationDidLaunch"] = (plugin, args) => plugin.OnApplicationDidLaunch(args),
 	  ["applicationDidTerminate"] = (plugin, args) => plugin.OnApplicationDidTerminate(args),
 	  ["didReceiveSettings"] = (plugin, args) => plugin.OnDidReceiveSettings(args),
-	  ["didReceiveGlobalSettings"] = (plugin, args) => plugin.OnDidReceiveGlobalSettings(args)
+	  ["didReceiveGlobalSettings"] = (plugin, args) => plugin.OnDidReceiveGlobalSettings(args),
+	  ["propertyInspectorDidDisappear"] = (plugin, args) => plugin.OnPropertyInspectorDidDisappear(args),
+	  ["propertyInspectorDidAppear"] = (plugin, args) => plugin.OnPropertyInspectorDidAppear(args)
 	};
   }
 
