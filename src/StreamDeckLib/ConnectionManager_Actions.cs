@@ -7,82 +7,51 @@ namespace StreamDeckLib
 {
 	partial class ConnectionManager
 	{
-		private static readonly Dictionary<string, BaseStreamDeckAction> _ActionsDictionary = new Dictionary<string, BaseStreamDeckAction>();
+	//string is the action UUID, type is the class type of the action
+	private Dictionary<string, Type> _actions = new Dictionary<string, Type>();
+	//string is the context, there will only ever be one action per context
+	private Dictionary<string, BaseStreamDeckAction> _contextActions = new Dictionary<string, BaseStreamDeckAction>();
 
-		[Obsolete("This method is obsolete, and has been replaced with the \"RegisterAction()\" method. Update your code to make use of this new method.", false)]
-		public ConnectionManager SetPlugin(BaseStreamDeckAction plugin) => this.RegisterAction(plugin);
-
-		public ConnectionManager RegisterAction(BaseStreamDeckAction action) => RegisterActionInternal(this, action);
-
-		public ConnectionManager RegisterAllActions(Assembly assembly)
-		{
-
-			var actions = assembly.GetTypes().Where(t => typeof(BaseStreamDeckAction).IsAssignableFrom(t));
-
-			foreach (var actionType in actions)
-			{
-				var newAction = Activator.CreateInstance(actionType) as BaseStreamDeckAction;
-				RegisterActionInternal(this, newAction);
-			}
-
-			return this;
-
-		}
-
-		private static ConnectionManager RegisterActionInternal(ConnectionManager manager, BaseStreamDeckAction action)
-		{
-
-			// Cheer 100 svavablount 15/2/19 
-
-			ValidateActionForRegistration(action);
-
-			action.Manager = manager;
-			action.Logger = _LoggerFactory.CreateLogger(action.UUID);
-
-			try
-			{
-				_ActionsDictionary.Add(action.RegistrationKey, action);
-			} catch (ArgumentException ex) {
-				throw new DuplicateActionRegistrationException(action.UUID, ex);
-			}
-
-			return manager;
-		}
-
-		private static void ValidateActionForRegistration(BaseStreamDeckAction action)
-		{
-			ValidateAction(action);
-
-			if (IsActionRegistered(action.RegistrationKey))
-			{
-				throw new DuplicateActionRegistrationException(action.UUID);
-			}
-
-		}
-
-		private static void ValidateAction(BaseStreamDeckAction action)
-		{
-			if (null == action)
-			{
-				throw new ArgumentNullException(nameof(action), "No action instance was given to register.");
-			}
-
-			if (string.IsNullOrWhiteSpace(action.RegistrationKey))
-			{
-				throw new IncompleteActionDefinitionException($"The action of type \"{action}\" does not define a valid UUID.");
-			}
-		}
-
-		private static bool IsActionRegistered(string actionUUID) => _ActionsDictionary.ContainsKey(actionUUID.ToLowerInvariant());
-
-		private static BaseStreamDeckAction GetRegisteredActionByUUID(string actionUUID)
-		{
-			if (!IsActionRegistered(actionUUID))
-			{
-				throw new ActionNotRegisteredException(actionUUID);
-			}
-
-			return _ActionsDictionary[actionUUID.ToLowerInvariant()];
-		}
+	//Cheer 100 svavablount 15/2/19 
+	public void RegisterActionType(string actionUuid, Type actionType)
+	{
+	  _actions.Add(actionUuid, actionType);
 	}
+
+	public BaseStreamDeckAction GetInstanceOfAction(string context, string actionUuid)
+	{
+	  //see if context exists, if so, return the associated action
+	  if (_contextActions.Any(x => x.Key.Equals(context)))
+	  {
+		return _contextActions[context];
+	  }
+	  else
+	  {
+		//see if we have a recorded type for the action
+		if (_actions.Any(x => x.Key.Equals(actionUuid)))
+		{
+		  var t = _actions[actionUuid];
+		  var action = Activator.CreateInstance(t) as BaseStreamDeckAction;
+		  action.Manager = this;
+		  action.Logger = _LoggerFactory.CreateLogger(action.ActionUuid);
+		  _contextActions.Add(context, action);
+		  return action;
+		}
+
+	  }
+	  return null;
+	}
+
+	public ConnectionManager RegisterAllActions(Assembly assembly)
+	{
+	  var actions = assembly.GetTypes().Where(t => Attribute.IsDefined(t, typeof(ActionUuidAttribute)));
+	  foreach (var actionType in actions)
+	  {
+		var attr = actionType.GetCustomAttributes(typeof(ActionUuidAttribute), true).FirstOrDefault() as ActionUuidAttribute;
+		this.RegisterActionType(attr.Uuid, actionType);
+	  }
+	  return this;
+	}
+
+  }
 }
