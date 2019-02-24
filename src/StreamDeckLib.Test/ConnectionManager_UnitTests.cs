@@ -70,47 +70,47 @@ namespace StreamDeckLib.Test
 	//}
 
 
-	//[Fact]
-	//public async Task ShouldThrowArgumentException_WhenRegisteringAnActionWithoutAUUID()
-	//{
-	//	//
-	//	// Arrange
-	//	//
+	[Fact]
+	public async Task ShouldThrowArgumentException_WhenRegisteringAnActionWithoutAUUID()
+	{
+	  //
+	  // Arrange
+	  //
 
-	//	Func<ConnectionManager> action = () => ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments)
-	//	                                                        .RegisterAction(new StubAction(string.Empty));
+	  Func<ConnectionManager> action = () => ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments)
+															  .RegisterActionType("", typeof(StubAction));
 
-	//	//
-	//	// Act
-	//	//
-	//	action.
+	  //
+	  // Act
+	  //
+	  action.
 
-	//	//
-	//	// Assert
-	//	//
-	//	Should().Throw<IncompleteActionDefinitionException>("An action must specify a non-blank or empty UUID");
-	//}
+	  //
+	  // Assert
+	  //
+	  Should().Throw<IncompleteActionDefinitionException>("An action must specify a non-blank or empty UUID");
+	}
 
-	//[Fact]
-	//public async Task ShouldThrowDuplicateActionRegistrationException_WhenRegisteringMultipleInstancesOfTheSameAction()
-	//{
-	//	//
-	//	// Arrange
-	//	//
+	[Fact]
+	public async Task ShouldThrowDuplicateActionRegistrationException_WhenRegisteringMultipleInstancesOfTheSameAction()
+	{
+	  //
+	  // Arrange
+	  //
 
 
-	//	Func<ConnectionManager> action = () => ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments)
-	//	                                                        .RegisterAction(new StubAction("UniqueID"))
-	//	                                                        .RegisterAction(new StubAction("UniqueID"));
+	  Func<ConnectionManager> action = () => ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments)
+															  .RegisterActionType("UniqueID", typeof(StubAction))
+															  .RegisterActionType("UniqueID", typeof(StubAction));
 
-	//	//
-	//	// Assert
-	//	//
+	  //
+	  // Assert
+	  //
 
-	//	//TODO: Wording? "unique UUID" is like saying "PIN number". It's "just" a test, but still syntactically incorrect. 
-	//	action.Should()
-	//	.Throw<DuplicateActionRegistrationException>("each BaseStreamDeckAction type should have its own unique UUID.");
-	//}
+	  //TODO: Wording? "unique UUID" is like saying "PIN number". It's "just" a test, but still syntactically incorrect. 
+	  action.Should()
+	  .Throw<DuplicateActionRegistrationException>("each BaseStreamDeckAction type should have its own unique UUID.");
+	}
 
 
 	//[Fact]
@@ -135,18 +135,18 @@ namespace StreamDeckLib.Test
 	//		.NotThrow("registering multiple unique actions is valid");
 	//}
 
-	//[Fact]
-	//public async Task ShouldRegisterAllActions_WhenRegisteringAllActions()
-	//{
+	[Fact]
+	public async Task ShouldRegisterAllActions_WhenRegisteringAllActions()
+	{
 
-	//	Func<ConnectionManager> action = () => ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments)
-	//.RegisterAllActions(this.GetType().Assembly);
+	  Func<ConnectionManager> action = () => ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments)
+  .RegisterAllActions(this.GetType().Assembly);
 
-	//	action.Should()
-	//		.NotThrow("No problems when registering All Actions");
+	  action.Should()
+		  .NotThrow("No problems when registering All Actions");
 
 
-	//}
+	}
 
 
   }

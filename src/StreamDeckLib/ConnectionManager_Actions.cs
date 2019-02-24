@@ -13,9 +13,17 @@ namespace StreamDeckLib
 	private Dictionary<string, BaseStreamDeckAction> _contextActions = new Dictionary<string, BaseStreamDeckAction>();
 
 	//Cheer 100 svavablount 15/2/19 
-	public void RegisterActionType(string actionUuid, Type actionType)
+	public ConnectionManager RegisterActionType(string actionUuid, Type actionType)
 	{
+	  if (string.IsNullOrWhiteSpace(actionUuid)){
+		throw new IncompleteActionDefinitionException("");
+	  }
+		if(_actions.ContainsKey(actionUuid))
+	  {
+		throw new DuplicateActionRegistrationException(actionUuid);
+	  }
 	  _actions.Add(actionUuid, actionType);
+	  return this;
 	}
 
 	public BaseStreamDeckAction GetInstanceOfAction(string context, string actionUuid)
