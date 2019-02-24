@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace _StreamDeckPlugin_
 {
+
+	// This value must match the UUID for the action in the manifest.json
+	// file, so that it can be called from the Stream Deck.
+	[ActionUuid(Uuid = "$(UUID).DefaultPluginAction")]
 	internal class DefaultPluginAction : BaseStreamDeckAction
 	{
 		private static int _Counter = 0;
 		private static bool _IsPropertyInspectorConnected = false;
-
-		// This value must match the UUID for the action in the manifest.json
-		// file, so that it can be called from the Stream Deck.
-		public override string UUID => "$(UUID).DefaultPluginAction";
 
 		public override async Task OnKeyUp(StreamDeckEventPayload args)
 		{
@@ -68,9 +68,9 @@ namespace _StreamDeckPlugin_
 
 		public async override Task OnPropertyInspectorMessageReceived(PropertyInspectorEventPayload args)
 		{
-		  if (args.PayloadHasProperty("starting_number"))
+		  if (args.SettingsPayloadHasProperty("starting_number"))
 		  {
-			_Counter = args.GetPayloadValue<int>("starting_number");
+			_Counter = args.GetSettingsPayloadValue<int>("starting_number");
 			await Manager.SetTitleAsync(args.context, _Counter.ToString());
 		  }
 
