@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using StreamDeckLib.Messages;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace StreamDeckLib
@@ -14,35 +15,27 @@ namespace StreamDeckLib
   public abstract class BaseStreamDeckAction
   {
 
-		public BaseStreamDeckAction() { }
+	/// <summary>
+	/// Gets the UUID which uniquely identifies the individual actions within a plugin.
+	/// </summary>
+	/// <value>The UUID representing the action, which matches the value in the &quot;manifest.json&quot; file.</value>
+	public string ActionUuid
+	{
+	  get
+	  {
+		return this.GetType().GetCustomAttributes(typeof(ActionUuidAttribute), true).FirstOrDefault() is ActionUuidAttribute attr && !string.IsNullOrWhiteSpace(attr.Uuid)
+		  ? attr.Uuid
+		  : string.Empty;
+	  }
+	}
 
-		public BaseStreamDeckAction(string uuid)
-		{
 
-			this.UUID = uuid;
-
-		}
-
-    /// <summary>
-    /// The <seealso cref="ConnectionManager"/> with which this instance
-    /// of the <seealso cref="BaseStreamDeckAction"/> is registered.
-    /// </summary>
-    /// <value>The manager.</value>
-    protected internal ConnectionManager Manager { get; set; }
-		
-    /// <summary>
-    /// Gets the UUID which uniquely identifies the individual actions within a plugin.
-    /// </summary>
-    /// <value>The UUID representing the action, which matches the value in the &quot;manifest.json&quot; file.</value>
-    public virtual string UUID { get; private set; }
-
-    /// <summary>
-    /// Gets the value of <seealso cref="UUID"/> in a format which can be used for 
-    /// lookups and comparison without concern for letter casing.
-    /// </summary>
-    /// <value>The registration key.</value>
-    protected internal string RegistrationKey => UUID;
-
+	/// <summary>
+	/// The <seealso cref="ConnectionManager"/> with which this instance
+	/// of the <seealso cref="BaseStreamDeckAction"/> is registered.
+	/// </summary>
+	/// <value>The manager.</value>
+	protected internal ConnectionManager Manager { get; set; }
 		public ILogger Logger { get; internal set; }
 
     public virtual Task OnKeyDown(StreamDeckEventPayload args) => Task.CompletedTask;

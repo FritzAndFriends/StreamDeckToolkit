@@ -1,11 +1,14 @@
 using Microsoft.Extensions.Logging;
+using SamplePlugin.Models;
 using Serilog.Core;
 using StreamDeckLib;
 using StreamDeckLib.Messages;
+using System;
 using System.Threading.Tasks;
 
 namespace SamplePlugin
 {
+	[ActionUuid(Uuid = "com.csharpfritz.samplePlugin.action")]
 	internal class MySampleAction : BaseStreamDeckAction
 	{
 
@@ -22,10 +25,8 @@ namespace SamplePlugin
 		// Cheer 1030 kulu83 Jan 15, 2019
 		// Cheer 2500 Auth0Bobby Jan 15, 2019
 
-		public override string UUID => "com.csharpfritz.samplePlugin.action";
-
-		private static int  _Counter                      = 0;
-		private static bool _IsPropertyInspectorConnected = false;
+		private SampleActionSettingsModel _settingsModel = new SampleActionSettingsModel();
+		private bool _IsPropertyInspectorConnected = false;
 
 		public override async Task OnKeyUp(StreamDeckEventPayload args)
 		{
@@ -35,48 +36,48 @@ namespace SamplePlugin
 
 			Logger.LogTrace($"Button pressed: {args}");
 
-			_Counter++;
-			await Manager.SetTitleAsync(args.context, _Counter.ToString());
+			_settingsModel.Counter++;
+			await Manager.SetTitleAsync(args.context, _settingsModel.Counter.ToString());
 
-			if (_Counter % 10 == 0)
+			if (_settingsModel.Counter % 10 == 0)
 			{
 				await Manager.ShowAlertAsync(args.context);
 			}
-			else if (_Counter % 15 == 0)
+			else if (_settingsModel.Counter % 15 == 0)
 			{
 				await Manager.OpenUrlAsync(args.context, "https://www.bing.com");
 			}
-			else if (_Counter % 3 == 0)
+			else if (_settingsModel.Counter % 3 == 0)
 			{
 				await Manager.ShowOkAsync(args.context);
 			}
-			else if (_Counter % 7 == 0)
+			else if (_settingsModel.Counter == 0)
 			{
 				await Manager.SetImageAsync(args.context, "images/Fritz.png");
 			}
+
+	  await Manager.SendToPropertyInspectorAsync(args.context, _settingsModel);
 		}
 
 		public override async Task OnWillAppear(StreamDeckEventPayload args)
 		{
-			if (args.payload != null && args.payload.settings != null && args.payload.settings.counter != null)
-			{
-				_Counter = args.payload.settings.counter;
-			}
-
-			await Manager.SetTitleAsync(args.context, _Counter.ToString());
+	 
+		if (args.PayloadSettingsHasProperty("Counter"))
+		{
+		  _settingsModel.Counter = args.GetPayloadSettingsValue<int>("Counter");
+		}
+			await Manager.SetTitleAsync(args.context, _settingsModel.Counter.ToString());
 		}
 
 		public override async Task OnWillDisappear(StreamDeckEventPayload args)
 		{
-			var settings = new {counter = _Counter};
-
-			await Manager.SetSettingsAsync(args.context, settings);
+			await Manager.SetSettingsAsync(args.context, _settingsModel);
 		}
 
-		public override Task OnPropertyInspectorConnected(PropertyInspectorEventPayload args)
+		public override async Task OnPropertyInspectorConnected(PropertyInspectorEventPayload args)
 		{
 			_IsPropertyInspectorConnected = true;
-			return Task.CompletedTask;
+			await Manager.SendToPropertyInspectorAsync(args.context, _settingsModel);
 		}
 
 		public override Task OnPropertyInspectorDisconnected(PropertyInspectorEventPayload args)
@@ -87,12 +88,13 @@ namespace SamplePlugin
 
 		public override async Task OnPropertyInspectorMessageReceived(PropertyInspectorEventPayload args)
 		{
-			if (args.PayloadHasProperty("starting_number"))
+			if (args.SettingsPayloadHasProperty("Counter"))
 			{
-				_Counter = args.GetPayloadValue<int>("starting_number");
-				await Manager.SetTitleAsync(args.context, _Counter.ToString());
+				_settingsModel.Counter = args.GetSettingsPayloadValue<int>("Counter");
+				
 			}
+		 await Manager.SetTitleAsync(args.context, _settingsModel.Counter.ToString());
 
-		}
+	}
 	}
 }
