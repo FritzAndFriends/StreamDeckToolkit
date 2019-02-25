@@ -82,7 +82,7 @@ namespace StreamDeckLib
 			_Logger = loggerFactory?.CreateLogger("ConnectionManager") ?? NullLogger.Instance;
 
 			// We MUST have an action manager instance. If we don't, we are inoperable.
-			var actionManagerInstance = actionManager ?? new ActionManager(_Logger);
+			var actionManagerInstance = actionManager ?? new ActionManager(_LoggerFactory.CreateLogger("ActionManager");
 
 			var manager = new ConnectionManager()
 			{
