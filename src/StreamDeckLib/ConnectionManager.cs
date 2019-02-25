@@ -111,7 +111,7 @@ namespace StreamDeckLib
 
 		private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
 		{
-			throw new NotImplementedException();
+			_Logger.LogError(e.Exception, "Error handling StreamDeck information");
 		}
 
 		private async Task Run(CancellationToken token)
@@ -297,9 +297,11 @@ namespace StreamDeckLib
 		public async Task SendToPropertyInspectorAsync(string context, dynamic payload)
 		{
 
+			var uuid = _contextActions[context].ActionUuid;
+
 			var args = new SendToPropertyInspectorArgs
 			{
-			  action = _Uuid,
+			  action = uuid,
 			  context = context,
 			  payload = new { settingsModel = payload }
 			};
