@@ -14,12 +14,16 @@ namespace StreamDeckLib
 	{
 		#region Type and instance properties
 
+		// We will use a string equality comparer for our dictionaries which ignores case and is for invariant culture.
 		private static readonly IEqualityComparer<string> _StringEqualityComparer = StringComparer.Create(CultureInfo.InvariantCulture, true);
 
+		//string is the action UUID, type is the class type of the action
 		private readonly Dictionary<string, Type> _Actions;
 
+		//string is the context, there will only ever be one action per context
 		private readonly Dictionary<string, BaseStreamDeckAction> _ActionInstances;
 
+		// The logger we will receive when being instantiated. Defaults to a NullLogger is none is specified.
 		private readonly ILogger _Logger;
 
 		#endregion
@@ -57,6 +61,8 @@ namespace StreamDeckLib
 		public ActionManager RegisterAction<TActionType>(string actionUUID)
 			where TActionType : BaseStreamDeckAction
 		{
+			this._Logger.LogTrace($"{nameof(ActionManager)}.{nameof(RegisterAction)}(string)");
+
 			this._Actions.Add(actionUUID, typeof(TActionType));
 			return this;
 		}
@@ -70,15 +76,28 @@ namespace StreamDeckLib
 		/// <param name="actionType">The type to be registered for the <paramref name="actionUUID"/>. Must inherit from <seealso cref="BaseStreamDeckAction"/>.</param>
 		/// <remarks>If the <paramref name="actionType" /> does not inherit from <seealso cref="BaseStreamDeckAction"/>,
 		/// a <seealso cref="TypeDoesNotInheritFromBaseStreamDeckAction"/> exception is thrown.</remarks>
-		public ActionManager RegisterActionType(string actionUUID, Type actionType)
+		public ActionManager RegisterActionType(string actionUuid, Type actionType)
 		{
+			this._Logger.LogTrace($"{nameof(ActionManager)}.{nameof(RegisterActionType)}(string, Type)");
+
+			// Check that we've got a UUID to use for registration.
+			if (string.IsNullOrWhiteSpace(actionUuid))
+			{
+				throw new IncompleteActionDefinitionException($"The UUID for the \"{actionType.Name}\" action was not specified.");
+			}
+
+			if (_Actions.ContainsKey(actionUuid))
+			{
+				throw new DuplicateActionRegistrationException(actionUuid);
+			}
+
 			// Ensure that the type we're registering inherits from BaseStreamDeckAction. 
 			if (!actionType.IsSubclassOf(typeof(BaseStreamDeckAction)))
 			{
 				throw new TypeDoesNotInheritFromBaseStreamDeckAction(actionType.Name, actionType.FullName, actionType.Assembly.FullName);
 			}
 
-			this._Actions.Add(actionUUID, actionType);
+			this._Actions.Add(actionUuid, actionType);
 			return this;
 		}
 
@@ -91,6 +110,7 @@ namespace StreamDeckLib
 		/// <param name="actionsAssembly">The <seealso cref="Assembly"/> from within which actions are to be registered.</param>
 		public ActionManager RegisterAllActions(Assembly actionsAssembly)
 		{
+			this._Logger.LogTrace($"{nameof(ActionManager)}.{nameof(RegisterAllActions)}(assembly)");
 
 			var actions = actionsAssembly.GetTypes().Where(type => Attribute.IsDefined(type, typeof(ActionUuidAttribute)));
 			foreach (var actionType in actions)
@@ -98,9 +118,6 @@ namespace StreamDeckLib
 				var attr = actionType.GetCustomAttributes(typeof(ActionUuidAttribute), true).FirstOrDefault() as ActionUuidAttribute;
 				this.RegisterActionType(attr.Uuid, actionType);
 			}
-			return this;
-
-
 			return this;
 		}
 
@@ -120,6 +137,8 @@ namespace StreamDeckLib
 		public TActionType GetActionInstance<TActionType>(string actionUUID)
 			where TActionType : BaseStreamDeckAction
 		{
+			this._Logger.LogTrace($"{nameof(ActionManager)}.{nameof(GetActionInstance)}(string)");
+
 			if (this._Actions.ContainsKey(actionUUID))
 			{
 				return Activator.CreateInstance(this._Actions[actionUUID]) as TActionType;
@@ -136,6 +155,8 @@ namespace StreamDeckLib
 		/// <param name="actionUUID">The UUID to check</param>
 		public bool IsActionRegistered(string actionUUID)
 		{
+			this._Logger.LogTrace($"{nameof(ActionManager)}.{nameof(IsActionRegistered)}(string)");
+
 			return this._Actions.ContainsKey(actionUUID);
 		}
 
@@ -153,12 +174,26 @@ namespace StreamDeckLib
 		/// </remarks>
 		public BaseStreamDeckAction GetAction(string actionUUID)
 		{
-			if (this._ActionInstances.ContainsKey(actionUUID))
+			this._Logger.LogTrace($"{nameof(ActionManager)}.{nameof(GetAction)}(string)");
+
+			return this.CreateActionInstanceByUUID(actionUUID);
+		}
+
+
+		private BaseStreamDeckAction CreateActionInstanceByUUID(string actionUuid, bool throwIfNotRegistered = true)
+		{
+			this._Logger.LogTrace($"{nameof(ActionManager)}.{nameof(CreateActionInstanceByUUID)}(string, bool)");
+			if (this._ActionInstances.ContainsKey(actionUuid))
 			{
-				return this._ActionInstances[actionUUID];
+				return this._ActionInstances[actionUuid];
 			}
 
-			throw new ActionNotRegisteredException(actionUUID);
+			if (throwIfNotRegistered)
+			{
+				throw new ActionNotRegisteredException(actionUuid);
+			}
+
+			return null;
 		}
 
 		#endregion
@@ -171,10 +206,30 @@ namespace StreamDeckLib
 		/// Registers the action instance.
 		/// </summary>
 		/// <returns>The action instance.</returns>
-		/// <param name="instanceKey">Instance key.</param>
+		/// <param name="instanceKey">The key to be used when registering the action instance.
+		/// This is typically the value of the <seealso cref="StreamDeckLib.Messages.StreamDeckEventPayload.context"/>.</param>
 		/// <param name="actionInstance">Action instance.</param>
 		public ActionManager RegisterActionInstance(string instanceKey, BaseStreamDeckAction actionInstance)
 		{
+			this._Logger.LogTrace($"{nameof(ActionManager)}.{nameof(RegisterAction)}(string, BaseStreamDeckAction)");
+			return this.RegisterActionInstanceInternal(instanceKey, actionInstance);
+		}
+
+		private ActionManager RegisterActionInstanceInternal(string instanceKey, BaseStreamDeckAction actionInstance, bool throwIfInstanceIsNull = true)
+		{
+			this._Logger.LogTrace($"{nameof(ActionManager)}.{nameof(RegisterActionInstanceInternal)}(string, BaseStreamDeckAction, bool)");
+
+			if (null == actionInstance && (!throwIfInstanceIsNull))
+			{
+				this._Logger.LogDebug($"The instance to register with a key of {instanceKey} was null, but prevent raising an exception was specified.");
+				return this;
+			}
+
+			if (null == actionInstance && throwIfInstanceIsNull)
+			{
+				throw new ArgumentNullException($"Could not register an action instance with a key of \"{instanceKey}\"");
+			}
+
 			this._Logger.LogDebug($"Registering an instance of {actionInstance.GetType().FullName} with a key of \"{instanceKey}\".");
 			if (this._ActionInstances.ContainsKey(instanceKey))
 			{
@@ -186,6 +241,29 @@ namespace StreamDeckLib
 			return this;
 		}
 
+
+		/// <summary>
+		/// Gets the instance of action.
+		/// </summary>
+		/// <returns>The instance of action.</returns>
+		/// <param name="context">Context.</param>
+		/// <param name="actionUuid">Action UUID.</param>
+		internal BaseStreamDeckAction GetActionForContext(string context, string actionUuid)
+		{
+			this._Logger.LogTrace($"{nameof(ActionManager)}.{nameof(GetActionForContext)}(string, string)");
+
+			//see if context exists, if so, return the associated action
+			if (this._ActionInstances.ContainsKey(context))
+			{
+				return this._ActionInstances[context];
+			}
+
+			//see if we have a recorded type for the action
+			var actionInstance = this.CreateActionInstanceByUUID(actionUuid, false);
+			this.RegisterActionInstanceInternal(context, actionInstance, false);
+
+			return actionInstance;
+		}
 
 
 		#endregion
