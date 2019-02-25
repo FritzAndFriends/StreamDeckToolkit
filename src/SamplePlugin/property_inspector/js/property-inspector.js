@@ -5,7 +5,7 @@ var websocket = null,
   inInfo = null,
   actionInfo = {},
   settingsModel = {
-		counter: 0
+		Counter: 0
   };
 
 function connectSocket(inPort, inUUID, inRegisterEvent, inInfo, inActionInfo) {
@@ -15,10 +15,26 @@ function connectSocket(inPort, inUUID, inRegisterEvent, inInfo, inActionInfo) {
   websocket = new WebSocket('ws://localhost:' + inPort);
 
   websocket.onopen = function () {
-		var json = { event: inRegisterEvent, uuid: inUUID };
-		// register property inspector to Stream Deck
-		websocket.send(JSON.stringify(json));
-		sendEventToPlugin('propertyInspectorConnected');
+	var json = { event: inRegisterEvent, uuid: inUUID };
+	// register property inspector to Stream Deck
+	websocket.send(JSON.stringify(json));
+	sendEventToPlugin('propertyInspectorConnected');
+  };
+
+  websocket.onmessage = function (evt) {
+	// Received message from Stream Deck
+	var jsonObj = JSON.parse(evt.data);
+	var sdEvent = jsonObj['event'];
+	switch (sdEvent) {
+	  case "sendToPropertyInspector":
+		if (jsonObj.payload.settingsModel.Counter) {
+		  settingsModel.Counter = jsonObj.payload.settingsModel.Counter;
+		  document.getElementById('txtCounterValue').value = settingsModel.Counter;
+		}
+		break;
+	  default:
+		break;
+	}
   };
 }
 
@@ -41,7 +57,7 @@ function sendValueToPlugin(value, param) {
 	}
 }
 
-function sendEventToPlugin(value) {
+function sendEventToPlugin(value, param) {
   if (websocket) {
 	settingsModel[param] = value;
 	const json = {

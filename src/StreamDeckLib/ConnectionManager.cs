@@ -111,7 +111,7 @@ namespace StreamDeckLib
 
 		private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
 		{
-			throw new NotImplementedException();
+			_Logger.LogError(e.Exception, "Error handling StreamDeck information");
 		}
 
 		private async Task Run(CancellationToken token)
@@ -154,23 +154,22 @@ namespace StreamDeckLib
 
 						if (_ActionEventsIgnore.Contains(msg.Event)) { continue; }
 
-						// Make sure we have a registered BaseStreamDeckAction instance registered for the received action (UUID)
-						if (!_ActionsDictionary.ContainsKey(msg.action))
-						{
-							_Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
-						}
-
-						var action = _ActionsDictionary[msg.action];
+									var action = GetInstanceOfAction(msg.context, msg.action);
+			if (action == null)
+			{
+			  _Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
+			  continue;
+			}
 
 
 						//property inspector payload
 						if (msg.Event == "sendToPlugin")
 						{
 							var piMsg = JsonConvert.DeserializeObject<PropertyInspectorEventPayload>(jsonString);
-							if (piMsg.PayloadHasProperty("property_inspector"))
+							if (piMsg.EventPayloadHasProperty("property_inspector"))
 							{
 								//property inspector event
-								var piEvent = piMsg.GetPayloadValue<string>("property_inspector");
+								var piEvent = piMsg.GetEventPayloadValue<string>("property_inspector");
 								if (!_PropertyInspectorActionDictionary.ContainsKey(piEvent))
 								{
 									_Logger.LogWarning($"Plugin does not handle the Property Inspector event '{piEvent}'");
@@ -275,7 +274,7 @@ namespace StreamDeckLib
 			var args = new SetSettingsArgs()
 			{
 				context = context,
-				payload = value
+				payload = new { settingsModel = value }
 			};
 
 			await _Proxy.SendStreamDeckEvent(args);
@@ -298,11 +297,13 @@ namespace StreamDeckLib
 		public async Task SendToPropertyInspectorAsync(string context, dynamic payload)
 		{
 
+			var uuid = _contextActions[context].ActionUuid;
+
 			var args = new SendToPropertyInspectorArgs
 			{
-				action = _Uuid,
-				context = context,
-				payload = payload
+			  action = uuid,
+			  context = context,
+			  payload = new { settingsModel = payload }
 			};
 
 			await _Proxy.SendStreamDeckEvent(args);
