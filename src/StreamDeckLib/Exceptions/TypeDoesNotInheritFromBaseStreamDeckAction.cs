@@ -1,14 +1,14 @@
-﻿using System;
+using System;
 using System.Reflection;
 using System.Runtime.Serialization;
 
 namespace StreamDeckLib
 {
   [Serializable]
-  internal class TypeDoesNotInheritFromBaseStreamDeckAction : Exception
+  public class TypeDoesNotInheritFromBaseStreamDeckAction : Exception
   {
     private string fullName;
-    private Assembly assembly;
+    private string  assemblyName;
 
     public TypeDoesNotInheritFromBaseStreamDeckAction()
     {
@@ -18,13 +18,19 @@ namespace StreamDeckLib
     {
     }
 
-    public TypeDoesNotInheritFromBaseStreamDeckAction(string fullName, Assembly assembly) : this($"The type \"{fullName}\" from assembly \"{assembly.GetName()}\" does not inherit from required base class \"{nameof(BaseStreamDeckAction)\"."})
-    {
-      this.fullName = fullName;
-      this.assembly = assembly;
-    }
 
-    public TypeDoesNotInheritFromBaseStreamDeckAction(string message, Exception innerException) : base(message, innerException)
+		public TypeDoesNotInheritFromBaseStreamDeckAction(string simpleName, string fullName, string assemblyName)
+		: this($"The type \"{simpleName}\" (\"{fullName}\") from assembly \"{assemblyName}\" does not inherit from required base class \"{nameof(BaseStreamDeckAction)}\".")
+    {
+
+			this.fullName = fullName;
+
+			this.assemblyName = assemblyName;
+
+		}
+
+
+	public TypeDoesNotInheritFromBaseStreamDeckAction(string message, Exception innerException) : base(message, innerException)
     {
     }
 

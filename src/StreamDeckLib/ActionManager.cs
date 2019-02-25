@@ -5,6 +5,8 @@ using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Globalization;
+using System.Linq;
+
 namespace StreamDeckLib
 {
 
@@ -31,8 +33,11 @@ namespace StreamDeckLib
 			this._ActionInstances = new Dictionary<string, BaseStreamDeckAction>(_StringEqualityComparer);
 		}
 
-
-		public ActionManager(ILogger logger) : this()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:StreamDeckLib.ActionManager"/> class.
+		/// </summary>
+		/// <param name="logger">An instance of a logger (<see cref="ILogger"/> class.</param>
+		public ActionManager(ILogger logger = null) : this()
 		{
 			this._Logger = logger ?? NullLoggerFactory.Instance.CreateLogger(nameof(ActionManager));
 		}
@@ -42,30 +47,13 @@ namespace StreamDeckLib
 
 		#region Action registration methods
 
-				public ActionManager RegisterActionInstance(BaseStreamDeckAction actionInstance)
-		{
-			if (null == actionInstance)
-			{
-				throw new ArgumentNullException(nameof(actionInstance), $"No instance of a {nameof(BaseStreamDeckAction)} derived class was specified to be registered.");
-			}
 
-			this._Logger.LogDebug($"Logging an instance of {actionInstance.GetType().FullName} without a named key. Using the action's UUID.");
-			return this.RegisterActionInstance(actionInstance.ActionUuid, actionInstance);
-		}
-
-		public ActionManager RegisterActionInstance(string actionKey, BaseStreamDeckAction actionInstance)
-		{
-			this._Logger.LogDebug($"Registering an instance of {actionInstance.GetType().FullName} with UUID/key of \"{actionKey}\".");
-			if (this._ActionInstances.ContainsKey(actionKey))
-			{
-				throw new DuplicateActionRegistrationException(actionKey);
-			}
-
-			this._ActionInstances.Add(actionKey, actionInstance);
-
-			return this;
-		}
-
+		/// <summary>
+		/// Registers an action type for a given UUID.
+		/// </summary>
+		/// <returns>The instance of <seealso cref="ActionManager"/>.</returns>
+		/// <param name="actionUUID">The UUID for the action.</param>
+		/// <typeparam name="TActionType">The type to be registered for the <paramref name="actionUUID"/>. Must inherit from <seealso cref="BaseStreamDeckAction"/>.</typeparam>
 		public ActionManager RegisterAction<TActionType>(string actionUUID)
 			where TActionType : BaseStreamDeckAction
 		{
@@ -73,9 +61,46 @@ namespace StreamDeckLib
 			return this;
 		}
 
+
+		/// <summary>
+		/// Registers an action type for a given UUID.
+		/// </summary>
+		/// <returns>The instance of <seealso cref="ActionManager"/>.</returns>
+		/// <param name="actionUUID">The UUID for the action.</param>
+		/// <param name="actionType">The type to be registered for the <paramref name="actionUUID"/>. Must inherit from <seealso cref="BaseStreamDeckAction"/>.</param>
+		/// <remarks>If the <paramref name="actionType" /> does not inherit from <seealso cref="BaseStreamDeckAction"/>,
+		/// a <seealso cref="TypeDoesNotInheritFromBaseStreamDeckAction"/> exception is thrown.</remarks>
+		public ActionManager RegisterActionType(string actionUUID, Type actionType)
+		{
+			// Ensure that the type we're registering inherits from BaseStreamDeckAction. 
+			if (!actionType.IsSubclassOf(typeof(BaseStreamDeckAction)))
+			{
+				throw new TypeDoesNotInheritFromBaseStreamDeckAction(actionType.Name, actionType.FullName, actionType.Assembly.FullName);
+			}
+
+			this._Actions.Add(actionUUID, actionType);
+			return this;
+		}
+
+
+		/// <summary>
+		/// Registers all actions which are decorated with an <seealso cref="ActionUuidAttribute"/>
+		/// withn a given <seealso cref="Assembly"/>.
+		/// </summary>
+		/// <returns>The instance of <seealso cref="ActionManager"/>.</returns>
+		/// <param name="actionsAssembly">The <seealso cref="Assembly"/> from within which actions are to be registered.</param>
 		public ActionManager RegisterAllActions(Assembly actionsAssembly)
 		{
-			throw new NotImplementedException();
+
+			var actions = actionsAssembly.GetTypes().Where(type => Attribute.IsDefined(type, typeof(ActionUuidAttribute)));
+			foreach (var actionType in actions)
+			{
+				var attr = actionType.GetCustomAttributes(typeof(ActionUuidAttribute), true).FirstOrDefault() as ActionUuidAttribute;
+				this.RegisterActionType(attr.Uuid, actionType);
+			}
+			return this;
+
+
 			return this;
 		}
 
@@ -84,6 +109,14 @@ namespace StreamDeckLib
 
 		#region Action instance creation and retrieval
 
+		/// <summary>
+		/// Gets an instance of an action from an action UUID.
+		/// </summary>
+		/// <returns>A new instance of an action.</returns>
+		/// <param name="actionUUID">The UUID of the action type which is requested.</param>
+		/// <typeparam name="TActionType">The specific type of action to be returned.</typeparam>
+		/// <remarks>If no type is found to match the <paramref name="actionUUID"/>, an exception
+		/// of type <seealso cref="ActionNotRegisteredException"/> is thrown.</remarks>
 		public TActionType GetActionInstance<TActionType>(string actionUUID)
 			where TActionType : BaseStreamDeckAction
 		{
@@ -96,11 +129,16 @@ namespace StreamDeckLib
 		}
 
 
-
+		/// <summary>
+		/// Checks whether an action is registered for a given UUID.
+		/// </summary>
+		/// <returns><c>true</c>, if action registered was registered, <c>false</c> otherwise.</returns>
+		/// <param name="actionUUID">The UUID to check</param>
 		public bool IsActionRegistered(string actionUUID)
 		{
 			return this._Actions.ContainsKey(actionUUID);
 		}
+
 
 		/// <summary>
 		/// Gets a new instance of an <seealso cref="BaseStreamDeckAction"/> registered with a UUID
@@ -126,7 +164,27 @@ namespace StreamDeckLib
 		#endregion
 
 
-		#region Specific action instance creation, registration, and retrieval
+		#region Specific action instance creation, registration, and retrieval (by Stream Deck context)
+
+
+		/// <summary>
+		/// Registers the action instance.
+		/// </summary>
+		/// <returns>The action instance.</returns>
+		/// <param name="instanceKey">Instance key.</param>
+		/// <param name="actionInstance">Action instance.</param>
+		public ActionManager RegisterActionInstance(string instanceKey, BaseStreamDeckAction actionInstance)
+		{
+			this._Logger.LogDebug($"Registering an instance of {actionInstance.GetType().FullName} with a key of \"{instanceKey}\".");
+			if (this._ActionInstances.ContainsKey(instanceKey))
+			{
+				throw new DuplicateActionInstanceRegistrationException(instanceKey);
+			}
+
+			this._ActionInstances.Add(instanceKey, actionInstance);
+
+			return this;
+		}
 
 
 
