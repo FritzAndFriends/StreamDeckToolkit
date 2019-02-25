@@ -26,6 +26,7 @@ namespace StreamDeckLib
 	
 		private ConnectionManager()
 		{
+			this._ActionManager = new ActionManager(_Logger);
 		}
 
 		public Messages.Info Info { get; private set; }
@@ -70,7 +71,9 @@ namespace StreamDeckLib
 
 		private static ConnectionManager Initialize(int port, string uuid,
 																								string registerEvent, string info,
-																								ILoggerFactory loggerFactory, IStreamDeckProxy streamDeckProxy)
+																								ILoggerFactory loggerFactory, 
+																								IStreamDeckProxy streamDeckProxy,
+																								ActionManager actionManager = null)
 		{
 			// TODO: Validate the info parameter
 			var myInfo = JsonConvert.DeserializeObject<Messages.Info>(info);
@@ -78,13 +81,17 @@ namespace StreamDeckLib
 			_LoggerFactory = loggerFactory ?? NullLoggerFactory.Instance;
 			_Logger = loggerFactory?.CreateLogger("ConnectionManager") ?? NullLogger.Instance;
 
+			// We MUST have an action manager instance. If we don't, we are inoperable.
+			var actionManagerInstance = actionManager ?? new ActionManager(_LoggerFactory.CreateLogger("ActionManager");
+
 			var manager = new ConnectionManager()
 			{
 				_Port = port,
 				_Uuid = uuid,
 				_RegisterEvent = registerEvent,
 				Info = myInfo,
-				_Proxy = streamDeckProxy
+				_Proxy = streamDeckProxy,
+				_ActionManager = actionManagerInstance,
 			};
 
 			return manager;
