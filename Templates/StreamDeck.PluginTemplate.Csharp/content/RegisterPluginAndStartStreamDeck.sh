@@ -1,10 +1,11 @@
+#!bin/sh
 #Notify user we are killing the process
 echo 'Killing the Stream Deck process'
 
 # Kill the process
 pkill 'Stream Deck'
 
-pluginName="$(UUID)"
+pluginUUID="$(UUID)"
 
 # Set the plugins and project directories to a variable
 pluginsDir="$HOME/Library/Application Support/com.elgato.StreamDeck/Plugins"
@@ -16,11 +17,11 @@ echo "Installing the $(PluginName) plugin to $pluginsDir"
 # Push the plugins directory on the stack
 pushd "$pluginsDir"
 # Check if the plugin direcotyr exists and remove it
-[ -d "$pluginName.sdPlugin" ] && rm -r $pluginName.sdPlugin
+[ -d "$pluginUUID.sdPlugin" ] && rm -r $pluginUUID.sdPlugin
 # Create the plugins directory
-mkdir $pluginName.sdPlugin
+mkdir $pluginUUID.sdPlugin
 # Copy the debug build output to the plugins directory
-cp -R "$projectDir/bin/Debug/netcoreapp2.2/osx-x64/." $pluginName.sdPlugin
+cp -R "$projectDir/bin/Debug/netcoreapp2.2/osx-x64/." $pluginUUID.sdPlugin
 # Pop the plugins directory off the stack returning to where we were
 popd
 

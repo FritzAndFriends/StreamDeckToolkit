@@ -31,8 +31,8 @@ If (-not (Test-Path $bindir)) {
   exit 1;
 }
 
-$pluginID = "$(UUID)"
-$destDir = "$($env:APPDATA)\Elgato\StreamDeck\Plugins\$pluginID.sdPlugin"
+$pluginUUID = "$(UUID)"
+$destDir = "$($env:APPDATA)\Elgato\StreamDeck\Plugins\$pluginUUID.sdPlugin"
 
 $pluginName = Split-Path $basePath -leaf
 
