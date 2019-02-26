@@ -1,7 +1,7 @@
-﻿namespace StreamDeckLib.Messages
+namespace StreamDeckLib.Messages
 {
-  public class GetGlobalSettingsArgs : BaseStreamDeckArgs
-  {
-	public override string Event => "getGlobalSettings";
-  }
+	public class GetGlobalSettingsArgs : BaseStreamDeckArgs
+	{
+		public override string Event => "getGlobalSettings";
+	}
 }

@@ -17,7 +17,7 @@
 	],
 	"Disabled":  false,
   "Author": "Jeffrey T. Fritz",
-	"CodePathWin": "SamplePlugin.exe",
+	"CodePathWin": "SamplePlugin.cmd",
 	"CodePathMac": "SamplePlugin",
 	"PropertyInspectorPath": "property_inspector/property_inspector.html",
   "Description": "The Sample Plugin",

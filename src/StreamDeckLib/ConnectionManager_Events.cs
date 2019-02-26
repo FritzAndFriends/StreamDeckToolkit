@@ -1,4 +1,4 @@
-﻿using StreamDeckLib.Messages;
+using StreamDeckLib.Messages;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,8 +9,7 @@ namespace StreamDeckLib
   {
 
 	// Cheer ramblinggeek 100 January 21, 2019
-
-	private static readonly Dictionary<string, Func<BaseStreamDeckAction, StreamDeckEventPayload, Task>> _ActionDictionary
+	private static readonly Dictionary<string, Func<BaseStreamDeckAction, StreamDeckEventPayload, Task>> _EventDictionary
 	= new Dictionary<string, Func<BaseStreamDeckAction, StreamDeckEventPayload, Task>>()
 	{
 	  ["keyDown"] = (plugin, args) => plugin.OnKeyDown(args),
@@ -22,11 +21,11 @@ namespace StreamDeckLib
 	  ["deviceDidDisconnect"] = (plugin, args) => plugin.OnDeviceDidDisconnect(args),
 	  ["applicationDidLaunch"] = (plugin, args) => plugin.OnApplicationDidLaunch(args),
 	  ["applicationDidTerminate"] = (plugin, args) => plugin.OnApplicationDidTerminate(args),
-	  ["propertyInspectorDidAppear"] = (plugin, args) => plugin.OnPropertyInspectorDidAppear(args),
-	  ["propertyInspectorDidDisappear"] = (plugin, args) => plugin.OnPropertyInspectorDidDisappear(args),
 	  ["didReceiveSettings"] = (plugin, args) => plugin.OnDidReceiveSettings(args),
-		["didReceiveGlobalSettings"] = (plugin, args) => plugin.OnDidReceiveGlobalSettings(args)
+	  ["didReceiveGlobalSettings"] = (plugin, args) => plugin.OnDidReceiveGlobalSettings(args),
+	  ["propertyInspectorDidDisappear"] = (plugin, args) => plugin.OnPropertyInspectorDidDisappear(args),
+	  ["propertyInspectorDidAppear"] = (plugin, args) => plugin.OnPropertyInspectorDidAppear(args)
 	};
-
   }
+
 }

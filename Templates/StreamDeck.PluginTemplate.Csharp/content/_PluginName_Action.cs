@@ -8,8 +8,11 @@ using System.Threading.Tasks;
 
 namespace _StreamDeckPlugin_
 {
+  [ActionUuid(Uuid="$(UUID)")]
   public class $(PluginName)Action : BaseStreamDeckActionWithSettingsModel<CounterSettingsModel>
   {
+	// Cheer 342 cpayette 15/2/19
+	// Cheer 100 devlead 15/2/19 
 	// Cheer 200 kevin_downs Jan 11, 2019
 	// Cheer 401 cpayette Jan 15, 2019
 	// Cheer 2501 themikejolley Jan 15, 2019
@@ -23,8 +26,6 @@ namespace _StreamDeckPlugin_
 	// Cheer 1030 kulu83 Jan 15, 2019
 	// Cheer 2500 Auth0Bobby Jan 15, 2019
 		
-	public override string ActionUuid => "$(UUID)";
-
 	public override async Task OnKeyUp(StreamDeckEventPayload args)
 	{
 	  SettingsModel.Counter++;

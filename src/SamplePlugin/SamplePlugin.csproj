@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>netcoreapp2.2</TargetFramework>
+		<TargetFramework>netcoreapp2.1</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<RuntimeIdentifier Condition=" '$(OS)' == 'Windows_NT' and '$(Configuration)'=='Debug' ">win-x64</RuntimeIdentifier>		<!-- When building/running on Windows -->
 		<RuntimeIdentifier Condition=" '$(OS)' != 'Windows_NT' and '$(Configuration)'=='Debug' ">osx-x64</RuntimeIdentifier>		<!-- When on non-Windows environment, assume macOS for now -->
@@ -15,9 +15,11 @@
 	  <None Remove="property_inspector\css\sdpi.css" />
 	  <None Remove="property_inspector\js\property-inspector.js" />
 	  <None Remove="property_inspector\property_inspector.html" />
+	  <None Remove="SamplePlugin.cmd" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\StreamDeckLib.Config\StreamDeckLib.Config.csproj" />
 		<ProjectReference Include="..\StreamDeckLib\StreamDeckLib.csproj" />
 	</ItemGroup>
 
@@ -74,21 +76,14 @@
 		<Content Include="property_inspector\property_inspector.html">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-	</ItemGroup>
-
-	<ItemGroup>
-
-    <None Update="RegisterPluginAndStartStreamDeck.ps1">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</None>
-		<None Update="RegisterPluginAndStartStreamDeck.sh">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</None>
+		<Content Include="SamplePlugin.cmd">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)'=='Debug'">
-		<Exec Condition=" '$(OS)' == 'Windows_NT' " Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)RegisterPluginAndStartStreamDeck.ps1&quot;" />
-		<Exec Condition=" '$(OS)' != 'Windows_NT' " Command="bash $(ProjectDir)RegisterPluginAndStartStreamDeck.sh" />
+		<Exec Condition=" '$(OS)' == 'Windows_NT' " Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)../../scripts/registration/RegisterPluginAndStartStreamDeck.ps1&quot;" />
+		<Exec Condition=" '$(OS)' != 'Windows_NT' " Command="bash $(ProjectDir)../../scripts/registration/RegisterPluginAndStartStreamDeck.sh" />
 	</Target>
 
 </Project>

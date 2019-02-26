@@ -1,4 +1,4 @@
-﻿namespace SamplePlugin.models
+namespace SamplePlugin.Models
 {
   public class CounterSettingsModel
   {

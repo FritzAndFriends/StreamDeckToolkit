@@ -1,7 +1,7 @@
-﻿namespace StreamDeckLib.Messages
+namespace StreamDeckLib.Messages
 {
-  public class GetSettingsArgs : BaseStreamDeckArgs
-  {
-	public override string Event => "getSettings";
-  }
+	public class GetSettingsArgs : BaseStreamDeckArgs
+	{
+		public override string Event => "getSettings";
+	}
 }

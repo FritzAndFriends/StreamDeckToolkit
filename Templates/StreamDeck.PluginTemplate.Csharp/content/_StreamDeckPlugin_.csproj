@@ -22,6 +22,7 @@
 	<!--Dependencies-->
 	<ItemGroup>
 		<PackageReference Include="StreamDeckLib" Version="0.*" />
+		<PackageReference Include="StreamDeckLib.Config" Version="0.*" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
 		<PackageReference Include="Serilog.Settings.Configuration" Version="3.0.1" />
@@ -58,30 +59,38 @@
 		<Content Include="images/actionIcon@2x.png">
 				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="images/Fritz.png">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
 		<Content Include="images/pluginIcon.png">
 				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="images/pluginIcon@2x.png">
 				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+		<Content Include="images/Fritz.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<!-- Property Inspector Files -->
 	<ItemGroup>
 		<Content Include="property_inspector\css\property-inspector.css">
-		  	<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="property_inspector\css\sdpi.css">
-		  	<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="property_inspector\js\property-inspector.js">
-		  	<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="property_inspector\property_inspector.html">
-		  	<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		
+	</ItemGroup>
+
+	<!-- Build Helper -->
+	<ItemGroup>
+		<Content Include="$(PluginName).cmd">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
 
@@ -101,5 +110,10 @@
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)'=='Debug'">
+		<Exec Condition=" '$(OS)' == 'Windows_NT' " Command="powershell -ExecutionPolicy Unrestricted -file &quot;$(ProjectDir)../../scripts/registration/RegisterPluginAndStartStreamDeck.ps1&quot;" />
+		<Exec Condition=" '$(OS)' != 'Windows_NT' " Command="bash $(ProjectDir)../../scripts/registration/RegisterPluginAndStartStreamDeck.sh" />
+	</Target>
 
 </Project>
