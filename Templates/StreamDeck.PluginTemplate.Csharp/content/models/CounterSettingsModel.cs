@@ -1,4 +1,4 @@
-﻿namespace _StreamDeckPlugin_.models
+﻿namespace _StreamDeckPlugin_.Models
 {
   public class CounterSettingsModel
   {
