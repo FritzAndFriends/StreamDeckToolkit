@@ -124,6 +124,25 @@ namespace StreamDeckLib.Test
 
 	}
 
+	[Fact]
+	public async Task ShouldHaveConnectionManagerAssigned_WhenGettingAnActionInstance()
+	{
+	  var cm = ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments)
+							.RegisterActionType("Unique_Action_ID_1", typeof(StubAction));
+	  var action = cm.GetInstanceOfAction("FAKECONTEXT", "Unique_Action_ID_1") as StubAction;
+	  action.GetConnectionManager().Should().NotBeNull("An action must have a connection manager assigned");
+
+	}
+
+	[Fact]
+	public async Task ShouldHaveLoggerAssigned_WhenGettingAnActionInstance()
+	{
+	  var cm = ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments)
+					 .RegisterActionType("Unique_Action_ID_1", typeof(StubAction));
+	  var action = cm.GetInstanceOfAction("FAKECONTEXT", "Unique_Action_ID_1") as StubAction;
+	  action.GetLogger().Should().NotBeNull("An action must have a logger assigned");
+	}
+
 
   }
 
