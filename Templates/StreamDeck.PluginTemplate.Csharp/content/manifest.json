@@ -15,7 +15,10 @@
       "UUID": "$(UUID).DefaultPluginAction"
     }
   ],
-  "Author": "",
+	"Category": "Your Plugin Category",
+	"CategoryIcon": "images/category/categoryIcon.png",
+	"Disabled":  false,
+	"Author": "Your Name",
 	"CodePathWin": "_StreamDeckPlugin_.exe",
 	"CodePathMac":  "_StreamDeckPlugin_",
   "PropertyInspectorPath": "property_inspector/property_inspector.html",
@@ -24,7 +27,11 @@
   "Icon": "images/pluginIcon",
   "URL": "https://www.elgato.com/gaming/stream-deck",
   "Version": "1.0",
-  "OS": [
+	"SDKVersion": 2,
+	"Software": {
+		"MinimumVersion":  "4.1"
+	},
+	"OS": [
     {
         "Platform": "mac",
         "MinimumVersion" : "10.11"
