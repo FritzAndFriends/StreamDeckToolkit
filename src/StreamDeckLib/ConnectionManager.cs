@@ -24,6 +24,17 @@ namespace StreamDeckLib
 		private string _RegisterEvent;
 		private IStreamDeckProxy _Proxy;
 
+		// Cheer 225 cpayette 26/2/19
+		// Cheer 10700 roberttables 26/2/19
+		// Cheer 840 auth0bobby 26/2/19
+		// Cheer 13629 themichaeljolley 26/2/19
+		// Cheer 182 sqlmistermagoo 26/2/19
+		// Cheer 100 acrophobicpixie 26/2/19
+		// Cheer 492 danerd 26/2/19
+		// Cheer 500 tealoldman 26/2/19
+		// Cheer 500 kittishomestead 26/2/19
+		// Cheer 5500 electrichavoc 26/2/19 
+
 		private ConnectionManager()
 		{
 			this._ActionManager = new ActionManager(this, _Logger);
