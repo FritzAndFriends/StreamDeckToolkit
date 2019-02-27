@@ -34,7 +34,8 @@
         "datatype": "string",
         "description": "The name of the stream deck plugin.",
         "defaultValue": "MyPlugin",
-        "replaces": "$(PluginName)"
+				"replaces": "$(PluginName)",
+				"fileRename": "_PluginName_"
       },
       "uuid": {
         "type": "parameter",

@@ -1,2 +1,2 @@
 ﻿cd %appdata%\Elgato\StreamDeck\Plugins\$(UUID)
-SamplePlugin.exe -break %*
+_StreamDeckPlugin_.exe -break %*
