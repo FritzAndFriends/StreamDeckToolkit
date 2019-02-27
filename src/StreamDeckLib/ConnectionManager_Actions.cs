@@ -7,82 +7,25 @@ namespace StreamDeckLib
 {
 	partial class ConnectionManager
 	{
-		private static readonly Dictionary<string, BaseStreamDeckAction> _ActionsDictionary = new Dictionary<string, BaseStreamDeckAction>();
+		private ActionManager _ActionManager;
 
-		[Obsolete("This method is obsolete, and has been replaced with the \"RegisterAction()\" method. Update your code to make use of this new method.", false)]
-		public ConnectionManager SetPlugin(BaseStreamDeckAction plugin) => this.RegisterAction(plugin);
+		//Cheer 100 svavablount 15/2/19 
+		public ConnectionManager RegisterActionType(string actionUuid, Type actionType)
+		{
+			this._ActionManager.RegisterActionType(actionUuid, actionType);
+			return this;
+		}
 
-		public ConnectionManager RegisterAction(BaseStreamDeckAction action) => RegisterActionInternal(this, action);
+		public BaseStreamDeckAction GetInstanceOfAction(string context, string actionUuid)
+		{
+			return this._ActionManager.GetActionForContext(context, actionUuid);
+		}
 
 		public ConnectionManager RegisterAllActions(Assembly assembly)
 		{
-
-			var actions = assembly.GetTypes().Where(t => typeof(BaseStreamDeckAction).IsAssignableFrom(t));
-
-			foreach (var actionType in actions)
-			{
-				var newAction = Activator.CreateInstance(actionType) as BaseStreamDeckAction;
-				RegisterActionInternal(this, newAction);
-			}
-
+			this._ActionManager.RegisterAllActions(assembly);
 			return this;
-
 		}
 
-		private static ConnectionManager RegisterActionInternal(ConnectionManager manager, BaseStreamDeckAction action)
-		{
-
-			// Cheer 100 svavablount 15/2/19 
-
-			ValidateActionForRegistration(action);
-
-			action.Manager = manager;
-			action.Logger = _LoggerFactory.CreateLogger(action.UUID);
-
-			try
-			{
-				_ActionsDictionary.Add(action.RegistrationKey, action);
-			} catch (ArgumentException ex) {
-				throw new DuplicateActionRegistrationException(action.UUID, ex);
-			}
-
-			return manager;
-		}
-
-		private static void ValidateActionForRegistration(BaseStreamDeckAction action)
-		{
-			ValidateAction(action);
-
-			if (IsActionRegistered(action.RegistrationKey))
-			{
-				throw new DuplicateActionRegistrationException(action.UUID);
-			}
-
-		}
-
-		private static void ValidateAction(BaseStreamDeckAction action)
-		{
-			if (null == action)
-			{
-				throw new ArgumentNullException(nameof(action), "No action instance was given to register.");
-			}
-
-			if (string.IsNullOrWhiteSpace(action.RegistrationKey))
-			{
-				throw new IncompleteActionDefinitionException($"The action of type \"{action}\" does not define a valid UUID.");
-			}
-		}
-
-		private static bool IsActionRegistered(string actionUUID) => _ActionsDictionary.ContainsKey(actionUUID.ToLowerInvariant());
-
-		private static BaseStreamDeckAction GetRegisteredActionByUUID(string actionUUID)
-		{
-			if (!IsActionRegistered(actionUUID))
-			{
-				throw new ActionNotRegisteredException(actionUUID);
-			}
-
-			return _ActionsDictionary[actionUUID.ToLowerInvariant()];
-		}
 	}
 }

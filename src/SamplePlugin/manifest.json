@@ -1,20 +1,23 @@
 {
-  "Actions": [
-    {
-      "Icon": "images/actionIcon",
-      "Name": "SamplePlugin",
-      "States": [
-        {
-          "Image": "images/actionDefaultImage",
-          "TitleAlignment": "middle",
-          "FontSize": "16"
-        }
-      ],
-      "SupportedInMultiActions": false,
-      "Tooltip": "How many times did you get pwned today? Keep track with this counter.",
-      "UUID": "com.csharpfritz.samplePlugin.action"
-    }
-  ],
+	"Actions": [
+		{
+			"Icon": "images/actionIcon",
+			"Name": "SamplePluginAction",
+			"States": [
+				{
+					"Image": "images/actionDefaultImage",
+					"TitleAlignment": "middle",
+					"FontSize": "16"
+				}
+			],
+			"SupportedInMultiActions": false,
+			"Tooltip": "How many times did you get pwned today? Keep track with this counter.",
+			"UUID": "com.csharpfritz.samplePlugin.action"
+		}
+	],
+	"Category": "Fritz & Friends",
+	"CategoryIcon": "images/category/categoryIcon.png",
+	"Disabled":  false,
   "Author": "Jeffrey T. Fritz",
 	"CodePathWin": "SamplePlugin.cmd",
 	"CodePathMac": "SamplePlugin",
@@ -22,8 +25,12 @@
   "Description": "The Sample Plugin",
   "Name": "Sample Plugin",
   "Icon": "images/pluginIcon",
-  "URL": "https://www.elgato.com/gaming/stream-deck",
-  "Version": "1.2",
+  "URL": "https://github.com/FritzAndFriends",
+	"Version": "1.3",
+	"SDKVersion": 2,
+	"Software": {
+		"MinimumVersion":  "4.1"
+	},
   "OS": [
     {
         "Platform": "mac",

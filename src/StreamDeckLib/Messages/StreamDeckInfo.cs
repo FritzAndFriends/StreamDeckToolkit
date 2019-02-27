@@ -1,9 +1,10 @@
-﻿namespace StreamDeckLib.Messages
+namespace StreamDeckLib.Messages
 {
 	public class Info
 	{
 		public Application application { get; set; }
 		public Device[] devices { get; set; }
+		public int devicePixelRatio { get; set; }
 
 		public class Application
 		{

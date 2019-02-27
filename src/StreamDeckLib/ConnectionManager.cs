@@ -26,6 +26,7 @@ namespace StreamDeckLib
 
 		private ConnectionManager()
 		{
+			this._ActionManager = new ActionManager(this, _Logger);
 		}
 
 		public Messages.Info Info { get; private set; }
@@ -70,7 +71,9 @@ namespace StreamDeckLib
 
 		private static ConnectionManager Initialize(int port, string uuid,
 																								string registerEvent, string info,
-																								ILoggerFactory loggerFactory, IStreamDeckProxy streamDeckProxy)
+																							ILoggerFactory loggerFactory,
+																							IStreamDeckProxy streamDeckProxy,
+																							ActionManager actionManager = null)
 		{
 			// TODO: Validate the info parameter
 			var myInfo = JsonConvert.DeserializeObject<Messages.Info>(info);
@@ -111,7 +114,7 @@ namespace StreamDeckLib
 
 		private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
 		{
-			throw new NotImplementedException();
+			_Logger.LogError(e.Exception, "Error handling StreamDeck information");
 		}
 
 		private async Task Run(CancellationToken token)
@@ -152,43 +155,18 @@ namespace StreamDeckLib
 							continue;
 						}
 
-						if (_ActionEventsIgnore.Contains(msg.Event)) { continue; }
-
-						// Make sure we have a registered BaseStreamDeckAction instance registered for the received action (UUID)
-						if (!_ActionsDictionary.ContainsKey(msg.action))
+						if (string.IsNullOrWhiteSpace(msg.context) && string.IsNullOrWhiteSpace(msg.action))
 						{
-							_Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
-						}
-
-						var action = _ActionsDictionary[msg.action];
-
-
-						//property inspector payload
-						if (msg.Event == "sendToPlugin")
-						{
-							var piMsg = JsonConvert.DeserializeObject<PropertyInspectorEventPayload>(jsonString);
-							if (piMsg.PayloadHasProperty("property_inspector"))
-							{
-								//property inspector event
-								var piEvent = piMsg.GetPayloadValue<string>("property_inspector");
-								if (!_PropertyInspectorActionDictionary.ContainsKey(piEvent))
-								{
-									_Logger.LogWarning($"Plugin does not handle the Property Inspector event '{piEvent}'");
-									continue;
-								}
-								else
-								{
-									_PropertyInspectorActionDictionary[piEvent]?.Invoke(action, piMsg);
-									continue;
-
-								}
-
-							}
-
-							//property inspector property value event
-							_PropertyInspectorActionDictionary[piMsg.Event]?.Invoke(action, piMsg);
+							_Logger.LogInformation($"System event received: ${msg.Event}");
 							continue;
 						}
+						var action = GetInstanceOfAction(msg.context, msg.action);
+						if (action == null)
+						{
+							_Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
+							continue;
+						}
+
 
 						if (!_EventDictionary.ContainsKey(msg.Event))
 						{
@@ -275,7 +253,18 @@ namespace StreamDeckLib
 			var args = new SetSettingsArgs()
 			{
 				context = context,
-				payload = value
+				payload = new { settingsModel = value }
+			};
+
+			await _Proxy.SendStreamDeckEvent(args);
+		}
+
+		public async Task SetGlobalSettingsAsync(string context, dynamic value)
+		{
+			var args = new SetGlobalSettingsArgs()
+			{
+				context = context,
+				payload = new { settingsModel = value }
 			};
 
 			await _Proxy.SendStreamDeckEvent(args);
@@ -290,19 +279,6 @@ namespace StreamDeckLib
 				{
 					state = state
 				}
-			};
-
-			await _Proxy.SendStreamDeckEvent(args);
-		}
-
-		public async Task SendToPropertyInspectorAsync(string context, dynamic payload)
-		{
-
-			var args = new SendToPropertyInspectorArgs
-			{
-				action = _Uuid,
-				context = context,
-				payload = payload
 			};
 
 			await _Proxy.SendStreamDeckEvent(args);
@@ -335,6 +311,20 @@ namespace StreamDeckLib
 				}
 			};
 
+			await _Proxy.SendStreamDeckEvent(args);
+		}
+
+
+		public async Task GetSettingsAsync(string context)
+		{
+			var args = new GetSettingsArgs() { context = context };
+			await _Proxy.SendStreamDeckEvent(args);
+		}
+
+
+		public async Task GetGlobalSettingsAsync(string context)
+		{
+			var args = new GetGlobalSettingsArgs() { context = context };
 			await _Proxy.SendStreamDeckEvent(args);
 		}
 
