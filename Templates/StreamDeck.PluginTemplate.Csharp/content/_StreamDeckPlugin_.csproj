@@ -89,7 +89,7 @@
 
 	<!-- Build Helper -->
 	<ItemGroup>
-		<Content Include="$(PluginName).cmd">
+		<Content Include="_StreamDeckPlugin_.cmd">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
