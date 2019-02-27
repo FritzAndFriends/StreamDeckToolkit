@@ -2,16 +2,14 @@
 
 namespace StreamDeckLib
 {
-
-	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited =false)]	
   public class ActionUuidAttribute : Attribute
   {
-	
+	private string _uuid;
 	public ActionUuidAttribute(string uuid = "")
 	{
-	  Uuid = uuid;
+	  this.Uuid = uuid;
 	}
 
-	public string Uuid { get; set; }
+	public string Uuid { get => _uuid; set => _uuid = value; }
   }
 }
