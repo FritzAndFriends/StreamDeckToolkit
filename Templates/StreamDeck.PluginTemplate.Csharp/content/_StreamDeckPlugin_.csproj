@@ -65,6 +65,33 @@
 		<Content Include="images/pluginIcon@2x.png">
 				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+		<Content Include="images/Fritz.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<!-- Property Inspector Files -->
+	<ItemGroup>
+		<Content Include="property_inspector\css\property-inspector.css">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="property_inspector\css\sdpi.css">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="property_inspector\js\property-inspector.js">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="property_inspector\property_inspector.html">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+
+	</ItemGroup>
+
+	<!-- Build Helper -->
+	<ItemGroup>
+		<Content Include="$(PluginName).cmd">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<!-- Include the README.md as part of the project for easy reference -->

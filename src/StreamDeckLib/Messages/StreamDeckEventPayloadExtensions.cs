@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using System;
 using System.ComponentModel;
 
@@ -9,7 +9,7 @@ namespace StreamDeckLib.Messages
 	public static bool PayloadSettingsHasProperty(this StreamDeckEventPayload obj, string propertyName)
 	{
 	  var jObj = obj.payload.settings as JObject;
-	
+
 	  return jObj.Count > 0 && obj.payload.settings.settingsModel[propertyName] != null;
 	}
 

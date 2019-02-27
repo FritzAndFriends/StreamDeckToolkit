@@ -1,5 +1,5 @@
 ﻿// global websocket, used to communicate from/to Stream Deck software
-// as well as some info about our plugin, as sent by Stream Deck software 
+// as well as some info about our plugin, as sent by Stream Deck software
 var websocket = null,
   uuid = null,
   inInfo = null,
@@ -8,68 +8,53 @@ var websocket = null,
 		Counter: 0
   };
 
-function connectSocket(inPort, inUUID, inRegisterEvent, inInfo, inActionInfo) {
+function connectElgatoStreamDeckSocket(inPort, inUUID, inRegisterEvent, inInfo, inActionInfo) {
   uuid = inUUID;
   actionInfo = JSON.parse(inActionInfo);
   inInfo = JSON.parse(inInfo);
   websocket = new WebSocket('ws://localhost:' + inPort);
 
+  //initialize values
+  if (actionInfo.payload.settings.settingsModel) {
+		settingsModel.Counter = actionInfo.payload.settings.settingsModel.Counter;
+  }
+
+  document.getElementById('txtCounterValue').value = settingsModel.Counter;
+
   websocket.onopen = function () {
-	var json = { event: inRegisterEvent, uuid: inUUID };
-	// register property inspector to Stream Deck
-	websocket.send(JSON.stringify(json));
-	sendEventToPlugin('propertyInspectorConnected');
+		var json = { event: inRegisterEvent, uuid: inUUID };
+		// register property inspector to Stream Deck
+		websocket.send(JSON.stringify(json));
+
   };
 
   websocket.onmessage = function (evt) {
-	// Received message from Stream Deck
-	var jsonObj = JSON.parse(evt.data);
-	var sdEvent = jsonObj['event'];
-	switch (sdEvent) {
-	  case "sendToPropertyInspector":
-		if (jsonObj.payload.settingsModel.Counter) {
-		  settingsModel.Counter = jsonObj.payload.settingsModel.Counter;
-		  document.getElementById('txtCounterValue').value = settingsModel.Counter;
+		// Received message from Stream Deck
+		var jsonObj = JSON.parse(evt.data);
+		var sdEvent = jsonObj['event'];
+		switch (sdEvent) {
+			case "didReceiveSettings":
+			if (jsonObj.payload.settings.settingsModel.Counter) {
+				settingsModel.Counter = jsonObj.payload.settings.settingsModel.Counter;
+				document.getElementById('txtCounterValue').value = settingsModel.Counter;
+			}
+			break;
+			default:
+			break;
 		}
-		break;
-	  default:
-		break;
-	}
   };
 }
 
-window.addEventListener('unload', function (event) {
-  sendEventToPlugin('propertyInspectorDisconnected');
-});
-
-function sendValueToPlugin(value, param) {
-  if (websocket) {
-		settingsModel[param] = value;
-		const json = {
-			"action": actionInfo['action'],
-			"event": "sendToPlugin",
-			"context": uuid,
-			"payload": {
-				"settingsModel": settingsModel
-			}
-		};
-		websocket.send(JSON.stringify(json));
-	}
-}
-
-function sendEventToPlugin(value, param) {
+function setSettings(value, param) {
   if (websocket) {
 	settingsModel[param] = value;
-	const json = {
-	  "action": actionInfo['action'],
-	  "event": "sendToPlugin",
+	var json = {
+	  "event": "setSettings",
 	  "context": uuid,
 	  "payload": {
-		  "property_inspector": value
+		"settingsModel": settingsModel
 	  }
 	};
 	websocket.send(JSON.stringify(json));
   }
-}
-
-
+};

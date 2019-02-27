@@ -26,6 +26,7 @@ namespace StreamDeckLib
 
 		private ConnectionManager()
 		{
+			this._ActionManager = new ActionManager(this, _Logger);
 		}
 
 		public Messages.Info Info { get; private set; }
@@ -70,7 +71,9 @@ namespace StreamDeckLib
 
 		private static ConnectionManager Initialize(int port, string uuid,
 																								string registerEvent, string info,
-																								ILoggerFactory loggerFactory, IStreamDeckProxy streamDeckProxy)
+																							ILoggerFactory loggerFactory,
+																							IStreamDeckProxy streamDeckProxy,
+																							ActionManager actionManager = null)
 		{
 			// TODO: Validate the info parameter
 			var myInfo = JsonConvert.DeserializeObject<Messages.Info>(info);
@@ -152,42 +155,18 @@ namespace StreamDeckLib
 							continue;
 						}
 
-						if (_ActionEventsIgnore.Contains(msg.Event)) { continue; }
-
-									var action = GetInstanceOfAction(msg.context, msg.action);
-			if (action == null)
-			{
-			  _Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
-			  continue;
-			}
-
-
-						//property inspector payload
-						if (msg.Event == "sendToPlugin")
+						if (string.IsNullOrWhiteSpace(msg.context) && string.IsNullOrWhiteSpace(msg.action))
 						{
-							var piMsg = JsonConvert.DeserializeObject<PropertyInspectorEventPayload>(jsonString);
-							if (piMsg.EventPayloadHasProperty("property_inspector"))
-							{
-								//property inspector event
-								var piEvent = piMsg.GetEventPayloadValue<string>("property_inspector");
-								if (!_PropertyInspectorActionDictionary.ContainsKey(piEvent))
-								{
-									_Logger.LogWarning($"Plugin does not handle the Property Inspector event '{piEvent}'");
-									continue;
-								}
-								else
-								{
-									_PropertyInspectorActionDictionary[piEvent]?.Invoke(action, piMsg);
-									continue;
-
-								}
-
-							}
-
-							//property inspector property value event
-							_PropertyInspectorActionDictionary[piMsg.Event]?.Invoke(action, piMsg);
+							_Logger.LogInformation($"System event received: ${msg.Event}");
 							continue;
 						}
+						var action = GetInstanceOfAction(msg.context, msg.action);
+						if (action == null)
+						{
+							_Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
+							continue;
+						}
+
 
 						if (!_EventDictionary.ContainsKey(msg.Event))
 						{
@@ -280,6 +259,17 @@ namespace StreamDeckLib
 			await _Proxy.SendStreamDeckEvent(args);
 		}
 
+		public async Task SetGlobalSettingsAsync(string context, dynamic value)
+		{
+			var args = new SetGlobalSettingsArgs()
+			{
+				context = context,
+				payload = new { settingsModel = value }
+			};
+
+			await _Proxy.SendStreamDeckEvent(args);
+		}
+
 		public async Task SetStateAsync(string context, int state)
 		{
 			var args = new SetStateArgs
@@ -289,21 +279,6 @@ namespace StreamDeckLib
 				{
 					state = state
 				}
-			};
-
-			await _Proxy.SendStreamDeckEvent(args);
-		}
-
-		public async Task SendToPropertyInspectorAsync(string context, dynamic payload)
-		{
-
-			var uuid = _contextActions[context].ActionUuid;
-
-			var args = new SendToPropertyInspectorArgs
-			{
-			  action = uuid,
-			  context = context,
-			  payload = new { settingsModel = payload }
 			};
 
 			await _Proxy.SendStreamDeckEvent(args);
@@ -336,6 +311,20 @@ namespace StreamDeckLib
 				}
 			};
 
+			await _Proxy.SendStreamDeckEvent(args);
+		}
+
+
+		public async Task GetSettingsAsync(string context)
+		{
+			var args = new GetSettingsArgs() { context = context };
+			await _Proxy.SendStreamDeckEvent(args);
+		}
+
+
+		public async Task GetGlobalSettingsAsync(string context)
+		{
+			var args = new GetGlobalSettingsArgs() { context = context };
 			await _Proxy.SendStreamDeckEvent(args);
 		}
 

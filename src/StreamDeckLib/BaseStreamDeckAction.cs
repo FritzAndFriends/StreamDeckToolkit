@@ -56,11 +56,13 @@ namespace StreamDeckLib
 
     public virtual Task OnApplicationDidTerminate(StreamDeckEventPayload args) => Task.CompletedTask;
 
-    public virtual Task OnPropertyInspectorMessageReceived(PropertyInspectorEventPayload args) => Task.CompletedTask;
+		public virtual Task OnDidReceiveSettings(StreamDeckEventPayload args) => Task.CompletedTask;
 
-    public virtual Task OnPropertyInspectorConnected(PropertyInspectorEventPayload args) => Task.CompletedTask;
+		public virtual Task OnDidReceiveGlobalSettings(StreamDeckEventPayload args) => Task.CompletedTask;
 
-    public virtual Task OnPropertyInspectorDisconnected(PropertyInspectorEventPayload args) => Task.CompletedTask;
-		
-  }
+		public virtual Task OnPropertyInspectorDidDisappear(StreamDeckEventPayload args) => Task.CompletedTask;
+
+		public virtual Task OnPropertyInspectorDidAppear(StreamDeckEventPayload args) => Task.CompletedTask;
+
+	}
 }
