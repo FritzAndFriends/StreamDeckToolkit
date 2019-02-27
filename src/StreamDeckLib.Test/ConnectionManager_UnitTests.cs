@@ -28,22 +28,24 @@ namespace StreamDeckLib.Test
 		{
 			// Arrange
 			var stub = new StubProxy()
-			           {
-				           InspectRegister = (e, uuid) =>
-				                             {
-					                             Assert.Equal(StubProxy.TEST_EVENT, e);
-					                             Assert.Equal(uuid, uuid);
-				                             }
-			           };
+			{
+				InspectRegister = (e, uuid) =>
+													{
+														Assert.Equal(StubProxy.TEST_EVENT, e);
+														Assert.Equal(uuid, uuid);
+													}
+			};
 
 			// Act
 			var tokenSource = new CancellationTokenSource();
 			var task = ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments, null, stub)
-			                       .StartAsync(tokenSource.Token);
+														 .StartAsync(tokenSource.Token);
 
 			// Assert
 			Assert.Null(task.Exception);
 			tokenSource.Cancel();
+
+		}
 
 
 	[Fact]
