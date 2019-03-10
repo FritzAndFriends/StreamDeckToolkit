@@ -82,6 +82,7 @@
 *.filters    text eol=crlf
 *.vcxitems   text eol=crlf
 
+*.sh         text eol=lf
 
 #*.sln       merge=binary
 #*.csproj    merge=binary

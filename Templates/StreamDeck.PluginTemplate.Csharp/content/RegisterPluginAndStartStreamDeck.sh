@@ -1,3 +1,5 @@
+#!/bin/sh
+
 #Notify user we are killing the process
 echo 'Killing the Stream Deck process'
 
