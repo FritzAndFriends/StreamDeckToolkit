@@ -274,6 +274,11 @@ namespace StreamDeckLib
 	  return actionInstance;
 	}
 
+	public Dictionary<string, BaseStreamDeckAction> GetAllActions()
+	{
+	  return _ActionInstances;
+	}
+
 
 	#endregion
 

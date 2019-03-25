@@ -1,3 +1,4 @@
+using StreamDeckLib.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,5 +28,19 @@ namespace StreamDeckLib
 			return this;
 		}
 
-	}
+		public void BroadcastGlobalSettings(StreamDeckEventPayload msg)
+		{
+			var actions = GetAllActions();
+			foreach (var entry in actions)
+			{
+				_EventDictionary[msg.Event]?.Invoke(entry.Value, msg);
+			}
+		}
+
+		public Dictionary<string, BaseStreamDeckAction> GetAllActions()
+		{
+			return this._ActionManager.GetAllActions();
+		}
+
+  }
 }

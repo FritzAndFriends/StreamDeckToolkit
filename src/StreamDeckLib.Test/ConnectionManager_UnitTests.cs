@@ -4,6 +4,7 @@ using FluentAssertions;
 using System.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using StreamDeckLib.Messages;
 
 namespace StreamDeckLib.Test
 {
@@ -144,6 +145,33 @@ namespace StreamDeckLib.Test
 			//TODO: Wording? "unique UUID" is like saying "PIN number". It's "just" a test, but still syntactically incorrect.
 			action.Should()
 			.NotThrow("registering multiple unique actions is valid");
+	}
+
+
+	[Fact]
+	public async Task ActionsShouldReceiveGlobalSetting_WhenGlobalSettingsAreBroadcast()
+	{		
+		//make sure the global settings are accessible in the actions
+	  var mgr = ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments)
+			.RegisterActionType("com.csharpfritz.samplePlugin.action", typeof(StubAction))
+			.RegisterActionType("com.csharpfritz.samplePlugin.action2", typeof(StubAction));
+			
+	  var dummyPayload = new StreamDeckEventPayload();
+	  dummyPayload.Event = "didReceiveGlobalSettings";
+	  dummyPayload.payload = new StreamDeckEventPayload.Payload();
+	  dummyPayload.payload.settings = new { Counter = 1 };
+			
+	  mgr.Invoking(x => x.BroadcastGlobalSettings(dummyPayload));
+	  var actions = mgr.GetAllActions();
+
+	  var result = true;
+
+	  foreach (var entry in actions)
+	  {
+			
+			result = result && (entry.Value as StubAction).Counter==1;
+	  }
+	  Assert.True(result);
 	}
 
   }

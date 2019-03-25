@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
 using StreamDeckLib.Messages;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace StreamDeckLib
 		private string _Uuid;
 		private string _RegisterEvent;
 		private IStreamDeckProxy _Proxy;
+		private IGlobalSettings _GlobalSettings;
 
 		// Cheer 225 cpayette 26/2/19
 		// Cheer 10700 roberttables 26/2/19
@@ -104,6 +106,12 @@ namespace StreamDeckLib
 			return manager;
 		}
 
+		public ConnectionManager RegisterGlobalSettings(IGlobalSettings settings)
+		{
+			_GlobalSettings = settings;
+			return this;
+		}
+
 		public async Task<ConnectionManager> StartAsync(CancellationToken token)
 		{
 
@@ -165,28 +173,38 @@ namespace StreamDeckLib
 
 							continue;
 						}
-
-						if (string.IsNullOrWhiteSpace(msg.context) && string.IsNullOrWhiteSpace(msg.action))
+						
+						if (msg.Event.Equals("didReceiveGlobalSettings"))
 						{
+							this.BroadcastGlobalSettings(msg);
+						}
+						else
+						{
+
+							if (string.IsNullOrWhiteSpace(msg.context) && string.IsNullOrWhiteSpace(msg.action))
+							{
 							_Logger.LogInformation($"System event received: ${msg.Event}");
 							continue;
-						}
-						var action = GetInstanceOfAction(msg.context, msg.action);
-						if (action == null)
-						{
+							}
+							var action = GetInstanceOfAction(msg.context, msg.action);
+							if (action == null)
+							{
 							_Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
 							continue;
-						}
+							}
 
 
-						if (!_EventDictionary.ContainsKey(msg.Event))
-						{
+							if (!_EventDictionary.ContainsKey(msg.Event))
+							{
 							_Logger.LogWarning($"Plugin does not handle the event '{msg.Event}'");
 
 							continue;
 						}
 
 						_EventDictionary[msg.Event]?.Invoke(action, msg);
+
+					}
+
 
 					}
 					catch (Exception ex)
@@ -339,6 +357,7 @@ namespace StreamDeckLib
 			await _Proxy.SendStreamDeckEvent(args);
 		}
 
+		
 		#endregion
 
 		#region IDisposable Support
