@@ -1,25 +1,24 @@
-using System;
-using System.Threading.Tasks;
 using StreamDeckLib.Messages;
+using System.Threading.Tasks;
 
 namespace StreamDeckLib.Test
 {
 
-	[ActionUuid(Uuid = "Test UUID")]
-	public class StubAction : BaseStreamDeckAction
+  [ActionUuid(Uuid = "Test UUID")]
+  public class StubAction : BaseStreamDeckAction
+  {
+	public int Counter = 0;
+
+	internal ConnectionManager GetConnectionManager()
 	{
-		public int Counter = 0;
+	  return this.Manager;
+	}
 
-		internal ConnectionManager GetConnectionManager()
-		{
-			return this.Manager;
-		}
-
-		public override Task OnDidReceiveGlobalSettings(StreamDeckEventPayload args)
-		{
-			Counter = 1;
-			return Task.CompletedTask;
-		}
+	public override Task OnDidReceiveGlobalSettings(StreamDeckEventPayload args)
+	{
+	  Counter = 1;
+	  return Task.CompletedTask;
+	}
 
   }
 
