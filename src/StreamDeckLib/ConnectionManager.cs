@@ -172,18 +172,18 @@ namespace StreamDeckLib
 			  continue;
 			}
 
-			if (msg.Event.Equals("didReceiveGlobalSettings"))
+			if (string.IsNullOrWhiteSpace(msg.context) && string.IsNullOrWhiteSpace(msg.action))
 			{
-			  this.BroadcastGlobalSettings(msg);
+			  this.BroadcastMessage(msg);
 			}
 			else
 			{
 
-			  if (string.IsNullOrWhiteSpace(msg.context) && string.IsNullOrWhiteSpace(msg.action))
-			  {
-				_Logger.LogInformation($"System event received: ${msg.Event}");
-				continue;
-			  }
+			  // if (string.IsNullOrWhiteSpace(msg.context) && string.IsNullOrWhiteSpace(msg.action))
+			  // {
+			  //_Logger.LogInformation($"System event received: ${msg.Event}");
+			  //continue;
+			  // }
 			  var action = GetInstanceOfAction(msg.context, msg.action);
 			  if (action == null)
 			  {
@@ -352,6 +352,29 @@ namespace StreamDeckLib
 	public async Task GetGlobalSettingsAsync(string context)
 	{
 	  var args = new GetGlobalSettingsArgs() { context = context };
+	  await _Proxy.SendStreamDeckEvent(args);
+	}
+
+	public async Task LogMessageAsync(string context, string logMessage)
+	{
+	  var args = new LogMessageArgs()
+	  {
+		context = context,
+		payload = new LogMessageArgs.Payload()
+		{
+		  message = logMessage
+		}
+	  };
+	  await _Proxy.SendStreamDeckEvent(args);
+	}
+
+	public async Task SendToPropertyInspectorAsync(string context, dynamic settings)
+	{
+	  var args = new SendToPropertyInspectorArgs()
+	  {
+		context = context,
+		payload = settings
+	  };
 	  await _Proxy.SendStreamDeckEvent(args);
 	}
 

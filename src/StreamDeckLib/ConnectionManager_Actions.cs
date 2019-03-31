@@ -27,7 +27,7 @@ namespace StreamDeckLib
 	  return this;
 	}
 
-	public void BroadcastGlobalSettings(StreamDeckEventPayload msg)
+	public void BroadcastMessage(StreamDeckEventPayload msg)
 	{
 	  var actions = GetAllActions();
 	  foreach (var entry in actions)

@@ -160,7 +160,7 @@ namespace StreamDeckLib.Test
 	  dummyPayload.payload = new StreamDeckEventPayload.Payload();
 	  dummyPayload.payload.settings = new { Counter = 1 };
 
-	  mgr.Invoking(x => x.BroadcastGlobalSettings(dummyPayload));
+	  mgr.Invoking(x => x.BroadcastMessage(dummyPayload));
 	  var actions = mgr.GetAllActions();
 
 	  var result = true;
