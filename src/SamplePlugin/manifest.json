@@ -13,6 +13,20 @@
 			"SupportedInMultiActions": false,
 			"Tooltip": "How many times did you get pwned today? Keep track with this counter.",
 			"UUID": "com.csharpfritz.samplePlugin.action"
+		},
+		{
+			"Icon": "images/actionIcon",
+			"Name": "SamplePluginAction2",
+			"States": [
+				{
+					"Image": "images/actionDefaultImage",
+					"TitleAlignment": "middle",
+					"FontSize": "16"
+				}
+			],
+			"SupportedInMultiActions": false,
+			"Tooltip": "How many times did you get pwned today? Keep track with this counter.",
+			"UUID": "com.csharpfritz.samplePlugin.action2"
 		}
 	],
 	"Category": "Fritz & Friends",
