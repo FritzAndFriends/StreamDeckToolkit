@@ -4,7 +4,7 @@
 
 ![](https://img.shields.io/azure-devops/tests/FritzAndFriends/StreamDeckTools/8/dev.svg)
 
-[Intellicode Model](https://prod.intellicode.vsengsaas.visualstudio.com/get?m=EE5419D495BE49528606139DA3ADC687)
+[Intellicode Model](https://prod.intellicode.vsengsaas.visualstudio.com/get?m=409A792BE4F74201806A848409B2984D)
 
 ## What Is This?
 
