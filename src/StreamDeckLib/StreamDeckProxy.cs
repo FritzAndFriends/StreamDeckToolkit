@@ -12,14 +12,6 @@ namespace StreamDeckLib
 
 	internal class StreamDeckProxy : IStreamDeckProxy
 	{
-
-		/*
-		 * Cheer 100 Auth0bobby January 27, 2019
-		 * Cheer 100 cpayette January 27, 2019
-		 * Cheer 100 RamblingGeek January 27, 2019
-		 * Cheer 100 PharEwings January 27, 2019
-		 * */
-
 		private readonly ClientWebSocket _Socket = new ClientWebSocket();
 
 		public WebSocketState State { get { return _Socket.State; } }

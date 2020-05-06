@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using StreamDeckLib.Messages;
 using System;
 using System.Collections.Generic;
@@ -5,41 +6,42 @@ using System.Reflection;
 
 namespace StreamDeckLib
 {
-  partial class ConnectionManager
-  {
-	private ActionManager _ActionManager;
-
-	//Cheer 100 svavablount 15/2/19 
-	public ConnectionManager RegisterActionType(string actionUuid, Type actionType)
+	partial class ConnectionManager
 	{
-	  this._ActionManager.RegisterActionType(actionUuid, actionType);
-	  return this;
-	}
+		private ActionManager _ActionManager;
 
-	public BaseStreamDeckAction GetInstanceOfAction(string context, string actionUuid)
-	{
-	  return this._ActionManager.GetActionForContext(context, actionUuid);
-	}
+		public ConnectionManager RegisterActionType(string actionUuid, Type actionType)
+		{
+			this._ActionManager.RegisterActionType(actionUuid, actionType);
+			return this;
+		}
 
-	public ConnectionManager RegisterAllActions(Assembly assembly)
-	{
-	  this._ActionManager.RegisterAllActions(assembly);
-	  return this;
-	}
+		public BaseStreamDeckAction GetInstanceOfAction(string context, string actionUuid)
+		{
+			return this._ActionManager.GetActionForContext(this, context, actionUuid);
+		}
 
-	public void BroadcastMessage(StreamDeckEventPayload msg)
-	{
-	  var actions = GetAllActions();
-	  foreach (var entry in actions)
-	  {
-		_EventDictionary[msg.Event]?.Invoke(entry.Value, msg);
-	  }
-	}
+		public ConnectionManager RegisterAllActions(Assembly assembly)
+		{
+			_logger?.LogInformation("ConnectionManager:RegisterAllActions: Started");
+			_ActionManager.RegisterAllActions(assembly);
+			_logger?.LogInformation("ConnectionManager:RegisterAllActions: Finished");
+			return this;
+		}
 
-	public Dictionary<string, BaseStreamDeckAction> GetAllActions()
-	{
-	  return this._ActionManager.GetAllActions();
-	}
+		public void BroadcastMessage(StreamDeckEventPayload msg)
+		{
+			var actions = GetAllActions();
+			foreach (var entry in actions)
+			{
+				_EventDictionary[msg.Event]?.Invoke(entry.Value, msg);
+			}
+		}
 
-  }
+		public Dictionary<string, BaseStreamDeckAction> GetAllActions()
+		{
+			return this._ActionManager.GetAllActions();
+		}
+
+	}
 }

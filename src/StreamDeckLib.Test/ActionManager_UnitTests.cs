@@ -13,10 +13,12 @@ namespace StreamDeckLib.Test
 			// Arrange
 			using (var SUT = new ActionManager(null))
 			{
+				var cm = ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments)
+									.RegisterActionType("Unique_Action_ID_1", typeof(StubAction));
 				// Act
 
 				// Assert
-				Assert.Throws<ActionNotRegisteredException>(() => SUT.GetAction("UUID1"));
+				Assert.Throws<ActionNotRegisteredException>(() => SUT.GetAction(cm, "UUID1"));
 
 			}
 		}
@@ -29,16 +31,18 @@ namespace StreamDeckLib.Test
 			//
 
 			var testAction = new StubAction();
-			BaseStreamDeckAction returnedAction;
+			BaseStreamDeckAction returnedAction=null;
 
 			// 
 			// Act
 			//
 			using (var SUT = new ActionManager(null))
 			{
+				var cm = ConnectionManager.Initialize(StubProxy.ValidCommandLineArguments)
+									.RegisterActionType("Unique_Action_ID_1", typeof(StubAction));
 
 				SUT.RegisterAction<StubAction>("UUID1");
-				returnedAction = SUT.GetActionInstance<StubAction>("UUID1");
+				returnedAction = SUT.GetActionInstance<StubAction>(cm, "UUID1");
 			}
 
 			//
