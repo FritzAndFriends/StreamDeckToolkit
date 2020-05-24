@@ -1,0 +1,6 @@
+- name: Working With This Template
+  href: template.md
+- name: Action
+  href: action.md
+- name: Property Inspector
+  href: propertyinspector.md

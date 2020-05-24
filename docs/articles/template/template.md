@@ -33,7 +33,8 @@ The following are the base set of images/icons which are needed for the plugin. 
 
 Unless otherwise noted, image assets should all be in the "Portable Network Graphics" (PNG) format.
 
-*Note:* While all efforts have been made to ensure the correctness of this information, please refer to the official [Style Guide][] and [Manifest file definition][Manifest File]  for the latest and most up-to-date information.
+> [!Note]
+> While all efforts have been made to ensure the correctness of this information, please refer to the official [Style Guide][] and [Manifest file definition][Manifest File]  for the latest and most up-to-date information.
 
 -----
 
