@@ -8,6 +8,8 @@
   href: using.md
 - name: Creating a Plugin Action
   href: create.md
+- name: Working With This Template
+  href: template.md
 - name: Projects
   href: projects/toc.yml
 #  items:
