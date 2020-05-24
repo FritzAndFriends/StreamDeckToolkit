@@ -1,0 +1,4 @@
+- name: StreamDeck Emulator
+  href: emulator.md
+- name: StreamDeck Dashboard
+  href: dashboard.md
