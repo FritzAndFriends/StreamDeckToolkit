@@ -28,7 +28,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Registration", "Registratio
 		..\scripts\registration\RegisterPluginAndStartStreamDeck.sh = ..\scripts\registration\RegisterPluginAndStartStreamDeck.sh
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamDeckLib.Config", "StreamDeckLib.Config\StreamDeckLib.Config.csproj", "{32D1D35F-58ED-4BB2-B1CE-473C89757282}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamDeckLib.Config", "StreamDeckLib.Config\StreamDeckLib.Config.csproj", "{32D1D35F-58ED-4BB2-B1CE-473C89757282}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebPlugin", "SampleWebPlugin\SampleWebPlugin.csproj", "{6CCD81B1-964E-49F6-AACD-577FE52B5317}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleDIPlugin", "SampleDIPlugin\SampleDIPlugin.csproj", "{FF0C8635-DDA9-4799-9B63-850119435DAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +56,14 @@ Global
 		{32D1D35F-58ED-4BB2-B1CE-473C89757282}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32D1D35F-58ED-4BB2-B1CE-473C89757282}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32D1D35F-58ED-4BB2-B1CE-473C89757282}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CCD81B1-964E-49F6-AACD-577FE52B5317}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CCD81B1-964E-49F6-AACD-577FE52B5317}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CCD81B1-964E-49F6-AACD-577FE52B5317}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CCD81B1-964E-49F6-AACD-577FE52B5317}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF0C8635-DDA9-4799-9B63-850119435DAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF0C8635-DDA9-4799-9B63-850119435DAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF0C8635-DDA9-4799-9B63-850119435DAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF0C8635-DDA9-4799-9B63-850119435DAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

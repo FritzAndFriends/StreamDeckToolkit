@@ -1,9 +1,9 @@
-﻿using SamplePlugin.Models;
+﻿using SampleDIPlugin.Models;
 using StreamDeckLib;
 using StreamDeckLib.Messages;
 using System.Threading.Tasks;
 
-namespace SamplePlugin
+namespace SampleDIPlugin
 {
 	[ActionUuid(Uuid = "com.csharpfritz.samplePlugin.action2")]
 	public class MySamplePluginAction2 : BaseStreamDeckActionWithSettingsModel<CounterSettingsModel>

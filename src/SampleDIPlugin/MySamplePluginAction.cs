@@ -1,12 +1,12 @@
-﻿using SamplePlugin.Models;
+﻿using SampleDIPlugin.Models;
 using StreamDeckLib;
 using StreamDeckLib.Messages;
 using System.Threading.Tasks;
 
-namespace SamplePlugin
+namespace SampleDIPlugin
 {
-	[ActionUuid(Uuid = "com.csharpfritz.samplePlugin.action2")]
-	public class MySamplePluginAction2 : BaseStreamDeckActionWithSettingsModel<CounterSettingsModel>
+	[ActionUuid(Uuid = "com.csharpfritz.samplePlugin.action")]
+	public class MySamplePluginAction : BaseStreamDeckActionWithSettingsModel<CounterSettingsModel>
 	{
 
 		public override async Task OnKeyUp(StreamDeckEventPayload args)
