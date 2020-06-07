@@ -14,6 +14,78 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/SampleDIPlugin.Models.CounterSettingsModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SampleDIPlugin.Models.CounterSettingsModel.html",
+          "hash": "3PZPJZuBXYzap4eGLbIxfA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SampleDIPlugin.Models.SampleActionSettingsModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SampleDIPlugin.Models.SampleActionSettingsModel.html",
+          "hash": "e2crsQRIt3th96NAm4eXjw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SampleDIPlugin.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SampleDIPlugin.Models.html",
+          "hash": "WwVFjFUzCyDIwYKp0oDr1w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SampleDIPlugin.MySamplePluginAction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SampleDIPlugin.MySamplePluginAction.html",
+          "hash": "bGuEmP1CEtRwrE7zI4HqAg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SampleDIPlugin.MySamplePluginAction2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SampleDIPlugin.MySamplePluginAction2.html",
+          "hash": "i8DrHpnjoSokvgUj3YyoWA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SampleDIPlugin.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SampleDIPlugin.html",
+          "hash": "jxlT5cR1X6gz0HYir5plvA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/SamplePlugin.Models.CounterSettingsModel.yml",
       "output": {
         ".html": {
@@ -30,7 +102,7 @@
       "output": {
         ".html": {
           "relative_path": "api/SamplePlugin.Models.SampleActionSettingsModel.html",
-          "hash": "kMC3Jjau0SUlEq0pxI42TA=="
+          "hash": "9PCShByCkmCAnTOc8bNELw=="
         }
       },
       "is_incremental": false,
@@ -86,11 +158,107 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/SampleWebPlugin.Models.CounterSettingsModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SampleWebPlugin.Models.CounterSettingsModel.html",
+          "hash": "2+Y5kQUz9ZEpGMOfr9Z+pA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SampleWebPlugin.Models.SampleActionSettingsModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SampleWebPlugin.Models.SampleActionSettingsModel.html",
+          "hash": "w1JEZdirLS3rzfE3hzIg4A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SampleWebPlugin.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SampleWebPlugin.Models.html",
+          "hash": "5PuhCaiD6C47cXixKj3YlQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SampleWebPlugin.MySamplePluginAction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SampleWebPlugin.MySamplePluginAction.html",
+          "hash": "cdWyo4kG5gN84N/UtCrvLw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SampleWebPlugin.MySamplePluginAction2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SampleWebPlugin.MySamplePluginAction2.html",
+          "hash": "9iRPYC1YF94rJg6DTcu9fQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SampleWebPlugin.Program.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SampleWebPlugin.Program.html",
+          "hash": "ejIW2aDl/DBzhN7qW4ImFg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SampleWebPlugin.Startup.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SampleWebPlugin.Startup.html",
+          "hash": "KJMgygt3IH2loXqHAiMq3w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/SampleWebPlugin.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/SampleWebPlugin.html",
+          "hash": "PAXH0STxgv/nihVkjL1rUw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/StreamDeckLib.ActionManager.yml",
       "output": {
         ".html": {
           "relative_path": "api/StreamDeckLib.ActionManager.html",
-          "hash": "qHnzuhQjqS3wk4nXSRNV0w=="
+          "hash": "dj3e8e6fW3DT+cQ68jy6VQ=="
         }
       },
       "is_incremental": false,
@@ -138,7 +306,7 @@
       "output": {
         ".html": {
           "relative_path": "api/StreamDeckLib.BaseStreamDeckActionWithSettingsModel-1.html",
-          "hash": "MuhvV2bcqZkMhnhO8Zz3yg=="
+          "hash": "7savND9+nh9Vgrc6++i4KA=="
         }
       },
       "is_incremental": false,
@@ -186,7 +354,31 @@
       "output": {
         ".html": {
           "relative_path": "api/StreamDeckLib.ConnectionManager.html",
-          "hash": "ocOfyCWvFOBFpkrRFC0VSQ=="
+          "hash": "GAtCBBLbyowuqmy3D2XuVQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StreamDeckLib.DependencyInjection.DependencyInjectionExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StreamDeckLib.DependencyInjection.DependencyInjectionExtensions.html",
+          "hash": "+2HDZJdzQlv8lM+c2sLfwA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StreamDeckLib.DependencyInjection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StreamDeckLib.DependencyInjection.html",
+          "hash": "Gr4mZc/yk9QHo3gLtToVrA=="
         }
       },
       "is_incremental": false,
@@ -211,6 +403,54 @@
         ".html": {
           "relative_path": "api/StreamDeckLib.DuplicateActionRegistrationException.html",
           "hash": "fb2yNKysv2wNFdFKOxegLw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StreamDeckLib.HostedServices.StreamDeckHostedService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StreamDeckLib.HostedServices.StreamDeckHostedService.html",
+          "hash": "LxziR27Bfhh9WVsRIjjOMw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StreamDeckLib.HostedServices.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StreamDeckLib.HostedServices.html",
+          "hash": "IJBys7P0PPQ5SBkaZXb5cg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StreamDeckLib.Hosting.DependencyInjectionExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StreamDeckLib.Hosting.DependencyInjectionExtensions.html",
+          "hash": "xlDHHf6SWg3ApMcxMmjWVA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StreamDeckLib.Hosting.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StreamDeckLib.Hosting.html",
+          "hash": "rzclTjwo0w9otASu5Wj7IQ=="
         }
       },
       "is_incremental": false,
@@ -674,6 +914,42 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/StreamDeckLib.Models.StreamDeckRegistrationOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StreamDeckLib.Models.StreamDeckRegistrationOptions.html",
+          "hash": "5XLYGx8vX2fqmX4S9cb2sw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StreamDeckLib.Models.StreamDeckToolkitOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StreamDeckLib.Models.StreamDeckToolkitOptions.html",
+          "hash": "MhcDuj8yfy8NPpM3hJla3w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/StreamDeckLib.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/StreamDeckLib.Models.html",
+          "hash": "EqiXUDBIVzKlNY8p525eMQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/StreamDeckLib.Test.ActionManagerShould.yml",
       "output": {
         ".html": {
@@ -774,7 +1050,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "hI61yjfR1NuUBZCEDqijqg=="
+          "hash": "pr1fxWgI0E3VGkvB7ZBFqA=="
         }
       },
       "is_incremental": false,
@@ -1045,7 +1321,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 62,
+          "total_file_count": 85,
           "skipped_file_count": 0
         },
         "ConceptualDocumentProcessor": {

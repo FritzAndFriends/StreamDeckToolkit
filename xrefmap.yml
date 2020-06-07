@@ -1,6 +1,146 @@
 ### YamlMime:XRefMap
 sorted: true
 references:
+- uid: SampleDIPlugin
+  name: SampleDIPlugin
+  href: api/SampleDIPlugin.html
+  commentId: N:SampleDIPlugin
+  fullName: SampleDIPlugin
+  nameWithType: SampleDIPlugin
+- uid: SampleDIPlugin.Models
+  name: SampleDIPlugin.Models
+  href: api/SampleDIPlugin.Models.html
+  commentId: N:SampleDIPlugin.Models
+  fullName: SampleDIPlugin.Models
+  nameWithType: SampleDIPlugin.Models
+- uid: SampleDIPlugin.Models.CounterSettingsModel
+  name: CounterSettingsModel
+  href: api/SampleDIPlugin.Models.CounterSettingsModel.html
+  commentId: T:SampleDIPlugin.Models.CounterSettingsModel
+  fullName: SampleDIPlugin.Models.CounterSettingsModel
+  nameWithType: CounterSettingsModel
+- uid: SampleDIPlugin.Models.CounterSettingsModel.Counter
+  name: Counter
+  href: api/SampleDIPlugin.Models.CounterSettingsModel.html#SampleDIPlugin_Models_CounterSettingsModel_Counter
+  commentId: P:SampleDIPlugin.Models.CounterSettingsModel.Counter
+  fullName: SampleDIPlugin.Models.CounterSettingsModel.Counter
+  nameWithType: CounterSettingsModel.Counter
+- uid: SampleDIPlugin.Models.CounterSettingsModel.Counter*
+  name: Counter
+  href: api/SampleDIPlugin.Models.CounterSettingsModel.html#SampleDIPlugin_Models_CounterSettingsModel_Counter_
+  commentId: Overload:SampleDIPlugin.Models.CounterSettingsModel.Counter
+  isSpec: "True"
+  fullName: SampleDIPlugin.Models.CounterSettingsModel.Counter
+  nameWithType: CounterSettingsModel.Counter
+- uid: SampleDIPlugin.Models.SampleActionSettingsModel
+  name: SampleActionSettingsModel
+  href: api/SampleDIPlugin.Models.SampleActionSettingsModel.html
+  commentId: T:SampleDIPlugin.Models.SampleActionSettingsModel
+  fullName: SampleDIPlugin.Models.SampleActionSettingsModel
+  nameWithType: SampleActionSettingsModel
+- uid: SampleDIPlugin.Models.SampleActionSettingsModel.Counter
+  name: Counter
+  href: api/SampleDIPlugin.Models.SampleActionSettingsModel.html#SampleDIPlugin_Models_SampleActionSettingsModel_Counter
+  commentId: P:SampleDIPlugin.Models.SampleActionSettingsModel.Counter
+  fullName: SampleDIPlugin.Models.SampleActionSettingsModel.Counter
+  nameWithType: SampleActionSettingsModel.Counter
+- uid: SampleDIPlugin.Models.SampleActionSettingsModel.Counter*
+  name: Counter
+  href: api/SampleDIPlugin.Models.SampleActionSettingsModel.html#SampleDIPlugin_Models_SampleActionSettingsModel_Counter_
+  commentId: Overload:SampleDIPlugin.Models.SampleActionSettingsModel.Counter
+  isSpec: "True"
+  fullName: SampleDIPlugin.Models.SampleActionSettingsModel.Counter
+  nameWithType: SampleActionSettingsModel.Counter
+- uid: SampleDIPlugin.MySamplePluginAction
+  name: MySamplePluginAction
+  href: api/SampleDIPlugin.MySamplePluginAction.html
+  commentId: T:SampleDIPlugin.MySamplePluginAction
+  fullName: SampleDIPlugin.MySamplePluginAction
+  nameWithType: MySamplePluginAction
+- uid: SampleDIPlugin.MySamplePluginAction.OnDidReceiveSettings(StreamDeckLib.Messages.StreamDeckEventPayload)
+  name: OnDidReceiveSettings(StreamDeckEventPayload)
+  href: api/SampleDIPlugin.MySamplePluginAction.html#SampleDIPlugin_MySamplePluginAction_OnDidReceiveSettings_StreamDeckLib_Messages_StreamDeckEventPayload_
+  commentId: M:SampleDIPlugin.MySamplePluginAction.OnDidReceiveSettings(StreamDeckLib.Messages.StreamDeckEventPayload)
+  fullName: SampleDIPlugin.MySamplePluginAction.OnDidReceiveSettings(StreamDeckLib.Messages.StreamDeckEventPayload)
+  nameWithType: MySamplePluginAction.OnDidReceiveSettings(StreamDeckEventPayload)
+- uid: SampleDIPlugin.MySamplePluginAction.OnDidReceiveSettings*
+  name: OnDidReceiveSettings
+  href: api/SampleDIPlugin.MySamplePluginAction.html#SampleDIPlugin_MySamplePluginAction_OnDidReceiveSettings_
+  commentId: Overload:SampleDIPlugin.MySamplePluginAction.OnDidReceiveSettings
+  isSpec: "True"
+  fullName: SampleDIPlugin.MySamplePluginAction.OnDidReceiveSettings
+  nameWithType: MySamplePluginAction.OnDidReceiveSettings
+- uid: SampleDIPlugin.MySamplePluginAction.OnKeyUp(StreamDeckLib.Messages.StreamDeckEventPayload)
+  name: OnKeyUp(StreamDeckEventPayload)
+  href: api/SampleDIPlugin.MySamplePluginAction.html#SampleDIPlugin_MySamplePluginAction_OnKeyUp_StreamDeckLib_Messages_StreamDeckEventPayload_
+  commentId: M:SampleDIPlugin.MySamplePluginAction.OnKeyUp(StreamDeckLib.Messages.StreamDeckEventPayload)
+  fullName: SampleDIPlugin.MySamplePluginAction.OnKeyUp(StreamDeckLib.Messages.StreamDeckEventPayload)
+  nameWithType: MySamplePluginAction.OnKeyUp(StreamDeckEventPayload)
+- uid: SampleDIPlugin.MySamplePluginAction.OnKeyUp*
+  name: OnKeyUp
+  href: api/SampleDIPlugin.MySamplePluginAction.html#SampleDIPlugin_MySamplePluginAction_OnKeyUp_
+  commentId: Overload:SampleDIPlugin.MySamplePluginAction.OnKeyUp
+  isSpec: "True"
+  fullName: SampleDIPlugin.MySamplePluginAction.OnKeyUp
+  nameWithType: MySamplePluginAction.OnKeyUp
+- uid: SampleDIPlugin.MySamplePluginAction.OnWillAppear(StreamDeckLib.Messages.StreamDeckEventPayload)
+  name: OnWillAppear(StreamDeckEventPayload)
+  href: api/SampleDIPlugin.MySamplePluginAction.html#SampleDIPlugin_MySamplePluginAction_OnWillAppear_StreamDeckLib_Messages_StreamDeckEventPayload_
+  commentId: M:SampleDIPlugin.MySamplePluginAction.OnWillAppear(StreamDeckLib.Messages.StreamDeckEventPayload)
+  fullName: SampleDIPlugin.MySamplePluginAction.OnWillAppear(StreamDeckLib.Messages.StreamDeckEventPayload)
+  nameWithType: MySamplePluginAction.OnWillAppear(StreamDeckEventPayload)
+- uid: SampleDIPlugin.MySamplePluginAction.OnWillAppear*
+  name: OnWillAppear
+  href: api/SampleDIPlugin.MySamplePluginAction.html#SampleDIPlugin_MySamplePluginAction_OnWillAppear_
+  commentId: Overload:SampleDIPlugin.MySamplePluginAction.OnWillAppear
+  isSpec: "True"
+  fullName: SampleDIPlugin.MySamplePluginAction.OnWillAppear
+  nameWithType: MySamplePluginAction.OnWillAppear
+- uid: SampleDIPlugin.MySamplePluginAction2
+  name: MySamplePluginAction2
+  href: api/SampleDIPlugin.MySamplePluginAction2.html
+  commentId: T:SampleDIPlugin.MySamplePluginAction2
+  fullName: SampleDIPlugin.MySamplePluginAction2
+  nameWithType: MySamplePluginAction2
+- uid: SampleDIPlugin.MySamplePluginAction2.OnDidReceiveSettings(StreamDeckLib.Messages.StreamDeckEventPayload)
+  name: OnDidReceiveSettings(StreamDeckEventPayload)
+  href: api/SampleDIPlugin.MySamplePluginAction2.html#SampleDIPlugin_MySamplePluginAction2_OnDidReceiveSettings_StreamDeckLib_Messages_StreamDeckEventPayload_
+  commentId: M:SampleDIPlugin.MySamplePluginAction2.OnDidReceiveSettings(StreamDeckLib.Messages.StreamDeckEventPayload)
+  fullName: SampleDIPlugin.MySamplePluginAction2.OnDidReceiveSettings(StreamDeckLib.Messages.StreamDeckEventPayload)
+  nameWithType: MySamplePluginAction2.OnDidReceiveSettings(StreamDeckEventPayload)
+- uid: SampleDIPlugin.MySamplePluginAction2.OnDidReceiveSettings*
+  name: OnDidReceiveSettings
+  href: api/SampleDIPlugin.MySamplePluginAction2.html#SampleDIPlugin_MySamplePluginAction2_OnDidReceiveSettings_
+  commentId: Overload:SampleDIPlugin.MySamplePluginAction2.OnDidReceiveSettings
+  isSpec: "True"
+  fullName: SampleDIPlugin.MySamplePluginAction2.OnDidReceiveSettings
+  nameWithType: MySamplePluginAction2.OnDidReceiveSettings
+- uid: SampleDIPlugin.MySamplePluginAction2.OnKeyUp(StreamDeckLib.Messages.StreamDeckEventPayload)
+  name: OnKeyUp(StreamDeckEventPayload)
+  href: api/SampleDIPlugin.MySamplePluginAction2.html#SampleDIPlugin_MySamplePluginAction2_OnKeyUp_StreamDeckLib_Messages_StreamDeckEventPayload_
+  commentId: M:SampleDIPlugin.MySamplePluginAction2.OnKeyUp(StreamDeckLib.Messages.StreamDeckEventPayload)
+  fullName: SampleDIPlugin.MySamplePluginAction2.OnKeyUp(StreamDeckLib.Messages.StreamDeckEventPayload)
+  nameWithType: MySamplePluginAction2.OnKeyUp(StreamDeckEventPayload)
+- uid: SampleDIPlugin.MySamplePluginAction2.OnKeyUp*
+  name: OnKeyUp
+  href: api/SampleDIPlugin.MySamplePluginAction2.html#SampleDIPlugin_MySamplePluginAction2_OnKeyUp_
+  commentId: Overload:SampleDIPlugin.MySamplePluginAction2.OnKeyUp
+  isSpec: "True"
+  fullName: SampleDIPlugin.MySamplePluginAction2.OnKeyUp
+  nameWithType: MySamplePluginAction2.OnKeyUp
+- uid: SampleDIPlugin.MySamplePluginAction2.OnWillAppear(StreamDeckLib.Messages.StreamDeckEventPayload)
+  name: OnWillAppear(StreamDeckEventPayload)
+  href: api/SampleDIPlugin.MySamplePluginAction2.html#SampleDIPlugin_MySamplePluginAction2_OnWillAppear_StreamDeckLib_Messages_StreamDeckEventPayload_
+  commentId: M:SampleDIPlugin.MySamplePluginAction2.OnWillAppear(StreamDeckLib.Messages.StreamDeckEventPayload)
+  fullName: SampleDIPlugin.MySamplePluginAction2.OnWillAppear(StreamDeckLib.Messages.StreamDeckEventPayload)
+  nameWithType: MySamplePluginAction2.OnWillAppear(StreamDeckEventPayload)
+- uid: SampleDIPlugin.MySamplePluginAction2.OnWillAppear*
+  name: OnWillAppear
+  href: api/SampleDIPlugin.MySamplePluginAction2.html#SampleDIPlugin_MySamplePluginAction2_OnWillAppear_
+  commentId: Overload:SampleDIPlugin.MySamplePluginAction2.OnWillAppear
+  isSpec: "True"
+  fullName: SampleDIPlugin.MySamplePluginAction2.OnWillAppear
+  nameWithType: MySamplePluginAction2.OnWillAppear
 - uid: SamplePlugin
   name: SamplePlugin
   href: api/SamplePlugin.html
@@ -141,6 +281,242 @@ references:
   isSpec: "True"
   fullName: SamplePlugin.MySamplePluginAction2.OnWillAppear
   nameWithType: MySamplePluginAction2.OnWillAppear
+- uid: SampleWebPlugin
+  name: SampleWebPlugin
+  href: api/SampleWebPlugin.html
+  commentId: N:SampleWebPlugin
+  fullName: SampleWebPlugin
+  nameWithType: SampleWebPlugin
+- uid: SampleWebPlugin.Models
+  name: SampleWebPlugin.Models
+  href: api/SampleWebPlugin.Models.html
+  commentId: N:SampleWebPlugin.Models
+  fullName: SampleWebPlugin.Models
+  nameWithType: SampleWebPlugin.Models
+- uid: SampleWebPlugin.Models.CounterSettingsModel
+  name: CounterSettingsModel
+  href: api/SampleWebPlugin.Models.CounterSettingsModel.html
+  commentId: T:SampleWebPlugin.Models.CounterSettingsModel
+  fullName: SampleWebPlugin.Models.CounterSettingsModel
+  nameWithType: CounterSettingsModel
+- uid: SampleWebPlugin.Models.CounterSettingsModel.Counter
+  name: Counter
+  href: api/SampleWebPlugin.Models.CounterSettingsModel.html#SampleWebPlugin_Models_CounterSettingsModel_Counter
+  commentId: P:SampleWebPlugin.Models.CounterSettingsModel.Counter
+  fullName: SampleWebPlugin.Models.CounterSettingsModel.Counter
+  nameWithType: CounterSettingsModel.Counter
+- uid: SampleWebPlugin.Models.CounterSettingsModel.Counter*
+  name: Counter
+  href: api/SampleWebPlugin.Models.CounterSettingsModel.html#SampleWebPlugin_Models_CounterSettingsModel_Counter_
+  commentId: Overload:SampleWebPlugin.Models.CounterSettingsModel.Counter
+  isSpec: "True"
+  fullName: SampleWebPlugin.Models.CounterSettingsModel.Counter
+  nameWithType: CounterSettingsModel.Counter
+- uid: SampleWebPlugin.Models.SampleActionSettingsModel
+  name: SampleActionSettingsModel
+  href: api/SampleWebPlugin.Models.SampleActionSettingsModel.html
+  commentId: T:SampleWebPlugin.Models.SampleActionSettingsModel
+  fullName: SampleWebPlugin.Models.SampleActionSettingsModel
+  nameWithType: SampleActionSettingsModel
+- uid: SampleWebPlugin.Models.SampleActionSettingsModel.Counter
+  name: Counter
+  href: api/SampleWebPlugin.Models.SampleActionSettingsModel.html#SampleWebPlugin_Models_SampleActionSettingsModel_Counter
+  commentId: P:SampleWebPlugin.Models.SampleActionSettingsModel.Counter
+  fullName: SampleWebPlugin.Models.SampleActionSettingsModel.Counter
+  nameWithType: SampleActionSettingsModel.Counter
+- uid: SampleWebPlugin.Models.SampleActionSettingsModel.Counter*
+  name: Counter
+  href: api/SampleWebPlugin.Models.SampleActionSettingsModel.html#SampleWebPlugin_Models_SampleActionSettingsModel_Counter_
+  commentId: Overload:SampleWebPlugin.Models.SampleActionSettingsModel.Counter
+  isSpec: "True"
+  fullName: SampleWebPlugin.Models.SampleActionSettingsModel.Counter
+  nameWithType: SampleActionSettingsModel.Counter
+- uid: SampleWebPlugin.MySamplePluginAction
+  name: MySamplePluginAction
+  href: api/SampleWebPlugin.MySamplePluginAction.html
+  commentId: T:SampleWebPlugin.MySamplePluginAction
+  fullName: SampleWebPlugin.MySamplePluginAction
+  nameWithType: MySamplePluginAction
+- uid: SampleWebPlugin.MySamplePluginAction.OnDidReceiveSettings(StreamDeckLib.Messages.StreamDeckEventPayload)
+  name: OnDidReceiveSettings(StreamDeckEventPayload)
+  href: api/SampleWebPlugin.MySamplePluginAction.html#SampleWebPlugin_MySamplePluginAction_OnDidReceiveSettings_StreamDeckLib_Messages_StreamDeckEventPayload_
+  commentId: M:SampleWebPlugin.MySamplePluginAction.OnDidReceiveSettings(StreamDeckLib.Messages.StreamDeckEventPayload)
+  fullName: SampleWebPlugin.MySamplePluginAction.OnDidReceiveSettings(StreamDeckLib.Messages.StreamDeckEventPayload)
+  nameWithType: MySamplePluginAction.OnDidReceiveSettings(StreamDeckEventPayload)
+- uid: SampleWebPlugin.MySamplePluginAction.OnDidReceiveSettings*
+  name: OnDidReceiveSettings
+  href: api/SampleWebPlugin.MySamplePluginAction.html#SampleWebPlugin_MySamplePluginAction_OnDidReceiveSettings_
+  commentId: Overload:SampleWebPlugin.MySamplePluginAction.OnDidReceiveSettings
+  isSpec: "True"
+  fullName: SampleWebPlugin.MySamplePluginAction.OnDidReceiveSettings
+  nameWithType: MySamplePluginAction.OnDidReceiveSettings
+- uid: SampleWebPlugin.MySamplePluginAction.OnKeyUp(StreamDeckLib.Messages.StreamDeckEventPayload)
+  name: OnKeyUp(StreamDeckEventPayload)
+  href: api/SampleWebPlugin.MySamplePluginAction.html#SampleWebPlugin_MySamplePluginAction_OnKeyUp_StreamDeckLib_Messages_StreamDeckEventPayload_
+  commentId: M:SampleWebPlugin.MySamplePluginAction.OnKeyUp(StreamDeckLib.Messages.StreamDeckEventPayload)
+  fullName: SampleWebPlugin.MySamplePluginAction.OnKeyUp(StreamDeckLib.Messages.StreamDeckEventPayload)
+  nameWithType: MySamplePluginAction.OnKeyUp(StreamDeckEventPayload)
+- uid: SampleWebPlugin.MySamplePluginAction.OnKeyUp*
+  name: OnKeyUp
+  href: api/SampleWebPlugin.MySamplePluginAction.html#SampleWebPlugin_MySamplePluginAction_OnKeyUp_
+  commentId: Overload:SampleWebPlugin.MySamplePluginAction.OnKeyUp
+  isSpec: "True"
+  fullName: SampleWebPlugin.MySamplePluginAction.OnKeyUp
+  nameWithType: MySamplePluginAction.OnKeyUp
+- uid: SampleWebPlugin.MySamplePluginAction.OnWillAppear(StreamDeckLib.Messages.StreamDeckEventPayload)
+  name: OnWillAppear(StreamDeckEventPayload)
+  href: api/SampleWebPlugin.MySamplePluginAction.html#SampleWebPlugin_MySamplePluginAction_OnWillAppear_StreamDeckLib_Messages_StreamDeckEventPayload_
+  commentId: M:SampleWebPlugin.MySamplePluginAction.OnWillAppear(StreamDeckLib.Messages.StreamDeckEventPayload)
+  fullName: SampleWebPlugin.MySamplePluginAction.OnWillAppear(StreamDeckLib.Messages.StreamDeckEventPayload)
+  nameWithType: MySamplePluginAction.OnWillAppear(StreamDeckEventPayload)
+- uid: SampleWebPlugin.MySamplePluginAction.OnWillAppear*
+  name: OnWillAppear
+  href: api/SampleWebPlugin.MySamplePluginAction.html#SampleWebPlugin_MySamplePluginAction_OnWillAppear_
+  commentId: Overload:SampleWebPlugin.MySamplePluginAction.OnWillAppear
+  isSpec: "True"
+  fullName: SampleWebPlugin.MySamplePluginAction.OnWillAppear
+  nameWithType: MySamplePluginAction.OnWillAppear
+- uid: SampleWebPlugin.MySamplePluginAction2
+  name: MySamplePluginAction2
+  href: api/SampleWebPlugin.MySamplePluginAction2.html
+  commentId: T:SampleWebPlugin.MySamplePluginAction2
+  fullName: SampleWebPlugin.MySamplePluginAction2
+  nameWithType: MySamplePluginAction2
+- uid: SampleWebPlugin.MySamplePluginAction2.OnDidReceiveSettings(StreamDeckLib.Messages.StreamDeckEventPayload)
+  name: OnDidReceiveSettings(StreamDeckEventPayload)
+  href: api/SampleWebPlugin.MySamplePluginAction2.html#SampleWebPlugin_MySamplePluginAction2_OnDidReceiveSettings_StreamDeckLib_Messages_StreamDeckEventPayload_
+  commentId: M:SampleWebPlugin.MySamplePluginAction2.OnDidReceiveSettings(StreamDeckLib.Messages.StreamDeckEventPayload)
+  fullName: SampleWebPlugin.MySamplePluginAction2.OnDidReceiveSettings(StreamDeckLib.Messages.StreamDeckEventPayload)
+  nameWithType: MySamplePluginAction2.OnDidReceiveSettings(StreamDeckEventPayload)
+- uid: SampleWebPlugin.MySamplePluginAction2.OnDidReceiveSettings*
+  name: OnDidReceiveSettings
+  href: api/SampleWebPlugin.MySamplePluginAction2.html#SampleWebPlugin_MySamplePluginAction2_OnDidReceiveSettings_
+  commentId: Overload:SampleWebPlugin.MySamplePluginAction2.OnDidReceiveSettings
+  isSpec: "True"
+  fullName: SampleWebPlugin.MySamplePluginAction2.OnDidReceiveSettings
+  nameWithType: MySamplePluginAction2.OnDidReceiveSettings
+- uid: SampleWebPlugin.MySamplePluginAction2.OnKeyUp(StreamDeckLib.Messages.StreamDeckEventPayload)
+  name: OnKeyUp(StreamDeckEventPayload)
+  href: api/SampleWebPlugin.MySamplePluginAction2.html#SampleWebPlugin_MySamplePluginAction2_OnKeyUp_StreamDeckLib_Messages_StreamDeckEventPayload_
+  commentId: M:SampleWebPlugin.MySamplePluginAction2.OnKeyUp(StreamDeckLib.Messages.StreamDeckEventPayload)
+  fullName: SampleWebPlugin.MySamplePluginAction2.OnKeyUp(StreamDeckLib.Messages.StreamDeckEventPayload)
+  nameWithType: MySamplePluginAction2.OnKeyUp(StreamDeckEventPayload)
+- uid: SampleWebPlugin.MySamplePluginAction2.OnKeyUp*
+  name: OnKeyUp
+  href: api/SampleWebPlugin.MySamplePluginAction2.html#SampleWebPlugin_MySamplePluginAction2_OnKeyUp_
+  commentId: Overload:SampleWebPlugin.MySamplePluginAction2.OnKeyUp
+  isSpec: "True"
+  fullName: SampleWebPlugin.MySamplePluginAction2.OnKeyUp
+  nameWithType: MySamplePluginAction2.OnKeyUp
+- uid: SampleWebPlugin.MySamplePluginAction2.OnWillAppear(StreamDeckLib.Messages.StreamDeckEventPayload)
+  name: OnWillAppear(StreamDeckEventPayload)
+  href: api/SampleWebPlugin.MySamplePluginAction2.html#SampleWebPlugin_MySamplePluginAction2_OnWillAppear_StreamDeckLib_Messages_StreamDeckEventPayload_
+  commentId: M:SampleWebPlugin.MySamplePluginAction2.OnWillAppear(StreamDeckLib.Messages.StreamDeckEventPayload)
+  fullName: SampleWebPlugin.MySamplePluginAction2.OnWillAppear(StreamDeckLib.Messages.StreamDeckEventPayload)
+  nameWithType: MySamplePluginAction2.OnWillAppear(StreamDeckEventPayload)
+- uid: SampleWebPlugin.MySamplePluginAction2.OnWillAppear*
+  name: OnWillAppear
+  href: api/SampleWebPlugin.MySamplePluginAction2.html#SampleWebPlugin_MySamplePluginAction2_OnWillAppear_
+  commentId: Overload:SampleWebPlugin.MySamplePluginAction2.OnWillAppear
+  isSpec: "True"
+  fullName: SampleWebPlugin.MySamplePluginAction2.OnWillAppear
+  nameWithType: MySamplePluginAction2.OnWillAppear
+- uid: SampleWebPlugin.Program
+  name: Program
+  href: api/SampleWebPlugin.Program.html
+  commentId: T:SampleWebPlugin.Program
+  fullName: SampleWebPlugin.Program
+  nameWithType: Program
+- uid: SampleWebPlugin.Program.CreateHostBuilder(System.String[])
+  name: CreateHostBuilder(String[])
+  href: api/SampleWebPlugin.Program.html#SampleWebPlugin_Program_CreateHostBuilder_System_String___
+  commentId: M:SampleWebPlugin.Program.CreateHostBuilder(System.String[])
+  name.vb: CreateHostBuilder(String())
+  fullName: SampleWebPlugin.Program.CreateHostBuilder(System.String[])
+  fullName.vb: SampleWebPlugin.Program.CreateHostBuilder(System.String())
+  nameWithType: Program.CreateHostBuilder(String[])
+  nameWithType.vb: Program.CreateHostBuilder(String())
+- uid: SampleWebPlugin.Program.CreateHostBuilder*
+  name: CreateHostBuilder
+  href: api/SampleWebPlugin.Program.html#SampleWebPlugin_Program_CreateHostBuilder_
+  commentId: Overload:SampleWebPlugin.Program.CreateHostBuilder
+  isSpec: "True"
+  fullName: SampleWebPlugin.Program.CreateHostBuilder
+  nameWithType: Program.CreateHostBuilder
+- uid: SampleWebPlugin.Program.Main(System.String[])
+  name: Main(String[])
+  href: api/SampleWebPlugin.Program.html#SampleWebPlugin_Program_Main_System_String___
+  commentId: M:SampleWebPlugin.Program.Main(System.String[])
+  name.vb: Main(String())
+  fullName: SampleWebPlugin.Program.Main(System.String[])
+  fullName.vb: SampleWebPlugin.Program.Main(System.String())
+  nameWithType: Program.Main(String[])
+  nameWithType.vb: Program.Main(String())
+- uid: SampleWebPlugin.Program.Main*
+  name: Main
+  href: api/SampleWebPlugin.Program.html#SampleWebPlugin_Program_Main_
+  commentId: Overload:SampleWebPlugin.Program.Main
+  isSpec: "True"
+  fullName: SampleWebPlugin.Program.Main
+  nameWithType: Program.Main
+- uid: SampleWebPlugin.Startup
+  name: Startup
+  href: api/SampleWebPlugin.Startup.html
+  commentId: T:SampleWebPlugin.Startup
+  fullName: SampleWebPlugin.Startup
+  nameWithType: Startup
+- uid: SampleWebPlugin.Startup.#ctor(IConfiguration)
+  name: Startup(IConfiguration)
+  href: api/SampleWebPlugin.Startup.html#SampleWebPlugin_Startup__ctor_IConfiguration_
+  commentId: M:SampleWebPlugin.Startup.#ctor(IConfiguration)
+  fullName: SampleWebPlugin.Startup.Startup(IConfiguration)
+  nameWithType: Startup.Startup(IConfiguration)
+- uid: SampleWebPlugin.Startup.#ctor*
+  name: Startup
+  href: api/SampleWebPlugin.Startup.html#SampleWebPlugin_Startup__ctor_
+  commentId: Overload:SampleWebPlugin.Startup.#ctor
+  isSpec: "True"
+  fullName: SampleWebPlugin.Startup.Startup
+  nameWithType: Startup.Startup
+- uid: SampleWebPlugin.Startup.Configuration
+  name: Configuration
+  href: api/SampleWebPlugin.Startup.html#SampleWebPlugin_Startup_Configuration
+  commentId: P:SampleWebPlugin.Startup.Configuration
+  fullName: SampleWebPlugin.Startup.Configuration
+  nameWithType: Startup.Configuration
+- uid: SampleWebPlugin.Startup.Configuration*
+  name: Configuration
+  href: api/SampleWebPlugin.Startup.html#SampleWebPlugin_Startup_Configuration_
+  commentId: Overload:SampleWebPlugin.Startup.Configuration
+  isSpec: "True"
+  fullName: SampleWebPlugin.Startup.Configuration
+  nameWithType: Startup.Configuration
+- uid: SampleWebPlugin.Startup.Configure(IApplicationBuilder,IWebHostEnvironment)
+  name: Configure(IApplicationBuilder, IWebHostEnvironment)
+  href: api/SampleWebPlugin.Startup.html#SampleWebPlugin_Startup_Configure_IApplicationBuilder_IWebHostEnvironment_
+  commentId: M:SampleWebPlugin.Startup.Configure(IApplicationBuilder,IWebHostEnvironment)
+  fullName: SampleWebPlugin.Startup.Configure(IApplicationBuilder, IWebHostEnvironment)
+  nameWithType: Startup.Configure(IApplicationBuilder, IWebHostEnvironment)
+- uid: SampleWebPlugin.Startup.Configure*
+  name: Configure
+  href: api/SampleWebPlugin.Startup.html#SampleWebPlugin_Startup_Configure_
+  commentId: Overload:SampleWebPlugin.Startup.Configure
+  isSpec: "True"
+  fullName: SampleWebPlugin.Startup.Configure
+  nameWithType: Startup.Configure
+- uid: SampleWebPlugin.Startup.ConfigureServices(IServiceCollection)
+  name: ConfigureServices(IServiceCollection)
+  href: api/SampleWebPlugin.Startup.html#SampleWebPlugin_Startup_ConfigureServices_IServiceCollection_
+  commentId: M:SampleWebPlugin.Startup.ConfigureServices(IServiceCollection)
+  fullName: SampleWebPlugin.Startup.ConfigureServices(IServiceCollection)
+  nameWithType: Startup.ConfigureServices(IServiceCollection)
+- uid: SampleWebPlugin.Startup.ConfigureServices*
+  name: ConfigureServices
+  href: api/SampleWebPlugin.Startup.html#SampleWebPlugin_Startup_ConfigureServices_
+  commentId: Overload:SampleWebPlugin.Startup.ConfigureServices
+  isSpec: "True"
+  fullName: SampleWebPlugin.Startup.ConfigureServices
+  nameWithType: Startup.ConfigureServices
 - uid: StreamDeckLib
   name: StreamDeckLib
   href: api/StreamDeckLib.html
@@ -153,12 +529,15 @@ references:
   commentId: T:StreamDeckLib.ActionManager
   fullName: StreamDeckLib.ActionManager
   nameWithType: ActionManager
-- uid: StreamDeckLib.ActionManager.#ctor(StreamDeckLib.ConnectionManager,ILogger)
-  name: ActionManager(ConnectionManager, ILogger)
-  href: api/StreamDeckLib.ActionManager.html#StreamDeckLib_ActionManager__ctor_StreamDeckLib_ConnectionManager_ILogger_
-  commentId: M:StreamDeckLib.ActionManager.#ctor(StreamDeckLib.ConnectionManager,ILogger)
-  fullName: StreamDeckLib.ActionManager.ActionManager(StreamDeckLib.ConnectionManager, ILogger)
-  nameWithType: ActionManager.ActionManager(ConnectionManager, ILogger)
+- uid: StreamDeckLib.ActionManager.#ctor(ILogger{StreamDeckLib.ActionManager})
+  name: ActionManager(ILogger<ActionManager>)
+  href: api/StreamDeckLib.ActionManager.html#StreamDeckLib_ActionManager__ctor_ILogger_StreamDeckLib_ActionManager__
+  commentId: M:StreamDeckLib.ActionManager.#ctor(ILogger{StreamDeckLib.ActionManager})
+  name.vb: ActionManager(ILogger(Of ActionManager))
+  fullName: StreamDeckLib.ActionManager.ActionManager(ILogger<StreamDeckLib.ActionManager>)
+  fullName.vb: StreamDeckLib.ActionManager.ActionManager(ILogger(Of StreamDeckLib.ActionManager))
+  nameWithType: ActionManager.ActionManager(ILogger<ActionManager>)
+  nameWithType.vb: ActionManager.ActionManager(ILogger(Of ActionManager))
 - uid: StreamDeckLib.ActionManager.#ctor*
   name: ActionManager
   href: api/StreamDeckLib.ActionManager.html#StreamDeckLib_ActionManager__ctor_
@@ -185,12 +564,12 @@ references:
   isSpec: "True"
   fullName: StreamDeckLib.ActionManager.Dispose
   nameWithType: ActionManager.Dispose
-- uid: StreamDeckLib.ActionManager.GetAction(System.String)
-  name: GetAction(String)
-  href: api/StreamDeckLib.ActionManager.html#StreamDeckLib_ActionManager_GetAction_System_String_
-  commentId: M:StreamDeckLib.ActionManager.GetAction(System.String)
-  fullName: StreamDeckLib.ActionManager.GetAction(System.String)
-  nameWithType: ActionManager.GetAction(String)
+- uid: StreamDeckLib.ActionManager.GetAction(StreamDeckLib.ConnectionManager,System.String)
+  name: GetAction(ConnectionManager, String)
+  href: api/StreamDeckLib.ActionManager.html#StreamDeckLib_ActionManager_GetAction_StreamDeckLib_ConnectionManager_System_String_
+  commentId: M:StreamDeckLib.ActionManager.GetAction(StreamDeckLib.ConnectionManager,System.String)
+  fullName: StreamDeckLib.ActionManager.GetAction(StreamDeckLib.ConnectionManager, System.String)
+  nameWithType: ActionManager.GetAction(ConnectionManager, String)
 - uid: StreamDeckLib.ActionManager.GetAction*
   name: GetAction
   href: api/StreamDeckLib.ActionManager.html#StreamDeckLib_ActionManager_GetAction_
@@ -205,15 +584,15 @@ references:
   isSpec: "True"
   fullName: StreamDeckLib.ActionManager.GetActionInstance
   nameWithType: ActionManager.GetActionInstance
-- uid: StreamDeckLib.ActionManager.GetActionInstance``1(System.String)
-  name: GetActionInstance<TActionType>(String)
-  href: api/StreamDeckLib.ActionManager.html#StreamDeckLib_ActionManager_GetActionInstance__1_System_String_
-  commentId: M:StreamDeckLib.ActionManager.GetActionInstance``1(System.String)
-  name.vb: GetActionInstance(Of TActionType)(String)
-  fullName: StreamDeckLib.ActionManager.GetActionInstance<TActionType>(System.String)
-  fullName.vb: StreamDeckLib.ActionManager.GetActionInstance(Of TActionType)(System.String)
-  nameWithType: ActionManager.GetActionInstance<TActionType>(String)
-  nameWithType.vb: ActionManager.GetActionInstance(Of TActionType)(String)
+- uid: StreamDeckLib.ActionManager.GetActionInstance``1(StreamDeckLib.ConnectionManager,System.String)
+  name: GetActionInstance<TActionType>(ConnectionManager, String)
+  href: api/StreamDeckLib.ActionManager.html#StreamDeckLib_ActionManager_GetActionInstance__1_StreamDeckLib_ConnectionManager_System_String_
+  commentId: M:StreamDeckLib.ActionManager.GetActionInstance``1(StreamDeckLib.ConnectionManager,System.String)
+  name.vb: GetActionInstance(Of TActionType)(ConnectionManager, String)
+  fullName: StreamDeckLib.ActionManager.GetActionInstance<TActionType>(StreamDeckLib.ConnectionManager, System.String)
+  fullName.vb: StreamDeckLib.ActionManager.GetActionInstance(Of TActionType)(StreamDeckLib.ConnectionManager, System.String)
+  nameWithType: ActionManager.GetActionInstance<TActionType>(ConnectionManager, String)
+  nameWithType.vb: ActionManager.GetActionInstance(Of TActionType)(ConnectionManager, String)
 - uid: StreamDeckLib.ActionManager.GetAllActions
   name: GetAllActions()
   href: api/StreamDeckLib.ActionManager.html#StreamDeckLib_ActionManager_GetAllActions
@@ -747,6 +1126,22 @@ references:
   commentId: T:StreamDeckLib.ConnectionManager
   fullName: StreamDeckLib.ConnectionManager
   nameWithType: ConnectionManager
+- uid: StreamDeckLib.ConnectionManager.#ctor(IOptions{StreamDeckLib.Models.StreamDeckToolkitOptions},StreamDeckLib.ActionManager,ILogger{StreamDeckLib.ConnectionManager},StreamDeckLib.IStreamDeckProxy)
+  name: ConnectionManager(IOptions<StreamDeckToolkitOptions>, ActionManager, ILogger<ConnectionManager>, IStreamDeckProxy)
+  href: api/StreamDeckLib.ConnectionManager.html#StreamDeckLib_ConnectionManager__ctor_IOptions_StreamDeckLib_Models_StreamDeckToolkitOptions__StreamDeckLib_ActionManager_ILogger_StreamDeckLib_ConnectionManager__StreamDeckLib_IStreamDeckProxy_
+  commentId: M:StreamDeckLib.ConnectionManager.#ctor(IOptions{StreamDeckLib.Models.StreamDeckToolkitOptions},StreamDeckLib.ActionManager,ILogger{StreamDeckLib.ConnectionManager},StreamDeckLib.IStreamDeckProxy)
+  name.vb: ConnectionManager(IOptions(Of StreamDeckToolkitOptions), ActionManager, ILogger(Of ConnectionManager), IStreamDeckProxy)
+  fullName: StreamDeckLib.ConnectionManager.ConnectionManager(IOptions<StreamDeckLib.Models.StreamDeckToolkitOptions>, StreamDeckLib.ActionManager, ILogger<StreamDeckLib.ConnectionManager>, StreamDeckLib.IStreamDeckProxy)
+  fullName.vb: StreamDeckLib.ConnectionManager.ConnectionManager(IOptions(Of StreamDeckLib.Models.StreamDeckToolkitOptions), StreamDeckLib.ActionManager, ILogger(Of StreamDeckLib.ConnectionManager), StreamDeckLib.IStreamDeckProxy)
+  nameWithType: ConnectionManager.ConnectionManager(IOptions<StreamDeckToolkitOptions>, ActionManager, ILogger<ConnectionManager>, IStreamDeckProxy)
+  nameWithType.vb: ConnectionManager.ConnectionManager(IOptions(Of StreamDeckToolkitOptions), ActionManager, ILogger(Of ConnectionManager), IStreamDeckProxy)
+- uid: StreamDeckLib.ConnectionManager.#ctor*
+  name: ConnectionManager
+  href: api/StreamDeckLib.ConnectionManager.html#StreamDeckLib_ConnectionManager__ctor_
+  commentId: Overload:StreamDeckLib.ConnectionManager.#ctor
+  isSpec: "True"
+  fullName: StreamDeckLib.ConnectionManager.ConnectionManager
+  nameWithType: ConnectionManager.ConnectionManager
 - uid: StreamDeckLib.ConnectionManager.BroadcastMessage(StreamDeckLib.Messages.StreamDeckEventPayload)
   name: BroadcastMessage(StreamDeckEventPayload)
   href: api/StreamDeckLib.ConnectionManager.html#StreamDeckLib_ConnectionManager_BroadcastMessage_StreamDeckLib_Messages_StreamDeckEventPayload_
@@ -1055,6 +1450,31 @@ references:
   isSpec: "True"
   fullName: StreamDeckLib.ConnectionManager.SwitchToProfileAsync
   nameWithType: ConnectionManager.SwitchToProfileAsync
+- uid: StreamDeckLib.DependencyInjection
+  name: StreamDeckLib.DependencyInjection
+  href: api/StreamDeckLib.DependencyInjection.html
+  commentId: N:StreamDeckLib.DependencyInjection
+  fullName: StreamDeckLib.DependencyInjection
+  nameWithType: StreamDeckLib.DependencyInjection
+- uid: StreamDeckLib.DependencyInjection.DependencyInjectionExtensions
+  name: DependencyInjectionExtensions
+  href: api/StreamDeckLib.DependencyInjection.DependencyInjectionExtensions.html
+  commentId: T:StreamDeckLib.DependencyInjection.DependencyInjectionExtensions
+  fullName: StreamDeckLib.DependencyInjection.DependencyInjectionExtensions
+  nameWithType: DependencyInjectionExtensions
+- uid: StreamDeckLib.DependencyInjection.DependencyInjectionExtensions.AddStreamDeck(IServiceCollection,IConfiguration,Assembly)
+  name: AddStreamDeck(IServiceCollection, IConfiguration, Assembly)
+  href: api/StreamDeckLib.DependencyInjection.DependencyInjectionExtensions.html#StreamDeckLib_DependencyInjection_DependencyInjectionExtensions_AddStreamDeck_IServiceCollection_IConfiguration_Assembly_
+  commentId: M:StreamDeckLib.DependencyInjection.DependencyInjectionExtensions.AddStreamDeck(IServiceCollection,IConfiguration,Assembly)
+  fullName: StreamDeckLib.DependencyInjection.DependencyInjectionExtensions.AddStreamDeck(IServiceCollection, IConfiguration, Assembly)
+  nameWithType: DependencyInjectionExtensions.AddStreamDeck(IServiceCollection, IConfiguration, Assembly)
+- uid: StreamDeckLib.DependencyInjection.DependencyInjectionExtensions.AddStreamDeck*
+  name: AddStreamDeck
+  href: api/StreamDeckLib.DependencyInjection.DependencyInjectionExtensions.html#StreamDeckLib_DependencyInjection_DependencyInjectionExtensions_AddStreamDeck_
+  commentId: Overload:StreamDeckLib.DependencyInjection.DependencyInjectionExtensions.AddStreamDeck
+  isSpec: "True"
+  fullName: StreamDeckLib.DependencyInjection.DependencyInjectionExtensions.AddStreamDeck
+  nameWithType: DependencyInjectionExtensions.AddStreamDeck
 - uid: StreamDeckLib.DuplicateActionInstanceRegistrationException
   name: DuplicateActionInstanceRegistrationException
   href: api/StreamDeckLib.DuplicateActionInstanceRegistrationException.html
@@ -1143,6 +1563,101 @@ references:
   isSpec: "True"
   fullName: StreamDeckLib.DuplicateActionRegistrationException.UUID
   nameWithType: DuplicateActionRegistrationException.UUID
+- uid: StreamDeckLib.HostedServices
+  name: StreamDeckLib.HostedServices
+  href: api/StreamDeckLib.HostedServices.html
+  commentId: N:StreamDeckLib.HostedServices
+  fullName: StreamDeckLib.HostedServices
+  nameWithType: StreamDeckLib.HostedServices
+- uid: StreamDeckLib.HostedServices.StreamDeckHostedService
+  name: StreamDeckHostedService
+  href: api/StreamDeckLib.HostedServices.StreamDeckHostedService.html
+  commentId: T:StreamDeckLib.HostedServices.StreamDeckHostedService
+  fullName: StreamDeckLib.HostedServices.StreamDeckHostedService
+  nameWithType: StreamDeckHostedService
+- uid: StreamDeckLib.HostedServices.StreamDeckHostedService.#ctor(ILogger{StreamDeckLib.HostedServices.StreamDeckHostedService},StreamDeckLib.ConnectionManager,IOptions{StreamDeckLib.Models.StreamDeckRegistrationOptions})
+  name: StreamDeckHostedService(ILogger<StreamDeckHostedService>, ConnectionManager, IOptions<StreamDeckRegistrationOptions>)
+  href: api/StreamDeckLib.HostedServices.StreamDeckHostedService.html#StreamDeckLib_HostedServices_StreamDeckHostedService__ctor_ILogger_StreamDeckLib_HostedServices_StreamDeckHostedService__StreamDeckLib_ConnectionManager_IOptions_StreamDeckLib_Models_StreamDeckRegistrationOptions__
+  commentId: M:StreamDeckLib.HostedServices.StreamDeckHostedService.#ctor(ILogger{StreamDeckLib.HostedServices.StreamDeckHostedService},StreamDeckLib.ConnectionManager,IOptions{StreamDeckLib.Models.StreamDeckRegistrationOptions})
+  name.vb: StreamDeckHostedService(ILogger(Of StreamDeckHostedService), ConnectionManager, IOptions(Of StreamDeckRegistrationOptions))
+  fullName: StreamDeckLib.HostedServices.StreamDeckHostedService.StreamDeckHostedService(ILogger<StreamDeckLib.HostedServices.StreamDeckHostedService>, StreamDeckLib.ConnectionManager, IOptions<StreamDeckLib.Models.StreamDeckRegistrationOptions>)
+  fullName.vb: StreamDeckLib.HostedServices.StreamDeckHostedService.StreamDeckHostedService(ILogger(Of StreamDeckLib.HostedServices.StreamDeckHostedService), StreamDeckLib.ConnectionManager, IOptions(Of StreamDeckLib.Models.StreamDeckRegistrationOptions))
+  nameWithType: StreamDeckHostedService.StreamDeckHostedService(ILogger<StreamDeckHostedService>, ConnectionManager, IOptions<StreamDeckRegistrationOptions>)
+  nameWithType.vb: StreamDeckHostedService.StreamDeckHostedService(ILogger(Of StreamDeckHostedService), ConnectionManager, IOptions(Of StreamDeckRegistrationOptions))
+- uid: StreamDeckLib.HostedServices.StreamDeckHostedService.#ctor*
+  name: StreamDeckHostedService
+  href: api/StreamDeckLib.HostedServices.StreamDeckHostedService.html#StreamDeckLib_HostedServices_StreamDeckHostedService__ctor_
+  commentId: Overload:StreamDeckLib.HostedServices.StreamDeckHostedService.#ctor
+  isSpec: "True"
+  fullName: StreamDeckLib.HostedServices.StreamDeckHostedService.StreamDeckHostedService
+  nameWithType: StreamDeckHostedService.StreamDeckHostedService
+- uid: StreamDeckLib.HostedServices.StreamDeckHostedService.DisposeAsync
+  name: DisposeAsync()
+  href: api/StreamDeckLib.HostedServices.StreamDeckHostedService.html#StreamDeckLib_HostedServices_StreamDeckHostedService_DisposeAsync
+  commentId: M:StreamDeckLib.HostedServices.StreamDeckHostedService.DisposeAsync
+  fullName: StreamDeckLib.HostedServices.StreamDeckHostedService.DisposeAsync()
+  nameWithType: StreamDeckHostedService.DisposeAsync()
+- uid: StreamDeckLib.HostedServices.StreamDeckHostedService.DisposeAsync*
+  name: DisposeAsync
+  href: api/StreamDeckLib.HostedServices.StreamDeckHostedService.html#StreamDeckLib_HostedServices_StreamDeckHostedService_DisposeAsync_
+  commentId: Overload:StreamDeckLib.HostedServices.StreamDeckHostedService.DisposeAsync
+  isSpec: "True"
+  fullName: StreamDeckLib.HostedServices.StreamDeckHostedService.DisposeAsync
+  nameWithType: StreamDeckHostedService.DisposeAsync
+- uid: StreamDeckLib.HostedServices.StreamDeckHostedService.StartAsync(CancellationToken)
+  name: StartAsync(CancellationToken)
+  href: api/StreamDeckLib.HostedServices.StreamDeckHostedService.html#StreamDeckLib_HostedServices_StreamDeckHostedService_StartAsync_CancellationToken_
+  commentId: M:StreamDeckLib.HostedServices.StreamDeckHostedService.StartAsync(CancellationToken)
+  fullName: StreamDeckLib.HostedServices.StreamDeckHostedService.StartAsync(CancellationToken)
+  nameWithType: StreamDeckHostedService.StartAsync(CancellationToken)
+- uid: StreamDeckLib.HostedServices.StreamDeckHostedService.StartAsync*
+  name: StartAsync
+  href: api/StreamDeckLib.HostedServices.StreamDeckHostedService.html#StreamDeckLib_HostedServices_StreamDeckHostedService_StartAsync_
+  commentId: Overload:StreamDeckLib.HostedServices.StreamDeckHostedService.StartAsync
+  isSpec: "True"
+  fullName: StreamDeckLib.HostedServices.StreamDeckHostedService.StartAsync
+  nameWithType: StreamDeckHostedService.StartAsync
+- uid: StreamDeckLib.HostedServices.StreamDeckHostedService.StopAsync(CancellationToken)
+  name: StopAsync(CancellationToken)
+  href: api/StreamDeckLib.HostedServices.StreamDeckHostedService.html#StreamDeckLib_HostedServices_StreamDeckHostedService_StopAsync_CancellationToken_
+  commentId: M:StreamDeckLib.HostedServices.StreamDeckHostedService.StopAsync(CancellationToken)
+  fullName: StreamDeckLib.HostedServices.StreamDeckHostedService.StopAsync(CancellationToken)
+  nameWithType: StreamDeckHostedService.StopAsync(CancellationToken)
+- uid: StreamDeckLib.HostedServices.StreamDeckHostedService.StopAsync*
+  name: StopAsync
+  href: api/StreamDeckLib.HostedServices.StreamDeckHostedService.html#StreamDeckLib_HostedServices_StreamDeckHostedService_StopAsync_
+  commentId: Overload:StreamDeckLib.HostedServices.StreamDeckHostedService.StopAsync
+  isSpec: "True"
+  fullName: StreamDeckLib.HostedServices.StreamDeckHostedService.StopAsync
+  nameWithType: StreamDeckHostedService.StopAsync
+- uid: StreamDeckLib.Hosting
+  name: StreamDeckLib.Hosting
+  href: api/StreamDeckLib.Hosting.html
+  commentId: N:StreamDeckLib.Hosting
+  fullName: StreamDeckLib.Hosting
+  nameWithType: StreamDeckLib.Hosting
+- uid: StreamDeckLib.Hosting.DependencyInjectionExtensions
+  name: DependencyInjectionExtensions
+  href: api/StreamDeckLib.Hosting.DependencyInjectionExtensions.html
+  commentId: T:StreamDeckLib.Hosting.DependencyInjectionExtensions
+  fullName: StreamDeckLib.Hosting.DependencyInjectionExtensions
+  nameWithType: DependencyInjectionExtensions
+- uid: StreamDeckLib.Hosting.DependencyInjectionExtensions.ConfigureStreamDeckToolkit(IHostBuilder,System.String[])
+  name: ConfigureStreamDeckToolkit(IHostBuilder, String[])
+  href: api/StreamDeckLib.Hosting.DependencyInjectionExtensions.html#StreamDeckLib_Hosting_DependencyInjectionExtensions_ConfigureStreamDeckToolkit_IHostBuilder_System_String___
+  commentId: M:StreamDeckLib.Hosting.DependencyInjectionExtensions.ConfigureStreamDeckToolkit(IHostBuilder,System.String[])
+  name.vb: ConfigureStreamDeckToolkit(IHostBuilder, String())
+  fullName: StreamDeckLib.Hosting.DependencyInjectionExtensions.ConfigureStreamDeckToolkit(IHostBuilder, System.String[])
+  fullName.vb: StreamDeckLib.Hosting.DependencyInjectionExtensions.ConfigureStreamDeckToolkit(IHostBuilder, System.String())
+  nameWithType: DependencyInjectionExtensions.ConfigureStreamDeckToolkit(IHostBuilder, String[])
+  nameWithType.vb: DependencyInjectionExtensions.ConfigureStreamDeckToolkit(IHostBuilder, String())
+- uid: StreamDeckLib.Hosting.DependencyInjectionExtensions.ConfigureStreamDeckToolkit*
+  name: ConfigureStreamDeckToolkit
+  href: api/StreamDeckLib.Hosting.DependencyInjectionExtensions.html#StreamDeckLib_Hosting_DependencyInjectionExtensions_ConfigureStreamDeckToolkit_
+  commentId: Overload:StreamDeckLib.Hosting.DependencyInjectionExtensions.ConfigureStreamDeckToolkit
+  isSpec: "True"
+  fullName: StreamDeckLib.Hosting.DependencyInjectionExtensions.ConfigureStreamDeckToolkit
+  nameWithType: DependencyInjectionExtensions.ConfigureStreamDeckToolkit
 - uid: StreamDeckLib.IGlobalSettings
   name: IGlobalSettings
   href: api/StreamDeckLib.IGlobalSettings.html
@@ -2573,6 +3088,89 @@ references:
   isSpec: "True"
   fullName: StreamDeckLib.Messages.SwitchToProfileArgs.Payload.profile
   nameWithType: SwitchToProfileArgs.Payload.profile
+- uid: StreamDeckLib.Models
+  name: StreamDeckLib.Models
+  href: api/StreamDeckLib.Models.html
+  commentId: N:StreamDeckLib.Models
+  fullName: StreamDeckLib.Models
+  nameWithType: StreamDeckLib.Models
+- uid: StreamDeckLib.Models.StreamDeckRegistrationOptions
+  name: StreamDeckRegistrationOptions
+  href: api/StreamDeckLib.Models.StreamDeckRegistrationOptions.html
+  commentId: T:StreamDeckLib.Models.StreamDeckRegistrationOptions
+  fullName: StreamDeckLib.Models.StreamDeckRegistrationOptions
+  nameWithType: StreamDeckRegistrationOptions
+- uid: StreamDeckLib.Models.StreamDeckRegistrationOptions.Assembly
+  name: Assembly
+  href: api/StreamDeckLib.Models.StreamDeckRegistrationOptions.html#StreamDeckLib_Models_StreamDeckRegistrationOptions_Assembly
+  commentId: P:StreamDeckLib.Models.StreamDeckRegistrationOptions.Assembly
+  fullName: StreamDeckLib.Models.StreamDeckRegistrationOptions.Assembly
+  nameWithType: StreamDeckRegistrationOptions.Assembly
+- uid: StreamDeckLib.Models.StreamDeckRegistrationOptions.Assembly*
+  name: Assembly
+  href: api/StreamDeckLib.Models.StreamDeckRegistrationOptions.html#StreamDeckLib_Models_StreamDeckRegistrationOptions_Assembly_
+  commentId: Overload:StreamDeckLib.Models.StreamDeckRegistrationOptions.Assembly
+  isSpec: "True"
+  fullName: StreamDeckLib.Models.StreamDeckRegistrationOptions.Assembly
+  nameWithType: StreamDeckRegistrationOptions.Assembly
+- uid: StreamDeckLib.Models.StreamDeckToolkitOptions
+  name: StreamDeckToolkitOptions
+  href: api/StreamDeckLib.Models.StreamDeckToolkitOptions.html
+  commentId: T:StreamDeckLib.Models.StreamDeckToolkitOptions
+  fullName: StreamDeckLib.Models.StreamDeckToolkitOptions
+  nameWithType: StreamDeckToolkitOptions
+- uid: StreamDeckLib.Models.StreamDeckToolkitOptions.Info
+  name: Info
+  href: api/StreamDeckLib.Models.StreamDeckToolkitOptions.html#StreamDeckLib_Models_StreamDeckToolkitOptions_Info
+  commentId: P:StreamDeckLib.Models.StreamDeckToolkitOptions.Info
+  fullName: StreamDeckLib.Models.StreamDeckToolkitOptions.Info
+  nameWithType: StreamDeckToolkitOptions.Info
+- uid: StreamDeckLib.Models.StreamDeckToolkitOptions.Info*
+  name: Info
+  href: api/StreamDeckLib.Models.StreamDeckToolkitOptions.html#StreamDeckLib_Models_StreamDeckToolkitOptions_Info_
+  commentId: Overload:StreamDeckLib.Models.StreamDeckToolkitOptions.Info
+  isSpec: "True"
+  fullName: StreamDeckLib.Models.StreamDeckToolkitOptions.Info
+  nameWithType: StreamDeckToolkitOptions.Info
+- uid: StreamDeckLib.Models.StreamDeckToolkitOptions.PluginUUID
+  name: PluginUUID
+  href: api/StreamDeckLib.Models.StreamDeckToolkitOptions.html#StreamDeckLib_Models_StreamDeckToolkitOptions_PluginUUID
+  commentId: P:StreamDeckLib.Models.StreamDeckToolkitOptions.PluginUUID
+  fullName: StreamDeckLib.Models.StreamDeckToolkitOptions.PluginUUID
+  nameWithType: StreamDeckToolkitOptions.PluginUUID
+- uid: StreamDeckLib.Models.StreamDeckToolkitOptions.PluginUUID*
+  name: PluginUUID
+  href: api/StreamDeckLib.Models.StreamDeckToolkitOptions.html#StreamDeckLib_Models_StreamDeckToolkitOptions_PluginUUID_
+  commentId: Overload:StreamDeckLib.Models.StreamDeckToolkitOptions.PluginUUID
+  isSpec: "True"
+  fullName: StreamDeckLib.Models.StreamDeckToolkitOptions.PluginUUID
+  nameWithType: StreamDeckToolkitOptions.PluginUUID
+- uid: StreamDeckLib.Models.StreamDeckToolkitOptions.Port
+  name: Port
+  href: api/StreamDeckLib.Models.StreamDeckToolkitOptions.html#StreamDeckLib_Models_StreamDeckToolkitOptions_Port
+  commentId: P:StreamDeckLib.Models.StreamDeckToolkitOptions.Port
+  fullName: StreamDeckLib.Models.StreamDeckToolkitOptions.Port
+  nameWithType: StreamDeckToolkitOptions.Port
+- uid: StreamDeckLib.Models.StreamDeckToolkitOptions.Port*
+  name: Port
+  href: api/StreamDeckLib.Models.StreamDeckToolkitOptions.html#StreamDeckLib_Models_StreamDeckToolkitOptions_Port_
+  commentId: Overload:StreamDeckLib.Models.StreamDeckToolkitOptions.Port
+  isSpec: "True"
+  fullName: StreamDeckLib.Models.StreamDeckToolkitOptions.Port
+  nameWithType: StreamDeckToolkitOptions.Port
+- uid: StreamDeckLib.Models.StreamDeckToolkitOptions.RegisterEvent
+  name: RegisterEvent
+  href: api/StreamDeckLib.Models.StreamDeckToolkitOptions.html#StreamDeckLib_Models_StreamDeckToolkitOptions_RegisterEvent
+  commentId: P:StreamDeckLib.Models.StreamDeckToolkitOptions.RegisterEvent
+  fullName: StreamDeckLib.Models.StreamDeckToolkitOptions.RegisterEvent
+  nameWithType: StreamDeckToolkitOptions.RegisterEvent
+- uid: StreamDeckLib.Models.StreamDeckToolkitOptions.RegisterEvent*
+  name: RegisterEvent
+  href: api/StreamDeckLib.Models.StreamDeckToolkitOptions.html#StreamDeckLib_Models_StreamDeckToolkitOptions_RegisterEvent_
+  commentId: Overload:StreamDeckLib.Models.StreamDeckToolkitOptions.RegisterEvent
+  isSpec: "True"
+  fullName: StreamDeckLib.Models.StreamDeckToolkitOptions.RegisterEvent
+  nameWithType: StreamDeckToolkitOptions.RegisterEvent
 - uid: StreamDeckLib.Test
   name: StreamDeckLib.Test
   href: api/StreamDeckLib.Test.html

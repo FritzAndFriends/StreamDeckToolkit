@@ -101,13 +101,13 @@
   
   
   <a id="StreamDeckLib_ActionManager__ctor_" data-uid="StreamDeckLib.ActionManager.#ctor*"></a>
-  <h4 id="StreamDeckLib_ActionManager__ctor_StreamDeckLib_ConnectionManager_ILogger_" data-uid="StreamDeckLib.ActionManager.#ctor(StreamDeckLib.ConnectionManager,ILogger)">ActionManager(ConnectionManager, ILogger)</h4>
+  <h4 id="StreamDeckLib_ActionManager__ctor_ILogger_StreamDeckLib_ActionManager__" data-uid="StreamDeckLib.ActionManager.#ctor(ILogger{StreamDeckLib.ActionManager})">ActionManager(ILogger&lt;ActionManager&gt;)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="StreamDeckLib.ActionManager.html">ActionManager</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ActionManager(ConnectionManager manager, ILogger logger = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public ActionManager(ILogger&lt;ActionManager&gt; logger = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -120,12 +120,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="StreamDeckLib.ConnectionManager.html">ConnectionManager</a></td>
-        <td><span class="parametername">manager</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="xref">ILogger</span></td>
+        <td><span class="xref">ILogger</span>&lt;<a class="xref" href="StreamDeckLib.ActionManager.html">ActionManager</a>&gt;</td>
         <td><span class="parametername">logger</span></td>
         <td><p>An instance of a logger (<see cref="!:ILogger"></see> class.</p>
 </td>
@@ -174,7 +169,7 @@
   
   
   <a id="StreamDeckLib_ActionManager_GetAction_" data-uid="StreamDeckLib.ActionManager.GetAction*"></a>
-  <h4 id="StreamDeckLib_ActionManager_GetAction_System_String_" data-uid="StreamDeckLib.ActionManager.GetAction(System.String)">GetAction(String)</h4>
+  <h4 id="StreamDeckLib_ActionManager_GetAction_StreamDeckLib_ConnectionManager_System_String_" data-uid="StreamDeckLib.ActionManager.GetAction(StreamDeckLib.ConnectionManager,System.String)">GetAction(ConnectionManager, String)</h4>
   <div class="markdown level1 summary"><p>Gets a new instance of an <a class="xref" href="StreamDeckLib.BaseStreamDeckAction.html">BaseStreamDeckAction</a> registered with a UUID
 of <code data-dev-comment-type="paramref" class="paramref">actionUUID</code>. This instance <strong>will not</strong> be stored or managed,
 and cannot be reused.</p>
@@ -182,7 +177,7 @@ and cannot be reused.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public BaseStreamDeckAction GetAction(string actionUUID)</code></pre>
+    <pre><code class="lang-csharp hljs">public BaseStreamDeckAction GetAction(ConnectionManager connectionManager, string actionUUID)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -194,6 +189,11 @@ and cannot be reused.</p>
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.ConnectionManager.html">ConnectionManager</a></td>
+        <td><span class="parametername">connectionManager</span></td>
+        <td></td>
+      </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">actionUUID</span></td>
@@ -218,20 +218,20 @@ and cannot be reused.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="StreamDeckLib_ActionManager_GetAction_System_String__remarks">Remarks</h5>
+  <h5 id="StreamDeckLib_ActionManager_GetAction_StreamDeckLib_ConnectionManager_System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Throws a <a class="xref" href="StreamDeckLib.ActionNotRegisteredException.html">ActionNotRegisteredException</a> exception if there is no action with
 a UUID of <code data-dev-comment-type="paramref" class="paramref">actionUUID</code> registered.</p>
 </div>
   
   
   <a id="StreamDeckLib_ActionManager_GetActionInstance_" data-uid="StreamDeckLib.ActionManager.GetActionInstance*"></a>
-  <h4 id="StreamDeckLib_ActionManager_GetActionInstance__1_System_String_" data-uid="StreamDeckLib.ActionManager.GetActionInstance``1(System.String)">GetActionInstance&lt;TActionType&gt;(String)</h4>
+  <h4 id="StreamDeckLib_ActionManager_GetActionInstance__1_StreamDeckLib_ConnectionManager_System_String_" data-uid="StreamDeckLib.ActionManager.GetActionInstance``1(StreamDeckLib.ConnectionManager,System.String)">GetActionInstance&lt;TActionType&gt;(ConnectionManager, String)</h4>
   <div class="markdown level1 summary"><p>Gets an instance of an action from an action UUID.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TActionType GetActionInstance&lt;TActionType&gt;(string actionUUID)
+    <pre><code class="lang-csharp hljs">public TActionType GetActionInstance&lt;TActionType&gt;(ConnectionManager connectionManager, string actionUUID)
     where TActionType : BaseStreamDeckAction</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -244,6 +244,11 @@ a UUID of <code data-dev-comment-type="paramref" class="paramref">actionUUID</co
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.ConnectionManager.html">ConnectionManager</a></td>
+        <td><span class="parametername">connectionManager</span></td>
+        <td></td>
+      </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">actionUUID</span></td>
@@ -284,7 +289,7 @@ a UUID of <code data-dev-comment-type="paramref" class="paramref">actionUUID</co
       </tr>
     </tbody>
   </table>
-  <h5 id="StreamDeckLib_ActionManager_GetActionInstance__1_System_String__remarks">Remarks</h5>
+  <h5 id="StreamDeckLib_ActionManager_GetActionInstance__1_StreamDeckLib_ConnectionManager_System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>If no type is found to match the <code data-dev-comment-type="paramref" class="paramref">actionUUID</code>, an exception
 of type <a class="xref" href="StreamDeckLib.ActionNotRegisteredException.html">ActionNotRegisteredException</a> is thrown.</p>
 </div>
