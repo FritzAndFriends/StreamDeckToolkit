@@ -1,12 +1,13 @@
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using StreamDeckLib.Messages;
+using StreamDeckLib.Models;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,78 +20,64 @@ namespace StreamDeckLib
 	/// </summary>
 	public partial class ConnectionManager : IDisposable
 	{
-		private int _Port;
-		private string _Uuid;
-		private string _RegisterEvent;
-		private IStreamDeckProxy _Proxy;
+		private readonly int _port;
+		private readonly string _uuid;
+		private readonly string _registerEvent;
+		private IStreamDeckProxy _proxy;
+		private IGlobalSettings _globalSettings;
+		public Info Info { get; private set; }
 
 		private ConnectionManager()
 		{
-			this._ActionManager = new ActionManager(this, _Logger);
+			this._ActionManager = new ActionManager(_LoggerFactory?.CreateLogger<ActionManager>());
 		}
 
-		public Messages.Info Info { get; private set; }
-
-		public static ConnectionManager Initialize(string[] commandLineArgs,
-																							 ILoggerFactory loggerFactory = null,
-																							 IStreamDeckProxy streamDeckProxy = null)
+		public ConnectionManager(IOptions<StreamDeckToolkitOptions> options, ActionManager actionManager, ILogger<ConnectionManager> logger, IStreamDeckProxy streamDeckProxy = null)
 		{
-			using (var app = new CommandLineApplication())
+			if (options == null) throw new ArgumentNullException("options", "Options cannot be null, these should be retrieved from commandline args.");
+			if (actionManager == null) throw new ArgumentNullException("actionManager", "ActionManager cannot be null, these should be retrieved from commandline args.");
+
+			_ActionManager = actionManager;
+			_logger = logger;
+
+			var myInfo = JsonConvert.DeserializeObject<Info>(options.Value.Info);
+			Info = myInfo;
+			_port = options.Value.Port;
+			_uuid = options.Value.PluginUUID;
+			_registerEvent = options.Value.RegisterEvent;
+			_proxy = streamDeckProxy;
+		}
+
+		private ConnectionManager(StreamDeckToolkitOptions options, ILoggerFactory loggerFactory = null, IStreamDeckProxy streamDeckProxy = null) : this()
+		{
+			var myInfo = JsonConvert.DeserializeObject<Info>(options.Info);
+			Info = myInfo;
+			_port = options.Port;
+			_uuid = options.PluginUUID;
+			_registerEvent = options.RegisterEvent;
+			_proxy = streamDeckProxy;
+
+			_LoggerFactory = loggerFactory ?? NullLoggerFactory.Instance;
+			_logger = loggerFactory?.CreateLogger<ConnectionManager>();
+		}
+
+		public static ConnectionManager Initialize(string[] commandLineArgs, ILoggerFactory loggerFactory = null, IStreamDeckProxy streamDeckProxy = null)
+		{
+			try
 			{
-				app.HelpOption();
-
-				var optionPort = app.Option<int>("-port|--port <PORT>",
-																				 "The port the Elgato StreamDeck software is listening on",
-																				 CommandOptionType.SingleValue);
-
-				var optionPluginUUID = app.Option("-pluginUUID <UUID>",
-																					"The UUID that the Elgato StreamDeck software knows this plugin as.",
-																					CommandOptionType.SingleValue);
-
-				var optionRegisterEvent = app.Option("-registerEvent <REGEVENT>", "The registration event",
-																						 CommandOptionType.SingleValue);
-
-				var optionInfo = app.Option("-info <INFO>", "Some information", CommandOptionType.SingleValue);
-
-				var optionBreak = app.Option("-break", "Attach the debugger", CommandOptionType.NoValue);
-
-				app.Parse(commandLineArgs);
-
-				try
-				{
-					return Initialize(optionPort.ParsedValue, optionPluginUUID.Values[0], optionRegisterEvent.Values[0],
-														optionInfo.Values[0], loggerFactory,
-														streamDeckProxy ?? new StreamDeckProxy());
-				}
-				catch
-				{
-					throw new ArgumentException($"{nameof(commandLineArgs)} must be the commandline args that the StreamDeck application calls this program with.");
-				}
+				var options = ParseCommandlineArgs(commandLineArgs);
+				return new ConnectionManager(options, loggerFactory, streamDeckProxy);
+			}
+			catch
+			{
+				throw new ArgumentException($"{nameof(commandLineArgs)} must be the commandline args that the StreamDeck application calls this program with.");
 			}
 		}
 
-		private static ConnectionManager Initialize(int port, string uuid,
-																								string registerEvent, string info,
-																							ILoggerFactory loggerFactory,
-																							IStreamDeckProxy streamDeckProxy,
-																							ActionManager actionManager = null)
+		public ConnectionManager RegisterGlobalSettings(IGlobalSettings settings)
 		{
-			// TODO: Validate the info parameter
-			var myInfo = JsonConvert.DeserializeObject<Messages.Info>(info);
-
-			_LoggerFactory = loggerFactory ?? NullLoggerFactory.Instance;
-			_Logger = loggerFactory?.CreateLogger("ConnectionManager") ?? NullLogger.Instance;
-
-			var manager = new ConnectionManager()
-			{
-				_Port = port,
-				_Uuid = uuid,
-				_RegisterEvent = registerEvent,
-				Info = myInfo,
-				_Proxy = streamDeckProxy
-			};
-
-			return manager;
+			_globalSettings = settings;
+			return this;
 		}
 
 		public async Task<ConnectionManager> StartAsync(CancellationToken token)
@@ -106,29 +93,64 @@ namespace StreamDeckLib
 
 		public async Task<ConnectionManager> StartAsync()
 		{
-
 			var source = new CancellationTokenSource();
-
 			return await this.StartAsync(source.Token);
+		}
+
+		private static StreamDeckToolkitOptions ParseCommandlineArgs(string[] args)
+		{
+			using (var app = new CommandLineApplication())
+			{
+				app.HelpOption();
+
+				var optionPort = app.Option<int>("-port|--port <PORT>",
+																				 "The port the Elgato StreamDeck software is listening on",
+																				 CommandOptionType.SingleValue);
+
+				var optionPluginUUID = app.Option<string>("-pluginUUID <UUID>",
+																					"The UUID that the Elgato StreamDeck software knows this plugin as.",
+																					CommandOptionType.SingleValue);
+
+				var optionRegisterEvent = app.Option<string>("-registerEvent <REGEVENT>", "The registration event",
+																						 CommandOptionType.SingleValue);
+
+				var optionInfo = app.Option<string>("-info <INFO>", "Some information", CommandOptionType.SingleValue);
+
+				// var optionBreak = app.Option("-break", "Attach the debugger", CommandOptionType.NoValue);
+
+				app.Parse(args);
+
+				return new StreamDeckToolkitOptions
+				{
+					// Break = optionBreak.,
+					Info = optionInfo.ParsedValue,
+					PluginUUID = optionPluginUUID.ParsedValue,
+					Port = optionPort.ParsedValue,
+					RegisterEvent = optionRegisterEvent.ParsedValue
+				};
+			}
 		}
 
 		private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
 		{
-			_Logger.LogError(e.Exception, "Error handling StreamDeck information");
+			_logger?.LogError(e.Exception, "Error handling StreamDeck information");
 		}
 
 		private async Task Run(CancellationToken token)
 		{
+			_logger?.LogTrace($"{nameof(ConnectionManager)}.{nameof(Run)} port:{_port}, event: {_registerEvent}, uuid: {_uuid}");
 
-			await _Proxy.ConnectAsync(new Uri($"ws://localhost:{_Port}"), token);
-			await _Proxy.Register(_RegisterEvent, _Uuid);
+			await _proxy.ConnectAsync(new Uri($"ws://localhost:{_port}"), token);
+			_logger?.LogTrace($"{nameof(ConnectionManager)}.{nameof(Run)} Connected");
+			await _proxy.Register(_registerEvent, _uuid);
+			_logger?.LogTrace($"{nameof(ConnectionManager)}.{nameof(Run)} Registered");
 
 			var keepRunning = true;
 
 			while (!token.IsCancellationRequested && keepRunning)
 			{
 				// Exit loop if the socket is closed or aborted
-				switch (_Proxy.State)
+				switch (_proxy.State)
 				{
 					case WebSocketState.CloseReceived:
 					case WebSocketState.Closed:
@@ -140,7 +162,7 @@ namespace StreamDeckLib
 
 				if (!keepRunning) break;
 
-				var jsonString = await _Proxy.GetMessageAsString(token);
+				var jsonString = await _proxy.GetMessageAsString(token);
 
 				if (!string.IsNullOrEmpty(jsonString) && !jsonString.StartsWith("\0"))
 				{
@@ -150,37 +172,41 @@ namespace StreamDeckLib
 
 						if (msg == null)
 						{
-							_Logger.LogError($"Unknown message received: {jsonString}");
+							_logger?.LogError($"Unknown message received: {jsonString}");
 
 							continue;
 						}
 
 						if (string.IsNullOrWhiteSpace(msg.context) && string.IsNullOrWhiteSpace(msg.action))
 						{
-							_Logger.LogInformation($"System event received: ${msg.Event}");
-							continue;
+							this.BroadcastMessage(msg);
 						}
-						var action = GetInstanceOfAction(msg.context, msg.action);
-						if (action == null)
+						else
 						{
-							_Logger.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
-							continue;
+							var action = GetInstanceOfAction(msg.context, msg.action);
+							if (action == null)
+							{
+								_logger?.LogWarning($"The action requested (\"{msg.action}\") was not found as being registered with the plugin");
+								continue;
+							}
+
+
+							if (!_EventDictionary.ContainsKey(msg.Event))
+							{
+								_logger?.LogWarning($"Plugin does not handle the event '{msg.Event}'");
+
+								continue;
+							}
+
+							_EventDictionary[msg.Event]?.Invoke(action, msg);
+
 						}
 
-
-						if (!_EventDictionary.ContainsKey(msg.Event))
-						{
-							_Logger.LogWarning($"Plugin does not handle the event '{msg.Event}'");
-
-							continue;
-						}
-
-						_EventDictionary[msg.Event]?.Invoke(action, msg);
 
 					}
 					catch (Exception ex)
 					{
-						_Logger.LogError(ex, "Error while processing payload from StreamDeck");
+						_logger?.LogError(ex, "Error while processing payload from StreamDeck");
 					}
 				}
 
@@ -204,14 +230,14 @@ namespace StreamDeckLib
 				}
 			};
 
-			await _Proxy.SendStreamDeckEvent(args);
+			await _proxy.SendStreamDeckEvent(args);
 		}
 
 		public async Task SetImageAsync(string context, string imageLocation)
 		{
 
 			Debug.WriteLine($"Getting Image from {new FileInfo(imageLocation).FullName} on disk");
-			_Logger.LogDebug($"Getting Image from {new FileInfo(imageLocation).FullName} on disk");
+			_logger?.LogDebug($"Getting Image from {new FileInfo(imageLocation).FullName} on disk");
 
 			var imgString = Convert.ToBase64String(File.ReadAllBytes(imageLocation), Base64FormattingOptions.None);
 
@@ -225,7 +251,7 @@ namespace StreamDeckLib
 				}
 			};
 
-			await _Proxy.SendStreamDeckEvent(args);
+			await _proxy.SendStreamDeckEvent(args);
 		}
 
 		public async Task ShowAlertAsync(string context)
@@ -235,7 +261,7 @@ namespace StreamDeckLib
 				context = context
 			};
 
-			await _Proxy.SendStreamDeckEvent(args);
+			await _proxy.SendStreamDeckEvent(args);
 		}
 
 		public async Task ShowOkAsync(string context)
@@ -245,7 +271,7 @@ namespace StreamDeckLib
 				context = context
 			};
 
-			await _Proxy.SendStreamDeckEvent(args);
+			await _proxy.SendStreamDeckEvent(args);
 		}
 
 		public async Task SetSettingsAsync(string context, dynamic value)
@@ -256,7 +282,7 @@ namespace StreamDeckLib
 				payload = new { settingsModel = value }
 			};
 
-			await _Proxy.SendStreamDeckEvent(args);
+			await _proxy.SendStreamDeckEvent(args);
 		}
 
 		public async Task SetGlobalSettingsAsync(string context, dynamic value)
@@ -267,7 +293,7 @@ namespace StreamDeckLib
 				payload = new { settingsModel = value }
 			};
 
-			await _Proxy.SendStreamDeckEvent(args);
+			await _proxy.SendStreamDeckEvent(args);
 		}
 
 		public async Task SetStateAsync(string context, int state)
@@ -281,7 +307,7 @@ namespace StreamDeckLib
 				}
 			};
 
-			await _Proxy.SendStreamDeckEvent(args);
+			await _proxy.SendStreamDeckEvent(args);
 		}
 
 		public async Task SwitchToProfileAsync(string context, string device, string profileName)
@@ -297,7 +323,7 @@ namespace StreamDeckLib
 				}
 			};
 
-			await _Proxy.SendStreamDeckEvent(args);
+			await _proxy.SendStreamDeckEvent(args);
 		}
 
 		public async Task OpenUrlAsync(string context, string url)
@@ -311,22 +337,46 @@ namespace StreamDeckLib
 				}
 			};
 
-			await _Proxy.SendStreamDeckEvent(args);
+			await _proxy.SendStreamDeckEvent(args);
 		}
 
 
 		public async Task GetSettingsAsync(string context)
 		{
 			var args = new GetSettingsArgs() { context = context };
-			await _Proxy.SendStreamDeckEvent(args);
+			await _proxy.SendStreamDeckEvent(args);
 		}
 
 
 		public async Task GetGlobalSettingsAsync(string context)
 		{
 			var args = new GetGlobalSettingsArgs() { context = context };
-			await _Proxy.SendStreamDeckEvent(args);
+			await _proxy.SendStreamDeckEvent(args);
 		}
+
+		public async Task LogMessageAsync(string context, string logMessage)
+		{
+			var args = new LogMessageArgs()
+			{
+				context = context,
+				payload = new LogMessageArgs.Payload()
+				{
+					message = logMessage
+				}
+			};
+			await _proxy.SendStreamDeckEvent(args);
+		}
+
+		public async Task SendToPropertyInspectorAsync(string context, dynamic settings)
+		{
+			var args = new SendToPropertyInspectorArgs()
+			{
+				context = context,
+				payload = settings
+			};
+			await _proxy.SendStreamDeckEvent(args);
+		}
+
 
 		#endregion
 
@@ -334,7 +384,7 @@ namespace StreamDeckLib
 
 		private bool disposedValue = false; // To detect redundant calls
 		private static ILoggerFactory _LoggerFactory;
-		private static ILogger _Logger;
+		private readonly ILogger<ConnectionManager> _logger;
 
 		void Dispose(bool disposing)
 		{
@@ -342,7 +392,7 @@ namespace StreamDeckLib
 			{
 				if (disposing)
 				{
-					_Proxy.Dispose();
+					_proxy.Dispose();
 				}
 
 				disposedValue = true;

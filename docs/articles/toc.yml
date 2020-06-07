@@ -1,0 +1,25 @@
+- name: Introduction
+  href: intro.md
+- name: Pre-Requisites
+  href: pre-reqs.md
+- name: Install Project Template
+  href: install.md
+- name: Using the Template
+  href: using.md
+- name: Creating a Plugin Action
+  href: create.md
+- name: Template
+  href: template/toc.yml
+- name: Plugins
+  href: plugins.md
+- name: Streams
+  href: streams.md
+- name: Projects
+  href: projects/toc.yml
+  #  items:
+  #  - name: StreamDeck Emulator
+  #    href: projects/emulator.md
+  #  - name: StreamDeck Dashboard
+  #    href: projects/dashboard.md
+- name: Contributing
+  href: contributing.md
