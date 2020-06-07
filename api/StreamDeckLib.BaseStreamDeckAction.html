@@ -1,0 +1,809 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class BaseStreamDeckAction
+   | StreamDeckToolkit </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class BaseStreamDeckAction
+   | StreamDeckToolkit ">
+    <meta name="generator" content="docfx 2.45.1.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="StreamDeckLib.BaseStreamDeckAction">
+  
+  
+  <h1 id="StreamDeckLib_BaseStreamDeckAction" data-uid="StreamDeckLib.BaseStreamDeckAction" class="text-break">Class BaseStreamDeckAction
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">BaseStreamDeckAction</span></div>
+      <div class="level2"><a class="xref" href="StreamDeckLib.BaseStreamDeckActionWithSettingsModel-1.html">BaseStreamDeckActionWithSettingsModel&lt;T&gt;</a></div>
+      <div class="level2"><a class="xref" href="StreamDeckLib.BaseStreamDeckPlugin.html">BaseStreamDeckPlugin</a></div>
+      <div class="level2"><a class="xref" href="StreamDeckLib.Test.StubAction.html">StubAction</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="StreamDeckLib.html">StreamDeckLib</a></h6>
+  <h6><strong>Assembly</strong>: StreamDeckLib.dll</h6>
+  <h5 id="StreamDeckLib_BaseStreamDeckAction_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class BaseStreamDeckAction : object</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_ActionUuid_" data-uid="StreamDeckLib.BaseStreamDeckAction.ActionUuid*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_ActionUuid" data-uid="StreamDeckLib.BaseStreamDeckAction.ActionUuid">ActionUuid</h4>
+  <div class="markdown level1 summary"><p>Gets the UUID which uniquely identifies the individual actions within a plugin.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ActionUuid { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>The UUID representing the action, which matches the value in the &quot;manifest.json&quot; file.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_Logger_" data-uid="StreamDeckLib.BaseStreamDeckAction.Logger*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_Logger" data-uid="StreamDeckLib.BaseStreamDeckAction.Logger">Logger</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ILogger Logger { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ILogger</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_Manager_" data-uid="StreamDeckLib.BaseStreamDeckAction.Manager*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_Manager" data-uid="StreamDeckLib.BaseStreamDeckAction.Manager">Manager</h4>
+  <div class="markdown level1 summary"><p>The <a class="xref" href="StreamDeckLib.ConnectionManager.html">ConnectionManager</a> with which this instance
+of the <a class="xref" href="StreamDeckLib.BaseStreamDeckAction.html">BaseStreamDeckAction</a> is registered.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ConnectionManager Manager { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.ConnectionManager.html">ConnectionManager</a></td>
+        <td><p>The manager.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_OnApplicationDidLaunchAsync_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnApplicationDidLaunchAsync*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_OnApplicationDidLaunchAsync_StreamDeckLib_Messages_StreamDeckEventPayload_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnApplicationDidLaunchAsync(StreamDeckLib.Messages.StreamDeckEventPayload)">OnApplicationDidLaunchAsync(StreamDeckEventPayload)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task OnApplicationDidLaunchAsync(StreamDeckEventPayload args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.Messages.StreamDeckEventPayload.html">StreamDeckEventPayload</a></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_OnApplicationDidTerminateAsync_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnApplicationDidTerminateAsync*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_OnApplicationDidTerminateAsync_StreamDeckLib_Messages_StreamDeckEventPayload_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnApplicationDidTerminateAsync(StreamDeckLib.Messages.StreamDeckEventPayload)">OnApplicationDidTerminateAsync(StreamDeckEventPayload)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task OnApplicationDidTerminateAsync(StreamDeckEventPayload args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.Messages.StreamDeckEventPayload.html">StreamDeckEventPayload</a></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_OnDeviceDidConnect_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnDeviceDidConnect*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_OnDeviceDidConnect_StreamDeckLib_Messages_StreamDeckEventPayload_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnDeviceDidConnect(StreamDeckLib.Messages.StreamDeckEventPayload)">OnDeviceDidConnect(StreamDeckEventPayload)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task OnDeviceDidConnect(StreamDeckEventPayload args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.Messages.StreamDeckEventPayload.html">StreamDeckEventPayload</a></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_OnDeviceDidDisconnect_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnDeviceDidDisconnect*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_OnDeviceDidDisconnect_StreamDeckLib_Messages_StreamDeckEventPayload_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnDeviceDidDisconnect(StreamDeckLib.Messages.StreamDeckEventPayload)">OnDeviceDidDisconnect(StreamDeckEventPayload)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task OnDeviceDidDisconnect(StreamDeckEventPayload args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.Messages.StreamDeckEventPayload.html">StreamDeckEventPayload</a></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_OnDidReceiveGlobalSettings_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnDidReceiveGlobalSettings*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_OnDidReceiveGlobalSettings_StreamDeckLib_Messages_StreamDeckEventPayload_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnDidReceiveGlobalSettings(StreamDeckLib.Messages.StreamDeckEventPayload)">OnDidReceiveGlobalSettings(StreamDeckEventPayload)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task OnDidReceiveGlobalSettings(StreamDeckEventPayload args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.Messages.StreamDeckEventPayload.html">StreamDeckEventPayload</a></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_OnDidReceiveSettings_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnDidReceiveSettings*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_OnDidReceiveSettings_StreamDeckLib_Messages_StreamDeckEventPayload_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnDidReceiveSettings(StreamDeckLib.Messages.StreamDeckEventPayload)">OnDidReceiveSettings(StreamDeckEventPayload)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task OnDidReceiveSettings(StreamDeckEventPayload args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.Messages.StreamDeckEventPayload.html">StreamDeckEventPayload</a></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_OnKeyDown_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnKeyDown*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_OnKeyDown_StreamDeckLib_Messages_StreamDeckEventPayload_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnKeyDown(StreamDeckLib.Messages.StreamDeckEventPayload)">OnKeyDown(StreamDeckEventPayload)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task OnKeyDown(StreamDeckEventPayload args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.Messages.StreamDeckEventPayload.html">StreamDeckEventPayload</a></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_OnKeyUp_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnKeyUp*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_OnKeyUp_StreamDeckLib_Messages_StreamDeckEventPayload_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnKeyUp(StreamDeckLib.Messages.StreamDeckEventPayload)">OnKeyUp(StreamDeckEventPayload)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task OnKeyUp(StreamDeckEventPayload args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.Messages.StreamDeckEventPayload.html">StreamDeckEventPayload</a></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_OnPropertyInspectorDidAppear_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnPropertyInspectorDidAppear*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_OnPropertyInspectorDidAppear_StreamDeckLib_Messages_StreamDeckEventPayload_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnPropertyInspectorDidAppear(StreamDeckLib.Messages.StreamDeckEventPayload)">OnPropertyInspectorDidAppear(StreamDeckEventPayload)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task OnPropertyInspectorDidAppear(StreamDeckEventPayload args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.Messages.StreamDeckEventPayload.html">StreamDeckEventPayload</a></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_OnPropertyInspectorDidDisappear_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnPropertyInspectorDidDisappear*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_OnPropertyInspectorDidDisappear_StreamDeckLib_Messages_StreamDeckEventPayload_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnPropertyInspectorDidDisappear(StreamDeckLib.Messages.StreamDeckEventPayload)">OnPropertyInspectorDidDisappear(StreamDeckEventPayload)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task OnPropertyInspectorDidDisappear(StreamDeckEventPayload args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.Messages.StreamDeckEventPayload.html">StreamDeckEventPayload</a></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_OnSendToPlugin_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnSendToPlugin*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_OnSendToPlugin_StreamDeckLib_Messages_StreamDeckEventPayload_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnSendToPlugin(StreamDeckLib.Messages.StreamDeckEventPayload)">OnSendToPlugin(StreamDeckEventPayload)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task OnSendToPlugin(StreamDeckEventPayload args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.Messages.StreamDeckEventPayload.html">StreamDeckEventPayload</a></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_OnTitleParametersDidChange_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnTitleParametersDidChange*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_OnTitleParametersDidChange_StreamDeckLib_Messages_StreamDeckEventPayload_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnTitleParametersDidChange(StreamDeckLib.Messages.StreamDeckEventPayload)">OnTitleParametersDidChange(StreamDeckEventPayload)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task OnTitleParametersDidChange(StreamDeckEventPayload args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.Messages.StreamDeckEventPayload.html">StreamDeckEventPayload</a></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_OnWillAppear_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnWillAppear*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_OnWillAppear_StreamDeckLib_Messages_StreamDeckEventPayload_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnWillAppear(StreamDeckLib.Messages.StreamDeckEventPayload)">OnWillAppear(StreamDeckEventPayload)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task OnWillAppear(StreamDeckEventPayload args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.Messages.StreamDeckEventPayload.html">StreamDeckEventPayload</a></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="StreamDeckLib_BaseStreamDeckAction_OnWillDisappear_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnWillDisappear*"></a>
+  <h4 id="StreamDeckLib_BaseStreamDeckAction_OnWillDisappear_StreamDeckLib_Messages_StreamDeckEventPayload_" data-uid="StreamDeckLib.BaseStreamDeckAction.OnWillDisappear(StreamDeckLib.Messages.StreamDeckEventPayload)">OnWillDisappear(StreamDeckEventPayload)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Task OnWillDisappear(StreamDeckEventPayload args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="StreamDeckLib.Messages.StreamDeckEventPayload.html">StreamDeckEventPayload</a></td>
+        <td><span class="parametername">args</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
