@@ -529,15 +529,15 @@ references:
   commentId: T:StreamDeckLib.ActionManager
   fullName: StreamDeckLib.ActionManager
   nameWithType: ActionManager
-- uid: StreamDeckLib.ActionManager.#ctor(ILogger{StreamDeckLib.ActionManager})
-  name: ActionManager(ILogger<ActionManager>)
-  href: api/StreamDeckLib.ActionManager.html#StreamDeckLib_ActionManager__ctor_ILogger_StreamDeckLib_ActionManager__
-  commentId: M:StreamDeckLib.ActionManager.#ctor(ILogger{StreamDeckLib.ActionManager})
-  name.vb: ActionManager(ILogger(Of ActionManager))
-  fullName: StreamDeckLib.ActionManager.ActionManager(ILogger<StreamDeckLib.ActionManager>)
-  fullName.vb: StreamDeckLib.ActionManager.ActionManager(ILogger(Of StreamDeckLib.ActionManager))
-  nameWithType: ActionManager.ActionManager(ILogger<ActionManager>)
-  nameWithType.vb: ActionManager.ActionManager(ILogger(Of ActionManager))
+- uid: StreamDeckLib.ActionManager.#ctor(ILogger{StreamDeckLib.ActionManager},IServiceProvider)
+  name: ActionManager(ILogger<ActionManager>, IServiceProvider)
+  href: api/StreamDeckLib.ActionManager.html#StreamDeckLib_ActionManager__ctor_ILogger_StreamDeckLib_ActionManager__IServiceProvider_
+  commentId: M:StreamDeckLib.ActionManager.#ctor(ILogger{StreamDeckLib.ActionManager},IServiceProvider)
+  name.vb: ActionManager(ILogger(Of ActionManager), IServiceProvider)
+  fullName: StreamDeckLib.ActionManager.ActionManager(ILogger<StreamDeckLib.ActionManager>, IServiceProvider)
+  fullName.vb: StreamDeckLib.ActionManager.ActionManager(ILogger(Of StreamDeckLib.ActionManager), IServiceProvider)
+  nameWithType: ActionManager.ActionManager(ILogger<ActionManager>, IServiceProvider)
+  nameWithType.vb: ActionManager.ActionManager(ILogger(Of ActionManager), IServiceProvider)
 - uid: StreamDeckLib.ActionManager.#ctor*
   name: ActionManager
   href: api/StreamDeckLib.ActionManager.html#StreamDeckLib_ActionManager__ctor_
