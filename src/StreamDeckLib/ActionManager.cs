@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using System;
@@ -24,6 +25,8 @@ namespace StreamDeckLib
 		// The logger we will receive when being instantiated. Defaults to a NullLogger is none is specified.
 		private readonly ILogger<ActionManager> _Logger;
 
+		private readonly IServiceProvider _serviceProvider;
+
 		#endregion
 
 
@@ -39,9 +42,10 @@ namespace StreamDeckLib
 		/// Initializes a new instance of the <see cref="T:StreamDeckLib.ActionManager"/> class.
 		/// </summary>
 		/// <param name="logger">An instance of a logger (<see cref="ILogger"/> class.</param>
-		public ActionManager(ILogger<ActionManager> logger = null) : this()
+		public ActionManager(ILogger<ActionManager> logger = null, IServiceProvider serviceProvider = null) : this()
 		{
 			this._Logger = logger ?? NullLoggerFactory.Instance.CreateLogger<ActionManager>();
+			this._serviceProvider = serviceProvider;
 		}
 
 		#endregion
@@ -140,7 +144,7 @@ namespace StreamDeckLib
 
 			if (this._Actions.ContainsKey(actionUUID))
 			{
-				var instance = Activator.CreateInstance(this._Actions[actionUUID]) as TActionType;
+				var instance = ActivatorUtilities.CreateInstance(this._serviceProvider, this._Actions[actionUUID]) as TActionType;
 				instance.Logger = _Logger;
 				instance.Manager = connectionManager;
 				return instance;
@@ -187,7 +191,7 @@ namespace StreamDeckLib
 			this._Logger?.LogTrace($"{nameof(ActionManager)}.{nameof(CreateActionInstanceByUUID)}(string, bool)");
 			if (this._Actions.ContainsKey(actionUuid))
 			{
-				var instance = Activator.CreateInstance(this._Actions[actionUuid]) as BaseStreamDeckAction;
+				var instance = ActivatorUtilities.CreateInstance(this._serviceProvider, this._Actions[actionUuid]) as BaseStreamDeckAction;
 				instance.Logger = _Logger;
 				instance.Manager = connectionManager;
 				return instance;

@@ -40,11 +40,17 @@ namespace StreamDeckLib
 			_ActionManager = actionManager;
 			_logger = logger;
 
-			var myInfo = JsonConvert.DeserializeObject<Info>(options.Value.Info);
-			Info = myInfo;
-			_port = options.Value.Port;
-			_uuid = options.Value.PluginUUID;
-			_registerEvent = options.Value.RegisterEvent;
+			if (options.Value != null)
+			{
+				if (!string.IsNullOrEmpty(options.Value.Info))
+				{
+					var myInfo = JsonConvert.DeserializeObject<Info>(options.Value.Info);
+					Info = myInfo;
+				}
+				_port = options.Value.Port;
+				_uuid = options.Value.PluginUUID;
+				_registerEvent = options.Value.RegisterEvent;
+			}
 			_proxy = streamDeckProxy;
 		}
 
