@@ -30,7 +30,7 @@
 		}
 	],
 	"Category": "Fritz & Friends",
-	"CategoryIcon": "images/category/categoryIcon.png",
+	"CategoryIcon": "images/category/categoryIcon",
 	"Disabled":  false,
   "Author": "Jeffrey T. Fritz",
 	"CodePathWin": "SamplePlugin.cmd",

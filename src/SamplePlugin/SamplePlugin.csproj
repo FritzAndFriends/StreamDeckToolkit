@@ -11,6 +11,8 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Fritz.png" />
+	  <None Remove="images\category\categoryIcon%402x.png" />
+	  <None Remove="images\category\categoryIcon.png" />
 	  <None Remove="property_inspector\css\property-inspector.css" />
 	  <None Remove="property_inspector\css\sdpi.css" />
 	  <None Remove="property_inspector\js\property-inspector.js" />
@@ -51,6 +53,12 @@
 		</Content>
 		<Content Include="images/Fritz.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="images\category\categoryIcon.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="images\category\categoryIcon@2x.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="manifest.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
