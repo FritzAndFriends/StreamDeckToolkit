@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace _StreamDeckPlugin_
 {
-  [ActionUuid(Uuid="$(UUID)")]
+  [ActionUuid(Uuid="$(UUID).DefaultPluginAction")]
   public class $(PluginName)Action : BaseStreamDeckActionWithSettingsModel<Models.CounterSettingsModel>
   {
 	public override async Task OnKeyUp(StreamDeckEventPayload args)
