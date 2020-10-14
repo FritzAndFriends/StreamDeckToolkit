@@ -11,6 +11,8 @@
     <None Remove="images\actionDefaultImage@2x.png" />
     <None Remove="images\actionIcon.png" />
     <None Remove="images\actionIcon@2x.png" />
+    <None Remove="images\category\categoryIcon%402x.png" />
+    <None Remove="images\category\categoryIcon.png" />
     <None Remove="images\Fritz.png" />
     <None Remove="images\pluginIcon.png" />
     <None Remove="images\pluginIcon@2x.png" />
@@ -40,6 +42,12 @@
     <Content Include="images\actionIcon@2x.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Include="images\category\categoryIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\category\categoryIcon@2x.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\Fritz.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
