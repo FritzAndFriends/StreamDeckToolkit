@@ -170,7 +170,7 @@ namespace StreamDeckLib
 
 				var jsonString = await _proxy.GetMessageAsString(token);
 
-				if (!string.IsNullOrEmpty(jsonString) && !jsonString.StartsWith("\0"))
+				if (!string.IsNullOrEmpty(jsonString) && !jsonString.StartsWith("\u0000", StringComparison.OrdinalIgnoreCase))
 				{
 					try
 					{
