@@ -40,12 +40,18 @@ namespace StreamDeckLib
 			_ActionManager = actionManager;
 			_logger = logger;
 
-			var myInfo = JsonConvert.DeserializeObject<Info>(options.Value.Info);
-			Info = myInfo;
-			_port = options.Value.Port;
-			_uuid = options.Value.PluginUUID;
-			_registerEvent = options.Value.RegisterEvent;
-			_proxy = streamDeckProxy;
+			if (options.Value != null)
+			{
+				if (!string.IsNullOrEmpty(options.Value.Info))
+				{
+					var myInfo = JsonConvert.DeserializeObject<Info>(options.Value.Info);
+					Info = myInfo;
+				}
+				_port = options.Value.Port;
+				_uuid = options.Value.PluginUUID;
+				_registerEvent = options.Value.RegisterEvent;
+			}
+			_proxy = streamDeckProxy ?? new StreamDeckProxy();
 		}
 
 		private ConnectionManager(StreamDeckToolkitOptions options, ILoggerFactory loggerFactory = null, IStreamDeckProxy streamDeckProxy = null) : this()
@@ -55,7 +61,7 @@ namespace StreamDeckLib
 			_port = options.Port;
 			_uuid = options.PluginUUID;
 			_registerEvent = options.RegisterEvent;
-			_proxy = streamDeckProxy;
+			_proxy = streamDeckProxy ?? new StreamDeckProxy();
 
 			_LoggerFactory = loggerFactory ?? NullLoggerFactory.Instance;
 			_logger = loggerFactory?.CreateLogger<ConnectionManager>();
@@ -164,7 +170,7 @@ namespace StreamDeckLib
 
 				var jsonString = await _proxy.GetMessageAsString(token);
 
-				if (!string.IsNullOrEmpty(jsonString) && !jsonString.StartsWith("\0"))
+				if (!string.IsNullOrEmpty(jsonString) && !jsonString.StartsWith("\u0000", StringComparison.OrdinalIgnoreCase))
 				{
 					try
 					{

@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>netcoreapp2.2</TargetFramework>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<LangVersion>latest</LangVersion>
 		<!-- When building/running on Windows -->
 		<RuntimeIdentifier Condition=" '$(OS)' == 'Windows_NT' and '$(Configuration)'=='Debug' ">win-x64</RuntimeIdentifier>
@@ -38,7 +38,7 @@
 	<!--Deployment files that must go with the build executable -->
 	<ItemGroup>
 		<Content Include="manifest.json">
-				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="appsettings.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -64,6 +64,12 @@
 		</Content>
 		<Content Include="images/pluginIcon@2x.png">
 				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="images/category/categoryIcon.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="images/category/categoryIcon@2x.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="images/Fritz.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
