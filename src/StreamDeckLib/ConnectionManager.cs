@@ -51,7 +51,7 @@ namespace StreamDeckLib
 				_uuid = options.Value.PluginUUID;
 				_registerEvent = options.Value.RegisterEvent;
 			}
-			_proxy = streamDeckProxy;
+			_proxy = streamDeckProxy ?? new StreamDeckProxy();
 		}
 
 		private ConnectionManager(StreamDeckToolkitOptions options, ILoggerFactory loggerFactory = null, IStreamDeckProxy streamDeckProxy = null) : this()
@@ -61,7 +61,7 @@ namespace StreamDeckLib
 			_port = options.Port;
 			_uuid = options.PluginUUID;
 			_registerEvent = options.RegisterEvent;
-			_proxy = streamDeckProxy;
+			_proxy = streamDeckProxy ?? new StreamDeckProxy();
 
 			_LoggerFactory = loggerFactory ?? NullLoggerFactory.Instance;
 			_logger = loggerFactory?.CreateLogger<ConnectionManager>();
