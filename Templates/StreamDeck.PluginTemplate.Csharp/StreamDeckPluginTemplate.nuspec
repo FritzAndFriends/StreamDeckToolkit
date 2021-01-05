@@ -16,6 +16,6 @@
   </metadata>
   <files>
     <file src="content/**" target="content/" />
-		<file src="../../scripts/registration/**" target="content/" />
+		<!-- <file src="../../scripts/registration/**" target="content/" /> -->
   </files>
 </package>
