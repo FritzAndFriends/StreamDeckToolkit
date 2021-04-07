@@ -10,7 +10,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
