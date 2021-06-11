@@ -281,8 +281,8 @@ namespace StreamDeckLib
 
 		public async Task SetImageDataAsync(string context, string imageData)
 		{
-			Debug.WriteLine("Getting Image from Base64");
-			_logger?.LogDebug("Getting Image from Base64");
+			Debug.WriteLine("Getting Image from image data");
+			_logger?.LogDebug("Getting Image from image data");
 
 			var args = new SetImageArgs
 			{
