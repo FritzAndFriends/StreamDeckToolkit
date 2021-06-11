@@ -270,10 +270,19 @@ namespace StreamDeckLib
 			byte[] imgBytes;
 			using (var imgByteStream = new MemoryStream())
 			{
-				image.Save(imgByteStream, ImageFormat.Png);// force use png
+				image.Save(imgByteStream, ImageFormat.Png);
 				imgBytes = imgByteStream.ToArray();
 			}
+
 			var imgString = Convert.ToBase64String(imgBytes, Base64FormattingOptions.None);
+
+			await SetImageDataAsync(context, $"data:image/png;base64, {imgString}");
+		}
+
+		public async Task SetImageDataAsync(string context, string imageData)
+		{
+			Debug.WriteLine("Getting Image from Base64");
+			_logger?.LogDebug("Getting Image from Base64");
 
 			var args = new SetImageArgs
 			{
@@ -281,13 +290,12 @@ namespace StreamDeckLib
 				payload = new SetImageArgs.Payload
 				{
 					TargetType = SetTitleArgs.TargetType.HardwareAndSoftware,
-					image = $"data:image/png;base64, {imgString}"
+					image = imageData
 				}
 			};
 
 			await _proxy.SendStreamDeckEvent(args);
 		}
-
 
 		public async Task ShowAlertAsync(string context)
 		{
