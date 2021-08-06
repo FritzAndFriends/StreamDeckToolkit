@@ -2,10 +2,10 @@
 
 namespace StreamDeckLib
 {
-  public class ActionUuidAttribute : Attribute
+  public class StreamDeckActionAttribute : Attribute
   {
 	private string _uuid;
-	public ActionUuidAttribute(string uuid = "")
+	public StreamDeckActionAttribute(string uuid = "")
 	{
 	  this.Uuid = uuid;
 	}

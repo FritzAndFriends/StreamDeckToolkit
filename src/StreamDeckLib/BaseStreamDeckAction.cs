@@ -19,11 +19,11 @@ namespace StreamDeckLib
 	/// Gets the UUID which uniquely identifies the individual actions within a plugin.
 	/// </summary>
 	/// <value>The UUID representing the action, which matches the value in the &quot;manifest.json&quot; file.</value>
-	public string ActionUuid
+	public virtual string ActionUuid
 	{
 	  get
 	  {
-		return this.GetType().GetCustomAttributes(typeof(ActionUuidAttribute), true).FirstOrDefault() is ActionUuidAttribute attr && !string.IsNullOrWhiteSpace(attr.Uuid)
+		return this.GetType().GetCustomAttributes(typeof(StreamDeckActionAttribute), true).FirstOrDefault() is StreamDeckActionAttribute attr && !string.IsNullOrWhiteSpace(attr.Uuid)
 		  ? attr.Uuid
 		  : string.Empty;
 	  }

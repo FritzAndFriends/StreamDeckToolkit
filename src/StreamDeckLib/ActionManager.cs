@@ -93,7 +93,7 @@ namespace StreamDeckLib
 				throw new DuplicateActionRegistrationException(actionUuid);
 			}
 
-			// Ensure that the type we're registering inherits from BaseStreamDeckAction. 
+			// Ensure that the type we're registering inherits from BaseStreamDeckAction.
 			if (!actionType.IsSubclassOf(typeof(BaseStreamDeckAction)))
 			{
 				throw new TypeDoesNotInheritFromBaseStreamDeckAction(actionType.Name, actionType.FullName, actionType.Assembly.FullName);
@@ -105,7 +105,7 @@ namespace StreamDeckLib
 
 
 		/// <summary>
-		/// Registers all actions which are decorated with an <seealso cref="ActionUuidAttribute"/>
+		/// Registers all actions which are decorated with an <seealso cref="StreamDeckActionAttribute"/>
 		/// withn a given <seealso cref="Assembly"/>.
 		/// </summary>
 		/// <returns>The instance of <seealso cref="ActionManager"/>.</returns>
@@ -114,10 +114,10 @@ namespace StreamDeckLib
 		{
 			this._Logger?.LogTrace($"{nameof(ActionManager)}.{nameof(RegisterAllActions)}(assembly)");
 
-			var actions = actionsAssembly.GetTypes().Where(type => Attribute.IsDefined(type, typeof(ActionUuidAttribute)));
+			var actions = actionsAssembly.GetTypes().Where(type => Attribute.IsDefined(type, typeof(StreamDeckActionAttribute)));
 			foreach (var actionType in actions)
 			{
-				var attr = actionType.GetCustomAttributes(typeof(ActionUuidAttribute), true).FirstOrDefault() as ActionUuidAttribute;
+				var attr = actionType.GetCustomAttributes(typeof(StreamDeckActionAttribute), true).FirstOrDefault() as StreamDeckActionAttribute;
 				this._Logger?.LogTrace($"{nameof(ActionManager)}.{nameof(RegisterAllActions)}({actionType}) {attr.Uuid}");
 				this.RegisterActionType(attr.Uuid, actionType);
 			}
