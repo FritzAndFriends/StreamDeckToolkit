@@ -9,7 +9,7 @@ You will also have a model created `CounterSettingsModel` which will be set.
 
 ### Attribute
 
-    [ActionUuid(Uuid="com.yourcompany.pluginname.actionname")]
+    [StreamDeckAction(Uuid="com.yourcompany.pluginname.actionname")]
 
 ### Class Name
 

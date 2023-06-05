@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace StreamDeckLib.Test
 {
 
-  [ActionUuid(Uuid = "Test UUID")]
+  [StreamDeckAction(Uuid = "Test UUID")]
   public class StubAction : BaseStreamDeckAction
   {
 	public int Counter = 0;

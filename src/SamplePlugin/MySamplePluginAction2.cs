@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SamplePlugin
 {
-	[ActionUuid(Uuid = "com.csharpfritz.samplePlugin.action2")]
+	[StreamDeckAction(Uuid = "com.csharpfritz.samplePlugin.action2")]
 	public class MySamplePluginAction2 : BaseStreamDeckActionWithSettingsModel<CounterSettingsModel>
 	{
 

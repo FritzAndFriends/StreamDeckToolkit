@@ -2,14 +2,13 @@
 
 namespace StreamDeckLib
 {
-  public class ActionUuidAttribute : Attribute
-  {
-	private string _uuid;
-	public ActionUuidAttribute(string uuid = "")
+	/// <summary>
+	/// An extension of the <see cref="StreamDeckActionAttribute"/>, so that we don't immediately break people who update
+	/// their NuGet packages...
+	/// </summary>
+	[Obsolete("This is being replaced by StreamDeckActionAttribute, use that instead.")]
+	public class ActionUuidAttribute : StreamDeckActionAttribute
 	{
-	  this.Uuid = uuid;
-	}
 
-	public string Uuid { get => _uuid; set => _uuid = value; }
-  }
+	}
 }
