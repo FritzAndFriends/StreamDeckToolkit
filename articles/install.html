@@ -81,11 +81,11 @@
 
 <h3 id="from-file-system">From File System</h3>
 <p>Installing the template from your filesystem is useful for local testing of the template itself. If you are actively working on the template making changes, this is the route you need to use.</p>
-<p>To install, run the following command from the root of the repository.</p>
-<p><code>dotnet new -i Templates/StreamDeck.PluginTemplate.Csharp</code></p>
+<p>To install, run the following command from the root of the repository.
+<code>dotnet new install StreamDeckPluginTemplate</code></p>
 <p>To pick up any changes you have made to the template source, you must uninstall the template and reinstall it.</p>
 <p>To uninstall, run the following command from the root of the respository.</p>
-<p><strong>Windows:</strong>  <code>dotnet new -u Templates/StreamDeck.PluginTemplate.Csharp</code></p>
+<p><strong>Windows:</strong> <code>dotnet new uninstall StreamDeckPluginTemplate</code></p>
 <p><strong>OSX/Linux:</strong> <code>dotnet new -u $PWD/Templates/StreamDeck.PluginTemplate.Csharp</code></p>
 <h3 id="from-nuget">From NuGet</h3>
 <p><code>dotnet new -i StreamDeckPluginTemplate</code></p>
