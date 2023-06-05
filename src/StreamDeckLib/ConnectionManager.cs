@@ -239,7 +239,7 @@ namespace StreamDeckLib
 			await _proxy.SendStreamDeckEvent(args);
 		}
 
-		public async Task SetImageAsync(string context, string imageLocation)
+		public async Task SetImageAsync(string context, string imageLocation, int? state = null)
 		{
 
 			Debug.WriteLine($"Getting Image from {new FileInfo(imageLocation).FullName} on disk");
@@ -253,7 +253,8 @@ namespace StreamDeckLib
 				payload = new SetImageArgs.Payload
 				{
 					TargetType = SetTitleArgs.TargetType.HardwareAndSoftware,
-					image = $"data:image/{new FileInfo(imageLocation).Extension.ToLowerInvariant().Substring(1)};base64, {imgString}"
+					image = $"data:image/{new FileInfo(imageLocation).Extension.ToLowerInvariant().Substring(1)};base64, {imgString}",
+					state = state
 				}
 			};
 

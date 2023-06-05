@@ -18,6 +18,8 @@ namespace StreamDeckLib.Messages
 			[JsonIgnore]
 			public TargetType TargetType { get; set; }
 
+			public int? state { get; set; }
+
 		}
 
 	}
