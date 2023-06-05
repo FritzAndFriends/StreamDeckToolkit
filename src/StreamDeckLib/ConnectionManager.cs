@@ -8,6 +8,8 @@ using StreamDeckLib.Models;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -254,6 +256,41 @@ namespace StreamDeckLib
 				{
 					TargetType = SetTitleArgs.TargetType.HardwareAndSoftware,
 					image = $"data:image/{new FileInfo(imageLocation).Extension.ToLowerInvariant().Substring(1)};base64, {imgString}"
+				}
+			};
+
+			await _proxy.SendStreamDeckEvent(args);
+		}
+
+		public async Task SetPngImageAsync(string context, Bitmap image)
+		{
+			Debug.WriteLine("Getting Image from Bitmap");
+			_logger?.LogDebug("Getting Image from Bitmap");
+
+			byte[] imgBytes;
+			using (var imgByteStream = new MemoryStream())
+			{
+				image.Save(imgByteStream, ImageFormat.Png);
+				imgBytes = imgByteStream.ToArray();
+			}
+
+			var imgString = Convert.ToBase64String(imgBytes, Base64FormattingOptions.None);
+
+			await SetImageDataAsync(context, $"data:image/png;base64, {imgString}");
+		}
+
+		public async Task SetImageDataAsync(string context, string imageData)
+		{
+			Debug.WriteLine("Getting Image from image data");
+			_logger?.LogDebug("Getting Image from image data");
+
+			var args = new SetImageArgs
+			{
+				context = context,
+				payload = new SetImageArgs.Payload
+				{
+					TargetType = SetTitleArgs.TargetType.HardwareAndSoftware,
+					image = imageData
 				}
 			};
 
