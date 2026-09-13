@@ -27,6 +27,14 @@ namespace StreamDeckLib
 
 		private readonly IServiceProvider _serviceProvider;
 
+		// Newer versions of ActivatorUtilities.CreateInstance require a non-null IServiceProvider,
+		// so this stand-in is used whenever no DI container was supplied to the ActionManager.
+		private sealed class NullServiceProvider : IServiceProvider
+		{
+			public static readonly NullServiceProvider Instance = new NullServiceProvider();
+			public object GetService(Type serviceType) => null;
+		}
+
 		#endregion
 
 
@@ -144,7 +152,7 @@ namespace StreamDeckLib
 
 			if (this._Actions.ContainsKey(actionUUID))
 			{
-				var instance = ActivatorUtilities.CreateInstance(this._serviceProvider, this._Actions[actionUUID]) as TActionType;
+				var instance = ActivatorUtilities.CreateInstance(this._serviceProvider ?? NullServiceProvider.Instance, this._Actions[actionUUID]) as TActionType;
 				instance.Logger = _Logger;
 				instance.Manager = connectionManager;
 				return instance;
@@ -191,7 +199,7 @@ namespace StreamDeckLib
 			this._Logger?.LogTrace($"{nameof(ActionManager)}.{nameof(CreateActionInstanceByUUID)}(string, bool)");
 			if (this._Actions.ContainsKey(actionUuid))
 			{
-				var instance = ActivatorUtilities.CreateInstance(this._serviceProvider, this._Actions[actionUuid]) as BaseStreamDeckAction;
+				var instance = ActivatorUtilities.CreateInstance(this._serviceProvider ?? NullServiceProvider.Instance, this._Actions[actionUuid]) as BaseStreamDeckAction;
 				instance.Logger = _Logger;
 				instance.Manager = connectionManager;
 				return instance;
